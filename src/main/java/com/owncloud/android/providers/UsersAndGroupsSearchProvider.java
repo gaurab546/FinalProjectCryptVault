@@ -35,14 +35,13 @@ import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.FileDataStorageManager;
+import com.owncloud.android.utils.ErrorMessageAdapter;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.shares.GetRemoteShareesOperation;
 import com.owncloud.android.lib.resources.shares.ShareType;
-import com.owncloud.android.utils.ErrorMessageAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,8 +99,8 @@ public class UsersAndGroupsSearchProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
 
-        AUTHORITY = getContext().getResources().getString(R.string.users_and_groups_search_authority);
-        ACTION_SHARE_WITH = getContext().getResources().getString(R.string.users_and_groups_share_with);
+        AUTHORITY = getContext().getResources().getString(com.owncloud.android.R.string.users_and_groups_search_authority);
+        ACTION_SHARE_WITH = getContext().getResources().getString(com.owncloud.android.R.string.users_and_groups_share_with);
         DATA_USER = AUTHORITY + ".data.user";
         DATA_GROUP = AUTHORITY + ".data.group";
         DATA_REMOTE = AUTHORITY + ".data.remote";
@@ -197,22 +196,22 @@ public class UsersAndGroupsSearchProvider extends ContentProvider {
                     String shareWith = value.getString(GetRemoteShareesOperation.PROPERTY_SHARE_WITH);
 
                     if (ShareType.GROUP.getValue() == type) {
-                        displayName = getContext().getString(R.string.share_group_clarification, userName);
-                        icon = R.drawable.ic_group;
+                        displayName = getContext().getString(com.owncloud.android.R.string.share_group_clarification, userName);
+                        icon = com.owncloud.android.R.drawable.ic_group;
                         dataUri = Uri.withAppendedPath(groupBaseUri, shareWith);
                     } else if (ShareType.FEDERATED.getValue() == type && federatedShareAllowed) {
-                        icon = R.drawable.ic_user;
+                        icon = com.owncloud.android.R.drawable.ic_user;
                         if (userName.equals(shareWith)) {
-                            displayName = getContext().getString(R.string.share_remote_clarification, userName);
+                            displayName = getContext().getString(com.owncloud.android.R.string.share_remote_clarification, userName);
                         } else {
                             String[] uriSplitted = shareWith.split("@");
-                            displayName = getContext().getString(R.string.share_known_remote_clarification, userName,
+                            displayName = getContext().getString(com.owncloud.android.R.string.share_known_remote_clarification, userName,
                                 uriSplitted[uriSplitted.length - 1]);
                         }
                         dataUri = Uri.withAppendedPath(remoteBaseUri, shareWith);
                     } else if (ShareType.USER.getValue() == type) {
                         displayName = userName;
-                        icon = R.drawable.ic_user;
+                        icon = com.owncloud.android.R.drawable.ic_user;
                         dataUri = Uri.withAppendedPath(userBaseUri, shareWith);
                     }
 

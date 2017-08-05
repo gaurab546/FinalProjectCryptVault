@@ -29,17 +29,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.owncloud.android.db.OCUpload;
+import com.owncloud.android.operations.UploadFileOperation;
+import com.owncloud.android.services.AutoUploadJob;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 import com.evernote.android.job.util.support.PersistableBundleCompat;
-import com.owncloud.android.db.OCUpload;
 import com.owncloud.android.db.ProviderMeta.ProviderTableMeta;
 import com.owncloud.android.db.UploadResult;
 import com.owncloud.android.files.services.FileUploader;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.UploadFileOperation;
-import com.owncloud.android.services.AutoUploadJob;
 
 import java.util.ArrayList;
 import java.util.Calendar;

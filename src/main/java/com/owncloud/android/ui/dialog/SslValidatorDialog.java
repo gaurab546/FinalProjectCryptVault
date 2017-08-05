@@ -28,7 +28,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.lib.common.network.CertificateCombinedException;
 import com.owncloud.android.lib.common.network.NetworkUtils;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
@@ -96,10 +95,10 @@ public class SslValidatorDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mView = getLayoutInflater().inflate(R.layout.ssl_validator_layout, null);
+        mView = getLayoutInflater().inflate(com.owncloud.android.R.layout.ssl_validator_layout, null);
         setContentView(mView); 
         
-        mView.findViewById(R.id.ok).setOnClickListener( 
+        mView.findViewById(com.owncloud.android.R.id.ok).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -123,7 +122,7 @@ public class SslValidatorDialog extends Dialog {
                     }
                 });
         
-        mView.findViewById(R.id.cancel).setOnClickListener(
+        mView.findViewById(com.owncloud.android.R.id.cancel).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -131,17 +130,17 @@ public class SslValidatorDialog extends Dialog {
                     }
                 });
         
-        mView.findViewById(R.id.details_btn).setOnClickListener(
+        mView.findViewById(com.owncloud.android.R.id.details_btn).setOnClickListener(
                 new View.OnClickListener() {
                    @Override
                     public void onClick(View v) {
-                       View detailsScroll = findViewById(R.id.details_scroll);
+                       View detailsScroll = findViewById(com.owncloud.android.R.id.details_scroll);
                        if (detailsScroll.getVisibility() == View.VISIBLE) {
                            detailsScroll.setVisibility(View.GONE);
-                           ((Button) v).setText(R.string.ssl_validator_btn_details_see);
+                           ((Button) v).setText(com.owncloud.android.R.string.ssl_validator_btn_details_see);
                        } else {
                            detailsScroll.setVisibility(View.VISIBLE);
-                           ((Button) v).setText(R.string.ssl_validator_btn_details_hide);
+                           ((Button) v).setText(com.owncloud.android.R.string.ssl_validator_btn_details_hide);
                        }
                     }
                 });
@@ -153,27 +152,27 @@ public class SslValidatorDialog extends Dialog {
             mException = (CertificateCombinedException) result.getException();
             
             /// clean
-            mView.findViewById(R.id.reason_cert_not_trusted).setVisibility(View.GONE);
-            mView.findViewById(R.id.reason_cert_expired).setVisibility(View.GONE);
-            mView.findViewById(R.id.reason_cert_not_yet_valid).setVisibility(View.GONE);
-            mView.findViewById(R.id.reason_hostname_not_verified).setVisibility(View.GONE);
-            mView.findViewById(R.id.details_scroll).setVisibility(View.GONE);
+            mView.findViewById(com.owncloud.android.R.id.reason_cert_not_trusted).setVisibility(View.GONE);
+            mView.findViewById(com.owncloud.android.R.id.reason_cert_expired).setVisibility(View.GONE);
+            mView.findViewById(com.owncloud.android.R.id.reason_cert_not_yet_valid).setVisibility(View.GONE);
+            mView.findViewById(com.owncloud.android.R.id.reason_hostname_not_verified).setVisibility(View.GONE);
+            mView.findViewById(com.owncloud.android.R.id.details_scroll).setVisibility(View.GONE);
 
             /// refresh
             if (mException.getCertPathValidatorException() != null) {
-                ((TextView)mView.findViewById(R.id.reason_cert_not_trusted)).setVisibility(View.VISIBLE);
+                ((TextView)mView.findViewById(com.owncloud.android.R.id.reason_cert_not_trusted)).setVisibility(View.VISIBLE);
             }
             
             if (mException.getCertificateExpiredException() != null) {
-                ((TextView)mView.findViewById(R.id.reason_cert_expired)).setVisibility(View.VISIBLE);
+                ((TextView)mView.findViewById(com.owncloud.android.R.id.reason_cert_expired)).setVisibility(View.VISIBLE);
             }
             
             if (mException.getCertificateNotYetValidException() != null) {
-                ((TextView)mView.findViewById(R.id.reason_cert_not_yet_valid)).setVisibility(View.VISIBLE);
+                ((TextView)mView.findViewById(com.owncloud.android.R.id.reason_cert_not_yet_valid)).setVisibility(View.VISIBLE);
             } 
 
             if (mException.getSslPeerUnverifiedException() != null ) {
-                ((TextView)mView.findViewById(R.id.reason_hostname_not_verified)).setVisibility(View.VISIBLE);
+                ((TextView)mView.findViewById(com.owncloud.android.R.id.reason_hostname_not_verified)).setVisibility(View.VISIBLE);
             }
             
             
@@ -197,8 +196,8 @@ public class SslValidatorDialog extends Dialog {
     }
 
     private void showSignature(X509Certificate cert) {
-        TextView sigView = ((TextView)mView.findViewById(R.id.value_signature));
-        TextView algorithmView = ((TextView)mView.findViewById(R.id.value_signature_algorithm));
+        TextView sigView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_signature));
+        TextView algorithmView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_signature_algorithm));
         sigView.setText(getHex(cert.getSignature()));
         algorithmView.setText(cert.getSigAlgName());
     }
@@ -219,20 +218,20 @@ public class SslValidatorDialog extends Dialog {
 
     @SuppressWarnings("deprecation")
     private void showValidity(Date notBefore, Date notAfter) {
-        TextView fromView = ((TextView)mView.findViewById(R.id.value_validity_from));
-        TextView toView = ((TextView)mView.findViewById(R.id.value_validity_to));
+        TextView fromView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_validity_from));
+        TextView toView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_validity_to));
         fromView.setText(notBefore.toLocaleString());
         toView.setText(notAfter.toLocaleString());
     }
 
     private void showSubject(X500Principal subject) {
         Map<String, String> s = parsePrincipal(subject);
-        TextView cnView = ((TextView)mView.findViewById(R.id.value_subject_CN));
-        TextView oView = ((TextView)mView.findViewById(R.id.value_subject_O));
-        TextView ouView = ((TextView)mView.findViewById(R.id.value_subject_OU));
-        TextView cView = ((TextView)mView.findViewById(R.id.value_subject_C));
-        TextView stView = ((TextView)mView.findViewById(R.id.value_subject_ST));
-        TextView lView = ((TextView)mView.findViewById(R.id.value_subject_L));
+        TextView cnView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_subject_CN));
+        TextView oView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_subject_O));
+        TextView ouView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_subject_OU));
+        TextView cView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_subject_C));
+        TextView stView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_subject_ST));
+        TextView lView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_subject_L));
         
         if (s.get("CN") != null) {
             cnView.setText(s.get("CN"));
@@ -274,12 +273,12 @@ public class SslValidatorDialog extends Dialog {
     
     private void showIssuer(X500Principal issuer) {
         Map<String, String> s = parsePrincipal(issuer);
-        TextView cnView = ((TextView)mView.findViewById(R.id.value_issuer_CN));
-        TextView oView = ((TextView)mView.findViewById(R.id.value_issuer_O));
-        TextView ouView = ((TextView)mView.findViewById(R.id.value_issuer_OU));
-        TextView cView = ((TextView)mView.findViewById(R.id.value_issuer_C));
-        TextView stView = ((TextView)mView.findViewById(R.id.value_issuer_ST));
-        TextView lView = ((TextView)mView.findViewById(R.id.value_issuer_L));
+        TextView cnView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_issuer_CN));
+        TextView oView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_issuer_O));
+        TextView ouView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_issuer_OU));
+        TextView cView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_issuer_C));
+        TextView stView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_issuer_ST));
+        TextView lView = ((TextView)mView.findViewById(com.owncloud.android.R.id.value_issuer_L));
         
         if (s.get("CN") != null) {
             cnView.setText(s.get("CN"));

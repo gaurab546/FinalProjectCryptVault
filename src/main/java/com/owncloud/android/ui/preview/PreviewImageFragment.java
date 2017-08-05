@@ -52,16 +52,15 @@ import android.widget.TextView;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.FileMenuFilter;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment;
 import com.owncloud.android.ui.dialog.RemoveFilesDialogFragment;
 import com.owncloud.android.ui.fragment.FileFragment;
-import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.BitmapUtils;
 import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.MimeTypeUtil;
 
 import java.io.FileInputStream;
@@ -168,8 +167,8 @@ public class PreviewImageFragment extends FileFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.preview_image_fragment, container, false);
-        mImageView = (TouchImageViewCustom) view.findViewById(R.id.image);
+        View view = inflater.inflate(com.owncloud.android.R.layout.preview_image_fragment, container, false);
+        mImageView = (TouchImageViewCustom) view.findViewById(com.owncloud.android.R.id.image);
         mImageView.setVisibility(View.GONE);
 
         view.setOnClickListener(new OnClickListener() {
@@ -188,7 +187,7 @@ public class PreviewImageFragment extends FileFragment {
             }
         });
 
-        mMultiView = (RelativeLayout) view.findViewById(R.id.multi_view);
+        mMultiView = (RelativeLayout) view.findViewById(com.owncloud.android.R.id.multi_view);
 
         setupMultiView(view);
         setMultiListLoadingMessage();
@@ -197,11 +196,11 @@ public class PreviewImageFragment extends FileFragment {
     }
 
     protected void setupMultiView(View view) {
-        mMultiListContainer = (LinearLayout) view.findViewById(R.id.empty_list_view);
-        mMultiListMessage = (TextView) view.findViewById(R.id.empty_list_view_text);
-        mMultiListHeadline = (TextView) view.findViewById(R.id.empty_list_view_headline);
-        mMultiListIcon = (ImageView) view.findViewById(R.id.empty_list_icon);
-        mMultiListProgress = (ProgressBar) view.findViewById(R.id.empty_list_progress);
+        mMultiListContainer = (LinearLayout) view.findViewById(com.owncloud.android.R.id.empty_list_view);
+        mMultiListMessage = (TextView) view.findViewById(com.owncloud.android.R.id.empty_list_view_text);
+        mMultiListHeadline = (TextView) view.findViewById(com.owncloud.android.R.id.empty_list_view_headline);
+        mMultiListIcon = (ImageView) view.findViewById(com.owncloud.android.R.id.empty_list_icon);
+        mMultiListProgress = (ProgressBar) view.findViewById(com.owncloud.android.R.id.empty_list_progress);
     }
 
     /**
@@ -265,7 +264,7 @@ public class PreviewImageFragment extends FileFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.file_actions_menu, menu);
+        inflater.inflate(com.owncloud.android.R.menu.file_actions_menu, menu);
     }
 
     /**
@@ -290,7 +289,7 @@ public class PreviewImageFragment extends FileFragment {
 
         // additional restriction for this fragment 
         // TODO allow renaming in PreviewImageFragment
-        MenuItem item = menu.findItem(R.id.action_rename_file);
+        MenuItem item = menu.findItem(com.owncloud.android.R.id.action_rename_file);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
@@ -298,35 +297,35 @@ public class PreviewImageFragment extends FileFragment {
 
         // additional restriction for this fragment 
         // TODO allow refresh file in PreviewImageFragment
-        item = menu.findItem(R.id.action_sync_file);
+        item = menu.findItem(com.owncloud.android.R.id.action_sync_file);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_move);
+        item = menu.findItem(com.owncloud.android.R.id.action_move);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_copy);
+        item = menu.findItem(com.owncloud.android.R.id.action_copy);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_favorite);
+        item = menu.findItem(com.owncloud.android.R.id.action_favorite);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_unset_favorite);
+        item = menu.findItem(com.owncloud.android.R.id.action_unset_favorite);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
@@ -341,32 +340,32 @@ public class PreviewImageFragment extends FileFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_share_file:
+            case com.owncloud.android.R.id.action_share_file:
                 mContainerActivity.getFileOperationsHelper().showShareFile(getFile());
                 return true;
 
-            case R.id.action_open_file_with:
+            case com.owncloud.android.R.id.action_open_file_with:
                 openFile();
                 return true;
 
-            case R.id.action_remove_file:
+            case com.owncloud.android.R.id.action_remove_file:
                 RemoveFilesDialogFragment dialog = RemoveFilesDialogFragment.newInstance(getFile());
                 dialog.show(getFragmentManager(), ConfirmationDialogFragment.FTAG_CONFIRMATION);
                 return true;
 
-            case R.id.action_see_details:
+            case com.owncloud.android.R.id.action_see_details:
                 seeDetails();
                 return true;
 
-            case R.id.action_send_file:
+            case com.owncloud.android.R.id.action_send_file:
                 mContainerActivity.getFileOperationsHelper().sendDownloadedFile(getFile());
                 return true;
 
-            case R.id.action_sync_file:
+            case com.owncloud.android.R.id.action_sync_file:
                 mContainerActivity.getFileOperationsHelper().syncFile(getFile());
                 return true;
 
-            case R.id.action_set_as_wallpaper:
+            case com.owncloud.android.R.id.action_set_as_wallpaper:
                 mContainerActivity.getFileOperationsHelper().setPictureAs(getFile());
                 return true;
 
@@ -474,10 +473,10 @@ public class PreviewImageFragment extends FileFragment {
                                 return new LoadImage(null, drawableResult, ocFile);
                             }
                         } catch (FileNotFoundException e) {
-                            mErrorMessageId = R.string.common_error_unknown;
+                            mErrorMessageId = com.owncloud.android.R.string.common_error_unknown;
                             Log_OC.e(TAG, "File not found trying to load " + getFile().getStoragePath(), e);
                         } catch (SVGParseException e) {
-                            mErrorMessageId = R.string.common_error_unknown;
+                            mErrorMessageId = com.owncloud.android.R.string.common_error_unknown;
                             Log_OC.e(TAG, "Couldn't parse SVG " + getFile().getStoragePath(), e);
                         }
                     } else {
@@ -494,7 +493,7 @@ public class PreviewImageFragment extends FileFragment {
                             }
 
                             if (bitmapResult == null) {
-                                mErrorMessageId = R.string.preview_image_error_unknown_format;
+                                mErrorMessageId = com.owncloud.android.R.string.preview_image_error_unknown_format;
                                 Log_OC.e(TAG, "File could not be loaded as a bitmap: " + storagePath);
                                 break;
                             } else {
@@ -505,7 +504,7 @@ public class PreviewImageFragment extends FileFragment {
                             }
 
                         } catch (OutOfMemoryError e) {
-                            mErrorMessageId = R.string.common_error_out_memory;
+                            mErrorMessageId = com.owncloud.android.R.string.common_error_out_memory;
                             if (i < maxDownScale - 1) {
                                 Log_OC.w(TAG, "Out of memory rendering file " + storagePath + " ; scaling down");
                                 minWidth = minWidth / 2;
@@ -523,12 +522,12 @@ public class PreviewImageFragment extends FileFragment {
                 }
 
             } catch (NoSuchFieldError e) {
-                mErrorMessageId = R.string.common_error_unknown;
+                mErrorMessageId = com.owncloud.android.R.string.common_error_unknown;
                 Log_OC.e(TAG, "Error from access to non-existing field despite protection; file "
                         + storagePath, e);
 
             } catch (Throwable t) {
-                mErrorMessageId = R.string.common_error_unknown;
+                mErrorMessageId = com.owncloud.android.R.string.common_error_unknown;
                 Log_OC.e(TAG, "Unexpected error loading " + getFile().getStoragePath(), t);
 
             }
@@ -572,7 +571,7 @@ public class PreviewImageFragment extends FileFragment {
                     if (getResources() != null) {
                         Resources r = getResources();
                         Drawable[] layers = new Drawable[2];
-                        layers[0] = r.getDrawable(R.color.white);
+                        layers[0] = r.getDrawable(com.owncloud.android.R.color.white);
                         Drawable bitmapDrawable;
                         if (result.ocFile.getMimetype().equalsIgnoreCase("image/png") ) {
                             bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
@@ -618,7 +617,7 @@ public class PreviewImageFragment extends FileFragment {
 
             mMultiView.setVisibility(View.GONE);
             if (getResources() != null) {
-                mImageView.setBackgroundColor(getResources().getColor(R.color.black));
+                mImageView.setBackgroundColor(getResources().getColor(com.owncloud.android.R.color.black));
             }
             mImageView.setVisibility(View.VISIBLE);
 
@@ -626,13 +625,13 @@ public class PreviewImageFragment extends FileFragment {
 
         private void showErrorMessage() {
             mImageView.setBackgroundColor(Color.TRANSPARENT);
-            setMessageForMultiList(mErrorMessageId, R.string.preview_sorry, R.drawable.file_image);
+            setMessageForMultiList(mErrorMessageId, com.owncloud.android.R.string.preview_sorry, com.owncloud.android.R.drawable.file_image);
         }
     }
 
     private void setMultiListLoadingMessage() {
         if (mMultiView != null) {
-            mMultiListHeadline.setText(R.string.file_list_loading);
+            mMultiListHeadline.setText(com.owncloud.android.R.string.file_list_loading);
             mMultiListMessage.setText("");
 
             mMultiListIcon.setVisibility(View.GONE);
@@ -682,9 +681,9 @@ public class PreviewImageFragment extends FileFragment {
             Drawable layerOne;
 
             if (previewImageActivity.getSystemUIVisible()) {
-                layerOne = getResources().getDrawable(R.color.white);
+                layerOne = getResources().getDrawable(com.owncloud.android.R.color.white);
             } else {
-                layerOne = getResources().getDrawable(R.drawable.backrepeat);
+                layerOne = getResources().getDrawable(com.owncloud.android.R.drawable.backrepeat);
             }
 
             layerDrawable.setDrawableByLayerId(layerDrawable.getId(0), layerOne);

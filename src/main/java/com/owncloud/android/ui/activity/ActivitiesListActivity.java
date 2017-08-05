@@ -42,10 +42,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.operations.RefreshFolderOperation;
+import com.owncloud.android.ui.adapter.ActivityListAdapter;
+import com.owncloud.android.ui.interfaces.ActivityListInterface;
+import com.owncloud.android.ui.preview.PreviewImageActivity;
+import com.owncloud.android.ui.preview.PreviewImageFragment;
+import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.utils.FileStorageUtils;
+import com.owncloud.android.utils.ThemeUtils;
+import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
@@ -57,15 +65,6 @@ import com.owncloud.android.lib.resources.activities.models.RichObject;
 import com.owncloud.android.lib.resources.files.FileUtils;
 import com.owncloud.android.lib.resources.files.ReadRemoteFileOperation;
 import com.owncloud.android.lib.resources.files.RemoteFile;
-import com.owncloud.android.operations.RefreshFolderOperation;
-import com.owncloud.android.ui.adapter.ActivityListAdapter;
-import com.owncloud.android.ui.interfaces.ActivityListInterface;
-import com.owncloud.android.ui.preview.PreviewImageActivity;
-import com.owncloud.android.ui.preview.PreviewImageFragment;
-import com.owncloud.android.utils.AnalyticsUtils;
-import com.owncloud.android.utils.DisplayUtils;
-import com.owncloud.android.utils.FileStorageUtils;
-import com.owncloud.android.utils.ThemeUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,32 +83,32 @@ public class ActivitiesListActivity extends FileActivity implements ActivityList
     private static final String TAG = ActivitiesListActivity.class.getSimpleName();
     private static final String SCREEN_NAME = "Activities";
 
-    @BindView(R.id.empty_list_view)
+    @BindView(com.owncloud.android.R.id.empty_list_view)
     public LinearLayout emptyContentContainer;
 
     public SwipeRefreshLayout swipeListRefreshLayout;
 
     public SwipeRefreshLayout swipeEmptyListRefreshLayout;
 
-    @BindView(R.id.empty_list_view_text)
+    @BindView(com.owncloud.android.R.id.empty_list_view_text)
     public TextView emptyContentMessage;
 
-    @BindView(R.id.empty_list_view_headline)
+    @BindView(com.owncloud.android.R.id.empty_list_view_headline)
     public TextView emptyContentHeadline;
 
-    @BindView(R.id.empty_list_icon)
+    @BindView(com.owncloud.android.R.id.empty_list_icon)
     public ImageView emptyContentIcon;
 
-    @BindView(R.id.empty_list_progress)
+    @BindView(com.owncloud.android.R.id.empty_list_progress)
     public ProgressBar emptyContentProgressBar;
 
     @BindView(android.R.id.list)
     public RecyclerView recyclerView;
 
-    @BindString(R.string.activities_no_results_headline)
+    @BindString(com.owncloud.android.R.string.activities_no_results_headline)
     public String noResultsHeadline;
 
-    @BindString(R.string.activities_no_results_message)
+    @BindString(com.owncloud.android.R.string.activities_no_results_message)
     public String noResultsMessage;
 
     private ActivityListAdapter adapter;
@@ -123,18 +122,18 @@ public class ActivitiesListActivity extends FileActivity implements ActivityList
         Log_OC.v(TAG, "onCreate() start");
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_list_layout);
+        setContentView(com.owncloud.android.R.layout.activity_list_layout);
         unbinder = ButterKnife.bind(this);
 
         // setup toolbar
         setupToolbar();
 
-        swipeEmptyListRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_containing_empty);
-        swipeListRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_containing_list);
+        swipeEmptyListRefreshLayout = (SwipeRefreshLayout) findViewById(com.owncloud.android.R.id.swipe_containing_empty);
+        swipeListRefreshLayout = (SwipeRefreshLayout) findViewById(com.owncloud.android.R.id.swipe_containing_list);
 
         // setup drawer
-        setupDrawer(R.id.nav_activity);
-        getSupportActionBar().setTitle(getString(R.string.drawer_item_activities));
+        setupDrawer(com.owncloud.android.R.id.nav_activity);
+        getSupportActionBar().setTitle(getString(com.owncloud.android.R.string.drawer_item_activities));
 
         swipeListRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -170,7 +169,7 @@ public class ActivitiesListActivity extends FileActivity implements ActivityList
      * sets up the UI elements and loads all activity items.
      */
     private void setupContent() {
-        emptyContentIcon.setImageResource(R.drawable.ic_activity_light_grey);
+        emptyContentIcon.setImageResource(com.owncloud.android.R.drawable.ic_activity_light_grey);
         emptyContentProgressBar.getIndeterminateDrawable().setColorFilter(ThemeUtils.primaryAccentColor(),
                 PorterDuff.Mode.SRC_IN);
         setLoadingMessage();
@@ -183,9 +182,9 @@ public class ActivitiesListActivity extends FileActivity implements ActivityList
 
         recyclerView.setLayoutManager(layoutManager);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(com.owncloud.android.R.id.bottom_navigation_view);
 
-        if (getResources().getBoolean(R.bool.bottom_toolbar_enabled)) {
+        if (getResources().getBoolean(com.owncloud.android.R.bool.bottom_toolbar_enabled)) {
             bottomNavigationView.setVisibility(View.VISIBLE);
             DisplayUtils.setupBottomBar(bottomNavigationView, getResources(), this, -1);
         }
@@ -296,7 +295,7 @@ public class ActivitiesListActivity extends FileActivity implements ActivityList
     }
 
     private void setLoadingMessage() {
-        emptyContentHeadline.setText(R.string.file_list_loading);
+        emptyContentHeadline.setText(com.owncloud.android.R.string.file_list_loading);
         emptyContentMessage.setText("");
 
         emptyContentIcon.setVisibility(View.GONE);
@@ -378,7 +377,7 @@ public class ActivitiesListActivity extends FileActivity implements ActivityList
             protected void onPostExecute(OCFile ocFile) {
                 if (!isCancelled()) {
                     if (ocFile == null) {
-                        Toast.makeText(getBaseContext(), R.string.file_not_found, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), com.owncloud.android.R.string.file_not_found, Toast.LENGTH_LONG).show();
 
                         swipeEmptyListRefreshLayout.setVisibility(View.GONE);
                         swipeListRefreshLayout.setVisibility(View.VISIBLE);

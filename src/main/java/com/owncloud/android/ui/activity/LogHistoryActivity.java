@@ -37,10 +37,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.dialog.LoadingDialog;
 import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.ThemeUtils;
 
 import java.io.BufferedReader;
@@ -74,17 +73,17 @@ public class LogHistoryActivity extends ToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.log_send_file);
+        setContentView(com.owncloud.android.R.layout.log_send_file);
         setupToolbar();
 
-        setTitle(getText(R.string.actionbar_logger));
+        setTitle(getText(com.owncloud.android.R.string.actionbar_logger));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        Button deleteHistoryButton = (Button) findViewById(R.id.deleteLogHistoryButton);
-        Button sendHistoryButton = (Button) findViewById(R.id.sendLogHistoryButton);
+        Button deleteHistoryButton = (Button) findViewById(com.owncloud.android.R.id.deleteLogHistoryButton);
+        Button sendHistoryButton = (Button) findViewById(com.owncloud.android.R.id.sendLogHistoryButton);
         sendHistoryButton.getBackground().setColorFilter(ThemeUtils.primaryAccentColor(), PorterDuff.Mode.SRC_ATOP);
-        TextView logTV = (TextView) findViewById(R.id.logTV);
+        TextView logTV = (TextView) findViewById(com.owncloud.android.R.id.logTV);
 
         deleteHistoryButton.setOnClickListener(new OnClickListener() {
             
@@ -154,7 +153,7 @@ public class LogHistoryActivity extends ToolbarActivity {
         // compilation fails in this case.
         String emailAddress;
         try {
-            Class<?> stringClass = R.string.class;
+            Class<?> stringClass = com.owncloud.android.R.string.class;
             Field mailLoggerField = stringClass.getField("mail_logger");
             int emailAddressId = (Integer) mailLoggerField.get(null);
             emailAddress = getString(emailAddressId);
@@ -171,7 +170,7 @@ public class LogHistoryActivity extends ToolbarActivity {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                     uris.add(Uri.fromFile(logFile));
                 } else {
-                    uris.add(FileProvider.getUriForFile(this, getString(R.string.file_provider_authority), logFile));
+                    uris.add(FileProvider.getUriForFile(this, getString(com.owncloud.android.R.string.file_provider_authority), logFile));
                 }
             }
         }
@@ -179,7 +178,7 @@ public class LogHistoryActivity extends ToolbarActivity {
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
 
         intent.putExtra(Intent.EXTRA_EMAIL, emailAddress);
-        String subject = String.format(getString(R.string.log_send_mail_subject), getString(R.string.app_name));
+        String subject = String.format(getString(com.owncloud.android.R.string.log_send_mail_subject), getString(com.owncloud.android.R.string.app_name));
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setType(MAIL_ATTACHMENT_TYPE);
@@ -187,7 +186,7 @@ public class LogHistoryActivity extends ToolbarActivity {
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, getString(R.string.log_send_no_mail_app), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(com.owncloud.android.R.string.log_send_no_mail_app), Toast.LENGTH_LONG).show();
             Log_OC.i(TAG, "Could not find app for sending log history.");
         }
 
@@ -274,7 +273,7 @@ public class LogHistoryActivity extends ToolbarActivity {
     public void showLoadingDialog() {
         // Construct dialog
         LoadingDialog loading = new LoadingDialog(
-                getResources().getString(R.string.log_progress_dialog_text)
+                getResources().getString(com.owncloud.android.R.string.log_progress_dialog_text)
         );
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

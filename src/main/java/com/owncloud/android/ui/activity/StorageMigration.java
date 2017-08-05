@@ -32,10 +32,9 @@ import android.os.AsyncTask;
 import android.view.View;
 
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.FileStorageUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 import java.io.File;
 
@@ -91,7 +90,7 @@ public class StorageMigration {
     private void askToOverride() {
 
         new AlertDialog.Builder(mContext)
-                .setMessage(R.string.file_migration_directory_already_exists)
+                .setMessage(com.owncloud.android.R.string.file_migration_directory_already_exists)
                 .setCancelable(true)
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
@@ -101,7 +100,7 @@ public class StorageMigration {
                         }
                     }
                 })
-                .setNegativeButton(R.string.common_cancel, new OnClickListener() {
+                .setNegativeButton(com.owncloud.android.R.string.common_cancel, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (mListener != null) {
@@ -109,7 +108,7 @@ public class StorageMigration {
                         }
                     }
                 })
-                .setNeutralButton(R.string.file_migration_use_data_folder, new OnClickListener() {
+                .setNeutralButton(com.owncloud.android.R.string.file_migration_use_data_folder, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ProgressDialog progressDialog = createMigrationProgressDialog();
@@ -125,7 +124,7 @@ public class StorageMigration {
 
                     }
                 })
-                .setPositiveButton(R.string.file_migration_override_data_folder, new OnClickListener() {
+                .setPositiveButton(com.owncloud.android.R.string.file_migration_override_data_folder, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ProgressDialog progressDialog = createMigrationProgressDialog();
@@ -147,11 +146,11 @@ public class StorageMigration {
     private ProgressDialog createMigrationProgressDialog() {
         ProgressDialog progressDialog = new ProgressDialog(mContext);
         progressDialog.setCancelable(false);
-        progressDialog.setTitle(R.string.file_migration_dialog_title);
-        progressDialog.setMessage(mContext.getString(R.string.file_migration_preparing));
+        progressDialog.setTitle(com.owncloud.android.R.string.file_migration_dialog_title);
+        progressDialog.setMessage(mContext.getString(com.owncloud.android.R.string.file_migration_preparing));
         progressDialog.setButton(
                 ProgressDialog.BUTTON_POSITIVE,
-                mContext.getString(R.string.drawer_close),
+                mContext.getString(com.owncloud.android.R.string.drawer_close),
                 new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -182,7 +181,7 @@ public class StorageMigration {
             mProgressDialog = progressDialog;
             mListener = listener;
 
-            mAuthority = mContext.getString(R.string.authority);
+            mAuthority = mContext.getString(com.owncloud.android.R.string.authority);
             mOcAccounts = AccountManager.get(mContext).getAccountsByType(MainApp.getAccountType());
         }
 
@@ -198,7 +197,7 @@ public class StorageMigration {
             if (code != 0) {
                 mProgressDialog.setMessage(mContext.getString(code));
             } else {
-                mProgressDialog.setMessage(mContext.getString(R.string.file_migration_ok_finished));
+                mProgressDialog.setMessage(mContext.getString(com.owncloud.android.R.string.file_migration_ok_finished));
             }
 
             boolean succeed = code == 0;
@@ -206,12 +205,12 @@ public class StorageMigration {
                 mProgressDialog.hide();
             } else {
 
-                if (code == R.string.file_migration_failed_not_readable) {
+                if (code == com.owncloud.android.R.string.file_migration_failed_not_readable) {
                     mProgressDialog.hide();
                     askToStillMove();
                 } else {
                     mProgressDialog.getButton(ProgressDialog.BUTTON_POSITIVE).setVisibility(View.VISIBLE);
-                    mProgressDialog.setIndeterminateDrawable(mContext.getResources().getDrawable(R.drawable.image_fail));
+                    mProgressDialog.setIndeterminateDrawable(mContext.getResources().getDrawable(com.owncloud.android.R.drawable.image_fail));
                 }
             }
 
@@ -222,15 +221,15 @@ public class StorageMigration {
 
         private void askToStillMove() {
             new AlertDialog.Builder(mContext)
-                    .setTitle(R.string.file_migration_source_not_readable_title)
-                    .setMessage(mContext.getString(R.string.file_migration_source_not_readable, mStorageTarget))
-                    .setNegativeButton(R.string.common_no, new OnClickListener() {
+                    .setTitle(com.owncloud.android.R.string.file_migration_source_not_readable_title)
+                    .setMessage(mContext.getString(com.owncloud.android.R.string.file_migration_source_not_readable, mStorageTarget))
+                    .setNegativeButton(com.owncloud.android.R.string.common_no, new OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
                         }
                     })
-                    .setPositiveButton(R.string.common_yes, new OnClickListener() {
+                    .setPositiveButton(com.owncloud.android.R.string.common_yes, new OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             if (mListener != null) {
@@ -294,18 +293,18 @@ public class StorageMigration {
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            publishProgress(R.string.file_migration_preparing);
+            publishProgress(com.owncloud.android.R.string.file_migration_preparing);
 
             boolean[] syncStates = null;
             try {
-                publishProgress(R.string.file_migration_saving_accounts_configuration);
+                publishProgress(com.owncloud.android.R.string.file_migration_saving_accounts_configuration);
                 syncStates = saveAccountsSyncStatus();
 
-                publishProgress(R.string.file_migration_waiting_for_unfinished_sync);
+                publishProgress(com.owncloud.android.R.string.file_migration_waiting_for_unfinished_sync);
                 stopAccountsSyncing();
                 waitForUnfinishedSynchronizations();
             } finally {
-                publishProgress(R.string.file_migration_restoring_accounts_configuration);
+                publishProgress(com.owncloud.android.R.string.file_migration_restoring_accounts_configuration);
                 restoreAccountsSyncStatus(syncStates);
             }
 
@@ -335,7 +334,7 @@ public class StorageMigration {
 
         @Override
         protected Integer doInBackground(Void... args) {
-            publishProgress(R.string.file_migration_preparing);
+            publishProgress(com.owncloud.android.R.string.file_migration_preparing);
 
             boolean[] syncState = null;
 
@@ -347,35 +346,35 @@ public class StorageMigration {
                 File srcFile = new File(mStorageSource + File.separator + MainApp.getDataFolder());
                 srcFile.mkdirs();
 
-                publishProgress(R.string.file_migration_checking_destination);
+                publishProgress(com.owncloud.android.R.string.file_migration_checking_destination);
 
                 checkDestinationAvailability();
 
-                publishProgress(R.string.file_migration_saving_accounts_configuration);
+                publishProgress(com.owncloud.android.R.string.file_migration_saving_accounts_configuration);
                 syncState = saveAccountsSyncStatus();
 
-                publishProgress(R.string.file_migration_waiting_for_unfinished_sync);
+                publishProgress(com.owncloud.android.R.string.file_migration_waiting_for_unfinished_sync);
                 stopAccountsSyncing();
                 waitForUnfinishedSynchronizations();
 
-                publishProgress(R.string.file_migration_migrating);
+                publishProgress(com.owncloud.android.R.string.file_migration_migrating);
                 copyFiles();
 
-                publishProgress(R.string.file_migration_updating_index);
+                publishProgress(com.owncloud.android.R.string.file_migration_updating_index);
                 updateIndex(mContext);
 
-                publishProgress(R.string.file_migration_cleaning);
+                publishProgress(com.owncloud.android.R.string.file_migration_cleaning);
                 cleanup();
 
             } catch (MigrationException e) {
                 rollback();
                 return e.getResId();
             } finally {
-                publishProgress(R.string.file_migration_restoring_accounts_configuration);
+                publishProgress(com.owncloud.android.R.string.file_migration_restoring_accounts_configuration);
                 restoreAccountsSyncStatus(syncState);
             }
 
-            publishProgress(R.string.file_migration_ok_finished);
+            publishProgress(com.owncloud.android.R.string.file_migration_ok_finished);
 
             return 0;
         }
@@ -386,19 +385,19 @@ public class StorageMigration {
             File dstFile = new File(mStorageTarget);
 
             if (!dstFile.canRead() || !srcFile.canRead()) {
-                throw new MigrationException(R.string.file_migration_failed_not_readable);
+                throw new MigrationException(com.owncloud.android.R.string.file_migration_failed_not_readable);
             }
 
             if (!dstFile.canWrite() || !srcFile.canWrite()) {
-                throw new MigrationException(R.string.file_migration_failed_not_writable);
+                throw new MigrationException(com.owncloud.android.R.string.file_migration_failed_not_writable);
             }
 
             if (new File(dstFile, MainApp.getDataFolder()).exists()) {
-                throw new MigrationException(R.string.file_migration_failed_dir_already_exists);
+                throw new MigrationException(com.owncloud.android.R.string.file_migration_failed_dir_already_exists);
             }
 
             if (dstFile.getFreeSpace() < FileStorageUtils.getFolderSize(new File(srcFile, MainApp.getDataFolder()))) {
-                throw new MigrationException(R.string.file_migration_failed_not_enough_space);
+                throw new MigrationException(com.owncloud.android.R.string.file_migration_failed_not_enough_space);
             }
         }
 
@@ -411,14 +410,14 @@ public class StorageMigration {
 
         private void copyDirs(File src, File dst) throws MigrationException {
             if (!dst.mkdirs()) {
-                throw new MigrationException(R.string.file_migration_failed_while_coping);
+                throw new MigrationException(com.owncloud.android.R.string.file_migration_failed_while_coping);
             }
 
             for (File f : src.listFiles()) {
                 if (f.isDirectory()) {
                     copyDirs(f, new File(dst, f.getName()));
                 } else if (!FileStorageUtils.copyFile(f, new File(dst, f.getName()))) {
-                    throw new MigrationException(R.string.file_migration_failed_while_coping);
+                    throw new MigrationException(com.owncloud.android.R.string.file_migration_failed_while_coping);
                 }
             }
 
@@ -431,7 +430,7 @@ public class StorageMigration {
                 manager.migrateStoredFiles(mStorageSource, mStorageTarget);
             } catch (Exception e) {
                 Log_OC.e(TAG,e.getMessage(),e);
-                throw new MigrationException(R.string.file_migration_failed_while_updating_index);
+                throw new MigrationException(com.owncloud.android.R.string.file_migration_failed_while_updating_index);
             }
         }
 

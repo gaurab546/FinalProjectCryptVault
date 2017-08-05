@@ -18,7 +18,7 @@
  *
  */
 
-package org.nextcloud.providers.cursors;
+package org.owncloud.providers.cursors;
 
 import android.annotation.TargetApi;
 import android.database.MatrixCursor;

@@ -32,9 +32,7 @@ import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AuthenticatorActivity;
-
 
 
 /**
@@ -78,11 +76,11 @@ public class CredentialsDialogFragment extends DialogFragment
 
         // Create field for username
         mUsernameET = new EditText(getActivity());
-        mUsernameET.setHint(getActivity().getText(R.string.auth_username));
+        mUsernameET.setHint(getActivity().getText(com.owncloud.android.R.string.auth_username));
 
         // Create field for password
         mPasswordET = new EditText(getActivity());
-        mPasswordET.setHint(getActivity().getText(R.string.auth_password));
+        mPasswordET.setHint(getActivity().getText(com.owncloud.android.R.string.auth_password));
         mPasswordET.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         // Prepare LinearLayout for dialog
@@ -97,11 +95,11 @@ public class CredentialsDialogFragment extends DialogFragment
 
         Builder authDialog = new AlertDialog
                 .Builder(getActivity())
-                .setTitle(getActivity().getText(R.string.saml_authentication_required_text))
+                .setTitle(getActivity().getText(com.owncloud.android.R.string.saml_authentication_required_text))
                 .setView(ll)
                 .setCancelable(false)
-                .setPositiveButton(R.string.common_ok, this)
-                .setNegativeButton(R.string.common_cancel, this);
+                .setPositiveButton(com.owncloud.android.R.string.common_ok, this)
+                .setNegativeButton(com.owncloud.android.R.string.common_cancel, this);
 
         Dialog d = authDialog.create();
         d.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);

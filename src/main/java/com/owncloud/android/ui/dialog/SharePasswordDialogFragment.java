@@ -31,9 +31,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.utils.ThemeUtils;
 
 /**

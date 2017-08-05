@@ -28,9 +28,9 @@ import android.os.Message;
 import android.util.Pair;
 
 import com.owncloud.android.datamodel.FileDataStorageManager;
+import com.owncloud.android.files.services.IndexedForest;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.services.FileDownloader;
-import com.owncloud.android.files.services.IndexedForest;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
@@ -45,7 +45,7 @@ import java.io.IOException;
  * SyncFolder worker. Performs the pending operations in the order they were requested.
  *
  * Created with the Looper of a new thread, started in
- * {@link com.owncloud.android.services.OperationsService#onCreate()}.
+ * {@link OperationsService#onCreate()}.
  */
 class SyncFolderHandler extends Handler {
 

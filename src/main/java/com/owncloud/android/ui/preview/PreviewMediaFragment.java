@@ -54,18 +54,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.owncloud.android.R;
-import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.FileMenuFilter;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.media.MediaControlView;
-import com.owncloud.android.media.MediaService;
 import com.owncloud.android.media.MediaServiceBinder;
 import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment;
 import com.owncloud.android.ui.dialog.RemoveFilesDialogFragment;
-import com.owncloud.android.ui.fragment.FileFragment;
 import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.media.MediaService;
+import com.owncloud.android.ui.fragment.FileFragment;
 import com.owncloud.android.utils.MimeTypeUtil;
 
 
@@ -170,15 +169,15 @@ public class PreviewMediaFragment extends FileFragment implements
         Log_OC.v(TAG, "onCreateView");
 
 
-        mView = inflater.inflate(R.layout.file_preview, container, false);
+        mView = inflater.inflate(com.owncloud.android.R.layout.file_preview, container, false);
 
-        mPreviewContainer = (RelativeLayout) mView.findViewById(R.id.file_preview_container);
-        mImagePreview = (ImageView) mView.findViewById(R.id.image_preview);
-        mVideoPreview = (VideoView) mView.findViewById(R.id.video_preview);
+        mPreviewContainer = (RelativeLayout) mView.findViewById(com.owncloud.android.R.id.file_preview_container);
+        mImagePreview = (ImageView) mView.findViewById(com.owncloud.android.R.id.image_preview);
+        mVideoPreview = (VideoView) mView.findViewById(com.owncloud.android.R.id.video_preview);
         mVideoPreview.setOnTouchListener(this);
 
-        mMediaController = (MediaControlView) mView.findViewById(R.id.media_controller);
-        mMultiView = (RelativeLayout) mView.findViewById(R.id.multi_view);
+        mMediaController = (MediaControlView) mView.findViewById(com.owncloud.android.R.id.media_controller);
+        mMultiView = (RelativeLayout) mView.findViewById(com.owncloud.android.R.id.multi_view);
 
         setupMultiView(mView);
         setMultiListLoadingMessage();
@@ -187,16 +186,16 @@ public class PreviewMediaFragment extends FileFragment implements
 
 
     protected void setupMultiView(View view) {
-        mMultiListContainer = (LinearLayout) view.findViewById(R.id.empty_list_view);
-        mMultiListMessage = (TextView) view.findViewById(R.id.empty_list_view_text);
-        mMultiListHeadline = (TextView) view.findViewById(R.id.empty_list_view_headline);
-        mMultiListIcon = (ImageView) view.findViewById(R.id.empty_list_icon);
-        mMultiListProgress = (ProgressBar) view.findViewById(R.id.empty_list_progress);
+        mMultiListContainer = (LinearLayout) view.findViewById(com.owncloud.android.R.id.empty_list_view);
+        mMultiListMessage = (TextView) view.findViewById(com.owncloud.android.R.id.empty_list_view_text);
+        mMultiListHeadline = (TextView) view.findViewById(com.owncloud.android.R.id.empty_list_view_headline);
+        mMultiListIcon = (ImageView) view.findViewById(com.owncloud.android.R.id.empty_list_icon);
+        mMultiListProgress = (ProgressBar) view.findViewById(com.owncloud.android.R.id.empty_list_progress);
     }
 
     private void setMultiListLoadingMessage() {
         if (mMultiView != null) {
-            mMultiListHeadline.setText(R.string.file_list_loading);
+            mMultiListHeadline.setText(com.owncloud.android.R.string.file_list_loading);
             mMultiListMessage.setText("");
 
             mMultiListIcon.setVisibility(View.GONE);
@@ -273,10 +272,10 @@ public class PreviewMediaFragment extends FileFragment implements
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     mImagePreview.setImageBitmap(bitmap); //associated cover art in bitmap
                 } else {
-                    mImagePreview.setImageResource(R.drawable.logo);
+                    mImagePreview.setImageResource(com.owncloud.android.R.drawable.logo);
                 }
             } catch (Throwable t) {
-                mImagePreview.setImageResource(R.drawable.logo);
+                mImagePreview.setImageResource(com.owncloud.android.R.drawable.logo);
             }
         }
     }
@@ -344,7 +343,7 @@ public class PreviewMediaFragment extends FileFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.file_actions_menu, menu);
+        inflater.inflate(com.owncloud.android.R.menu.file_actions_menu, menu);
     }
 
 
@@ -367,35 +366,35 @@ public class PreviewMediaFragment extends FileFragment implements
 
         // additional restriction for this fragment 
         // TODO allow renaming in PreviewImageFragment
-        MenuItem item = menu.findItem(R.id.action_rename_file);
+        MenuItem item = menu.findItem(com.owncloud.android.R.id.action_rename_file);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_move);
+        item = menu.findItem(com.owncloud.android.R.id.action_move);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_copy);
+        item = menu.findItem(com.owncloud.android.R.id.action_copy);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_favorite);
+        item = menu.findItem(com.owncloud.android.R.id.action_favorite);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_unset_favorite);
+        item = menu.findItem(com.owncloud.android.R.id.action_unset_favorite);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
@@ -410,28 +409,28 @@ public class PreviewMediaFragment extends FileFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_share_file: {
+            case com.owncloud.android.R.id.action_share_file: {
                 seeShareFile();
                 return true;
             }
-            case R.id.action_open_file_with: {
+            case com.owncloud.android.R.id.action_open_file_with: {
                 openFile();
                 return true;
             }
-            case R.id.action_remove_file: {
+            case com.owncloud.android.R.id.action_remove_file: {
                 RemoveFilesDialogFragment dialog = RemoveFilesDialogFragment.newInstance(getFile());
                 dialog.show(getFragmentManager(), ConfirmationDialogFragment.FTAG_CONFIRMATION);
                 return true;
             }
-            case R.id.action_see_details: {
+            case com.owncloud.android.R.id.action_see_details: {
                 seeDetails();
                 return true;
             }
-            case R.id.action_send_file: {
+            case com.owncloud.android.R.id.action_send_file: {
                 sendFile();
                 return true;
             }
-            case R.id.action_sync_file: {
+            case com.owncloud.android.R.id.action_sync_file: {
                 mContainerActivity.getFileOperationsHelper().syncFile(getFile());
                 return true;
             }
@@ -541,7 +540,7 @@ public class PreviewMediaFragment extends FileFragment implements
                 String message = MediaService.getMessageForMediaError(
                         getActivity(), what, extra);
                 mMultiView.setVisibility(View.VISIBLE);
-                setMessageForMultiList(message, R.string.preview_sorry, R.drawable.file_movie);
+                setMessageForMultiList(message, com.owncloud.android.R.string.preview_sorry, com.owncloud.android.R.drawable.file_movie);
             }
             return true;
         }

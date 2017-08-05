@@ -45,16 +45,18 @@ import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.util.Pair;
 
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
-import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.datamodel.FileDataStorageManager;
-import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.datamodel.UploadsStorageManager;
-import com.owncloud.android.datamodel.UploadsStorageManager.UploadStatus;
 import com.owncloud.android.db.OCUpload;
+import com.owncloud.android.operations.UploadFileOperation;
+import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.ui.notifications.NotificationUtils;
+import com.owncloud.android.utils.ErrorMessageAdapter;
 import com.owncloud.android.db.UploadResult;
+import com.owncloud.android.authentication.AuthenticatorActivity;
+import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
@@ -64,11 +66,7 @@ import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCo
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.FileUtils;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
-import com.owncloud.android.operations.UploadFileOperation;
-import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.activity.UploadListActivity;
-import com.owncloud.android.ui.notifications.NotificationUtils;
-import com.owncloud.android.utils.ErrorMessageAdapter;
 
 import java.io.File;
 import java.util.AbstractList;
@@ -358,7 +356,7 @@ public class FileUploader extends Service
         mUploadsStorageManager = new UploadsStorageManager(getContentResolver(), getApplicationContext());
 
         mNotification = new NotificationCompat.Builder(this).setContentTitle(getApplicationContext().
-                getResources().getString(R.string.app_name))
+                getResources().getString(com.owncloud.android.R.string.app_name))
                 .build();
 
         int failedCounter = mUploadsStorageManager.failInProgressUploads(
@@ -379,7 +377,7 @@ public class FileUploader extends Service
      */
     private void resurrection() {
         // remove stucked notification
-        mNotificationManager.cancel(R.string.uploader_upload_in_progress_ticker);
+        mNotificationManager.cancel(com.owncloud.android.R.string.uploader_upload_in_progress_ticker);
     }
 
 
@@ -508,7 +506,7 @@ public class FileUploader extends Service
                     ocUpload.setLocalAction(localAction);
                     /*ocUpload.setUseWifiOnly(isUseWifiOnly);
                     ocUpload.setWhileChargingOnly(isWhileChargingOnly);*/
-                    ocUpload.setUploadStatus(UploadStatus.UPLOAD_IN_PROGRESS);
+                    ocUpload.setUploadStatus(UploadsStorageManager.UploadStatus.UPLOAD_IN_PROGRESS);
 
                     newUpload = new UploadFileOperation(
                             account,
@@ -589,7 +587,7 @@ public class FileUploader extends Service
                 requestedUploads.add(uploadKey);
 
                 // Update upload in database
-                upload.setUploadStatus(UploadStatus.UPLOAD_IN_PROGRESS);
+                upload.setUploadStatus(UploadsStorageManager.UploadStatus.UPLOAD_IN_PROGRESS);
                 mUploadsStorageManager.updateUpload(upload);
             }
         }
@@ -1004,12 +1002,12 @@ public class FileUploader extends Service
                 NotificationUtils.newNotificationBuilder(this);
         mNotificationBuilder
                 .setOngoing(true)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setTicker(getString(R.string.uploader_upload_in_progress_ticker))
-                .setContentTitle(getString(R.string.uploader_upload_in_progress_ticker))
+                .setSmallIcon(com.owncloud.android.R.drawable.notification_icon)
+                .setTicker(getString(com.owncloud.android.R.string.uploader_upload_in_progress_ticker))
+                .setContentTitle(getString(com.owncloud.android.R.string.uploader_upload_in_progress_ticker))
                 .setProgress(100, 0, false)
                 .setContentText(
-                        String.format(getString(R.string.uploader_upload_in_progress_content), 0, upload.getFileName())
+                        String.format(getString(com.owncloud.android.R.string.uploader_upload_in_progress_content), 0, upload.getFileName())
                 );
 
         /// includes a pending intent in the notification showing the details
@@ -1021,7 +1019,7 @@ public class FileUploader extends Service
             showUploadListIntent, 0));
 
         if (!upload.isInstantPicture() && !upload.isInstantVideo()) {
-            mNotificationManager.notify(R.string.uploader_upload_in_progress_ticker, mNotificationBuilder.build());
+            mNotificationManager.notify(com.owncloud.android.R.string.uploader_upload_in_progress_ticker, mNotificationBuilder.build());
         }   // else wait until the upload really start (onTransferProgress is called), so that if it's discarded
         // due to lack of Wifi, no notification is shown
         // TODO generalize for automated uploads
@@ -1038,9 +1036,9 @@ public class FileUploader extends Service
         if (percent != mLastPercent) {
             mNotificationBuilder.setProgress(100, percent, false);
             String fileName = filePath.substring(filePath.lastIndexOf(FileUtils.PATH_SEPARATOR) + 1);
-            String text = String.format(getString(R.string.uploader_upload_in_progress_content), percent, fileName);
+            String text = String.format(getString(com.owncloud.android.R.string.uploader_upload_in_progress_content), percent, fileName);
             mNotificationBuilder.setContentText(text);
-            mNotificationManager.notify(R.string.uploader_upload_in_progress_ticker, mNotificationBuilder.build());
+            mNotificationManager.notify(com.owncloud.android.R.string.uploader_upload_in_progress_ticker, mNotificationBuilder.build());
         }
         mLastPercent = percent;
     }
@@ -1055,7 +1053,7 @@ public class FileUploader extends Service
                                     RemoteOperationResult uploadResult) {
         Log_OC.d(TAG, "NotifyUploadResult with resultCode: " + uploadResult.getCode());
         // / cancelled operation or success -> silent removal of progress notification
-        mNotificationManager.cancel(R.string.uploader_upload_in_progress_ticker);
+        mNotificationManager.cancel(com.owncloud.android.R.string.uploader_upload_in_progress_ticker);
 
         // Show the result: success or fail notification
         if (!uploadResult.isCancelled() &&
@@ -1063,15 +1061,15 @@ public class FileUploader extends Service
             !uploadResult.getCode().equals(ResultCode.DELAYED_FOR_WIFI) &&
             !uploadResult.getCode().equals(ResultCode.DELAYED_FOR_CHARGING)) {
 
-            int tickerId = (uploadResult.isSuccess()) ? R.string.uploader_upload_succeeded_ticker :
-                    R.string.uploader_upload_failed_ticker;
+            int tickerId = (uploadResult.isSuccess()) ? com.owncloud.android.R.string.uploader_upload_succeeded_ticker :
+                    com.owncloud.android.R.string.uploader_upload_failed_ticker;
 
             String content;
 
             // check credentials error
             boolean needsToUpdateCredentials = (ResultCode.UNAUTHORIZED.equals(uploadResult.getCode()));
             tickerId = (needsToUpdateCredentials) ?
-                    R.string.uploader_upload_failed_credentials_error : tickerId;
+                    com.owncloud.android.R.string.uploader_upload_failed_credentials_error : tickerId;
 
             mNotificationBuilder
                     .setTicker(getString(tickerId))
@@ -1127,7 +1125,7 @@ public class FileUploader extends Service
                 // remove success notification, with a delay of 2 seconds
                 NotificationUtils.cancelWithDelay(
                         mNotificationManager,
-                        R.string.uploader_upload_succeeded_ticker,
+                        com.owncloud.android.R.string.uploader_upload_succeeded_ticker,
                         2000);
             }
         }

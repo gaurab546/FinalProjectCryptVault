@@ -32,7 +32,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.utils.AnalyticsUtils;
 
 import java.util.ArrayList;
@@ -66,15 +65,15 @@ public class GenericExplanationActivity  extends AppCompatActivity {
         ArrayList<String> list = intent.getStringArrayListExtra(EXTRA_LIST);
         ArrayList<String> list2 = intent.getStringArrayListExtra(EXTRA_LIST_2);
         
-        setContentView(R.layout.generic_explanation);
+        setContentView(com.owncloud.android.R.layout.generic_explanation);
         
         if (message != null) {
-            TextView textView = (TextView) findViewById(R.id.message);
+            TextView textView = (TextView) findViewById(com.owncloud.android.R.id.message);
             textView.setText(message);
             textView.setMovementMethod(new ScrollingMovementMethod());
         }
         
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(com.owncloud.android.R.id.list);
         if (list != null && list.size() > 0) {
             //ListAdapter adapter = new ArrayAdapter<String>(this,
             // android.R.layout.simple_list_item_1, list);

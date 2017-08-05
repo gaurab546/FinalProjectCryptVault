@@ -25,6 +25,7 @@ import android.media.ExifInterface;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.owncloud.android.ui.activity.Preferences;
 import com.evernote.android.job.JobRequest;
 import com.evernote.android.job.util.support.PersistableBundleCompat;
 import com.owncloud.android.MainApp;
@@ -34,7 +35,6 @@ import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.SyncedFolder;
 import com.owncloud.android.files.services.FileUploader;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.ui.activity.Preferences;
 import com.owncloud.android.utils.FileStorageUtils;
 
 import org.apache.commons.io.monitor.FileAlterationListener;

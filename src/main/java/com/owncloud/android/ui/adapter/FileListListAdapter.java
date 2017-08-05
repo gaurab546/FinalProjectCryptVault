@@ -43,11 +43,15 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
+import com.owncloud.android.datamodel.ThumbnailsCacheManager;
+import com.owncloud.android.services.OperationsService;
+import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.ui.activity.ShareActivity;
+import com.owncloud.android.ui.fragment.ExtendedListFragment;
+import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.datamodel.VirtualFolderType;
 import com.owncloud.android.db.PreferenceManager;
 import com.owncloud.android.db.ProviderMeta;
@@ -59,11 +63,7 @@ import com.owncloud.android.lib.resources.files.ReadRemoteFileOperation;
 import com.owncloud.android.lib.resources.files.RemoteFile;
 import com.owncloud.android.lib.resources.shares.OCShare;
 import com.owncloud.android.lib.resources.shares.ShareType;
-import com.owncloud.android.services.OperationsService.OperationsServiceBinder;
 import com.owncloud.android.ui.activity.ComponentsGetter;
-import com.owncloud.android.ui.activity.FileActivity;
-import com.owncloud.android.ui.activity.ShareActivity;
-import com.owncloud.android.ui.fragment.ExtendedListFragment;
 import com.owncloud.android.ui.interfaces.OCFileListFragmentInterface;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.FileStorageUtils;
@@ -299,7 +299,7 @@ public class FileListListAdapter extends BaseAdapter {
                     localStateView.bringToFront();
                     FileDownloaderBinder downloaderBinder = mTransferServiceGetter.getFileDownloaderBinder();
                     FileUploaderBinder uploaderBinder = mTransferServiceGetter.getFileUploaderBinder();
-                    OperationsServiceBinder opsBinder = mTransferServiceGetter.getOperationsServiceBinder();
+                    OperationsService.OperationsServiceBinder opsBinder = mTransferServiceGetter.getOperationsServiceBinder();
 
                     localStateView.setVisibility(View.INVISIBLE);   // default first
 

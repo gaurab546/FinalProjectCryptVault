@@ -29,16 +29,14 @@ package com.owncloud.android.ui.dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.ui.activity.ComponentsGetter;
-import com.owncloud.android.ui.dialog.ConfirmationDialogFragment.ConfirmationDialogFragmentListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class RemoveFilesDialogFragment extends ConfirmationDialogFragment
-implements ConfirmationDialogFragmentListener {
+implements ConfirmationDialogFragment.ConfirmationDialogFragmentListener {
 
     private Collection<OCFile> mTargetFiles;
 
@@ -69,27 +67,27 @@ implements ConfirmationDialogFragmentListener {
             OCFile file = files.get(0);
 
             messageStringId = (file.isFolder()) ?
-                R.string.confirmation_remove_folder_alert :
-                R.string.confirmation_remove_file_alert;
+                com.owncloud.android.R.string.confirmation_remove_folder_alert :
+                com.owncloud.android.R.string.confirmation_remove_file_alert;
 
         } else {
             // choose message for more than one file
             messageStringId = (containsFolder) ?
-                R.string.confirmation_remove_folders_alert :
-                R.string.confirmation_remove_files_alert;
+                com.owncloud.android.R.string.confirmation_remove_folders_alert :
+                com.owncloud.android.R.string.confirmation_remove_files_alert;
 
         }
 
         int localRemoveButton = (!containsFavorite && (containsFolder || containsDown)) ?
-            R.string.confirmation_remove_local :
+            com.owncloud.android.R.string.confirmation_remove_local :
             -1;
 
         args.putInt(ARG_MESSAGE_RESOURCE_ID, messageStringId);
         if (files.size() == 1) {
             args.putStringArray(ARG_MESSAGE_ARGUMENTS, new String[]{files.get(0).getFileName()});
         }
-        args.putInt(ARG_POSITIVE_BTN_RES, R.string.common_yes);
-        args.putInt(ARG_NEUTRAL_BTN_RES, R.string.common_no);
+        args.putInt(ARG_POSITIVE_BTN_RES, com.owncloud.android.R.string.common_yes);
+        args.putInt(ARG_NEUTRAL_BTN_RES, com.owncloud.android.R.string.common_no);
         args.putInt(ARG_NEGATIVE_BTN_RES, localRemoveButton);
         args.putParcelableArrayList(ARG_TARGET_FILES, files);
         frag.setArguments(args);

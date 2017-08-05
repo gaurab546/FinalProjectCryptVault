@@ -35,12 +35,12 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
-import com.owncloud.android.R;
+import com.owncloud.android.datamodel.FileDataStorageManager;
+import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.ui.adapter.ShareUserListAdapter;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.shares.OCShare;
-import com.owncloud.android.ui.activity.FileActivity;
-import com.owncloud.android.ui.adapter.ShareUserListAdapter;
 import com.owncloud.android.utils.AnalyticsUtils;
 
 import java.util.ArrayList;
@@ -120,10 +120,10 @@ public class SearchShareesFragment extends Fragment implements ShareUserListAdap
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.search_users_groups_layout, container, false);
+        View view = inflater.inflate(com.owncloud.android.R.layout.search_users_groups_layout, container, false);
 
         // Get the SearchView and set the searchable configuration
-        SearchView searchView = (SearchView) view.findViewById(R.id.searchView);
+        SearchView searchView = (SearchView) view.findViewById(com.owncloud.android.R.id.searchView);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(
                 getActivity().getComponentName())   // assumes parent activity is the searchable activity
@@ -154,7 +154,7 @@ public class SearchShareesFragment extends Fragment implements ShareUserListAdap
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getActivity().setTitle(R.string.share_with_title);
+        getActivity().setTitle(com.owncloud.android.R.string.share_with_title);
 
         // Load data into the list
         refreshUsersOrGroupsListFromDB();
@@ -164,7 +164,7 @@ public class SearchShareesFragment extends Fragment implements ShareUserListAdap
     /**
      * Get users and groups from the DB to fill in the "share with" list
      *
-     * Depends on the parent Activity provides a {@link com.owncloud.android.datamodel.FileDataStorageManager}
+     * Depends on the parent Activity provides a {@link FileDataStorageManager}
      * instance ready to use. If not ready, does nothing.
      */
     public void refreshUsersOrGroupsListFromDB (){
@@ -185,11 +185,11 @@ public class SearchShareesFragment extends Fragment implements ShareUserListAdap
         // TODO Refactoring: create a new {@link ShareUserListAdapter} instance with every call should not be needed
         mUserGroupsAdapter = new ShareUserListAdapter(
                 getActivity().getApplicationContext(),
-                R.layout.share_user_item, mShares, this
+                com.owncloud.android.R.layout.share_user_item, mShares, this
         );
 
         // Show data
-        ListView usersList = (ListView) getView().findViewById(R.id.searchUsersListView);
+        ListView usersList = (ListView) getView().findViewById(com.owncloud.android.R.id.searchUsersListView);
 
         if (mShares.size() > 0) {
             usersList.setVisibility(View.VISIBLE);
@@ -215,7 +215,7 @@ public class SearchShareesFragment extends Fragment implements ShareUserListAdap
     public void onStart() {
         super.onStart();
         // focus the search view and request the software keyboard be shown
-        View searchView = getView().findViewById(R.id.searchView);
+        View searchView = getView().findViewById(com.owncloud.android.R.id.searchView);
         if (searchView.requestFocus()) {
             InputMethodManager imm = (InputMethodManager)
                     getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

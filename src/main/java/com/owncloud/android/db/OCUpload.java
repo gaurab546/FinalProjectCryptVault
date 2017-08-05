@@ -26,13 +26,12 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.UploadsStorageManager;
-import com.owncloud.android.datamodel.UploadsStorageManager.UploadStatus;
 import com.owncloud.android.files.services.FileUploader;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.utils.MimeTypeUtil;
 
 import java.io.File;
@@ -84,7 +83,7 @@ public class OCUpload implements Parcelable {
     /**
      * Status of upload (later, in_progress, ...).
      */
-    private UploadStatus mUploadStatus;
+    private UploadsStorageManager.UploadStatus mUploadStatus;
     /**
      * Result from last upload operation. Can be null.
      */
@@ -148,7 +147,7 @@ public class OCUpload implements Parcelable {
         mLocalAction = FileUploader.LOCAL_BEHAVIOUR_COPY;
         mForceOverwrite = false;
         mIsCreateRemoteFolder = false;
-        mUploadStatus = UploadStatus.UPLOAD_IN_PROGRESS;
+        mUploadStatus = UploadsStorageManager.UploadStatus.UPLOAD_IN_PROGRESS;
         mLastResult = UploadResult.UNKNOWN;
         mCreatedBy = UploadFileOperation.CREATED_BY_USER;
     }
@@ -165,7 +164,7 @@ public class OCUpload implements Parcelable {
     /**
      * @return the uploadStatus
      */
-    public UploadStatus getUploadStatus() {
+    public UploadsStorageManager.UploadStatus getUploadStatus() {
         return mUploadStatus;
     }
 
@@ -173,7 +172,7 @@ public class OCUpload implements Parcelable {
      * Sets uploadStatus AND SETS lastResult = null;
      * @param uploadStatus the uploadStatus to set
      */
-    public void setUploadStatus(UploadStatus uploadStatus) {
+    public void setUploadStatus(UploadsStorageManager.UploadStatus uploadStatus) {
         this.mUploadStatus = uploadStatus;
         setLastResult(UploadResult.UNKNOWN);
     }
@@ -358,9 +357,9 @@ public class OCUpload implements Parcelable {
         mForceOverwrite = (source.readInt() == 1);
         mIsCreateRemoteFolder = (source.readInt() == 1);
         try {
-            mUploadStatus = UploadStatus.valueOf(source.readString());
+            mUploadStatus = UploadsStorageManager.UploadStatus.valueOf(source.readString());
         } catch (IllegalArgumentException x) {
-            mUploadStatus = UploadStatus.UPLOAD_IN_PROGRESS;
+            mUploadStatus = UploadsStorageManager.UploadStatus.UPLOAD_IN_PROGRESS;
         }
         mUploadEndTimeStamp = source.readLong();
         try {

@@ -33,12 +33,11 @@ import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Video;
 import android.support.v4.content.ContextCompat;
 
-import com.owncloud.android.R;
-import com.owncloud.android.authentication.AccountUtils;
-import com.owncloud.android.db.PreferenceManager;
-import com.owncloud.android.files.services.FileUploader;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.operations.UploadFileOperation;
+import com.owncloud.android.authentication.AccountUtils;
+import com.owncloud.android.files.services.FileUploader;
+import com.owncloud.android.db.PreferenceManager;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.FileStorageUtils;
 
 
@@ -139,7 +138,7 @@ public class InstantUploadBroadcastReceiver extends BroadcastReceiver {
         int behaviour = getUploadBehaviour(context);
         Boolean subfolderByDate = PreferenceManager.instantPictureUploadPathUseSubfolders(context);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String uploadPathdef = context.getString(R.string.instant_upload_path);
+        String uploadPathdef = context.getString(com.owncloud.android.R.string.instant_upload_path);
         String uploadPath = pref.getString("instant_upload_path", uploadPathdef);
 
         FileUploader.UploadRequester requester = new FileUploader.UploadRequester();

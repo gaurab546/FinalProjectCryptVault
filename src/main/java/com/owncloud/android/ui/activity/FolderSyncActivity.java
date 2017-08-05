@@ -39,23 +39,22 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.MediaFolder;
 import com.owncloud.android.datamodel.MediaProvider;
-import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.datamodel.SyncedFolder;
 import com.owncloud.android.datamodel.SyncedFolderDisplayItem;
-import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.files.services.FileUploader;
 import com.owncloud.android.ui.adapter.FolderSyncAdapter;
-import com.owncloud.android.ui.decoration.MediaGridItemDecoration;
 import com.owncloud.android.ui.dialog.SyncedFolderPreferencesDialogFragment;
 import com.owncloud.android.ui.dialog.parcel.SyncedFolderParcelable;
-import com.owncloud.android.utils.AnalyticsUtils;
-import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.PermissionUtil;
+import com.owncloud.android.ui.decoration.MediaGridItemDecoration;
+import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.MainApp;
+import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.datamodel.SyncedFolder;
+import com.owncloud.android.datamodel.SyncedFolderProvider;
+import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.ThemeUtils;
 
 import java.io.File;
@@ -100,13 +99,13 @@ public class FolderSyncActivity extends FileActivity implements FolderSyncAdapte
             showSidebar = getIntent().getExtras().getBoolean(EXTRA_SHOW_SIDEBAR);
         }
 
-        setContentView(R.layout.folder_sync_layout);
+        setContentView(com.owncloud.android.R.layout.folder_sync_layout);
 
         // setup toolbar
         setupToolbar();
 
         // setup drawer
-        setupDrawer(R.id.nav_folder_sync);
+        //setupDrawer(com.owncloud.android.R.id.nav_folder_sync);
 
         if (!showSidebar) {
             setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -117,12 +116,12 @@ public class FolderSyncActivity extends FileActivity implements FolderSyncAdapte
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            ThemeUtils.setColoredTitle(getSupportActionBar(), getString(R.string.drawer_folder_sync));
+            ThemeUtils.setColoredTitle(getSupportActionBar(), getString(com.owncloud.android.R.string.drawer_folder_sync));
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         if (ThemeUtils.themingEnabled()) {
-            setTheme(R.style.FallbackThemingTheme);
+            setTheme(com.owncloud.android.R.style.FallbackThemingTheme);
         }
     }
 
@@ -141,21 +140,21 @@ public class FolderSyncActivity extends FileActivity implements FolderSyncAdapte
         mProgress = (LinearLayout) findViewById(android.R.id.progress);
         mEmpty = (TextView) findViewById(android.R.id.empty);
 
-        final int gridWidth = getResources().getInteger(R.integer.media_grid_width);
-        boolean lightVersion = getResources().getBoolean(R.bool.syncedFolder_light);
+        final int gridWidth = getResources().getInteger(com.owncloud.android.R.integer.media_grid_width);
+        boolean lightVersion = getResources().getBoolean(com.owncloud.android.R.bool.syncedFolder_light);
         mAdapter = new FolderSyncAdapter(this, gridWidth, this, lightVersion);
         mSyncedFolderProvider = new SyncedFolderProvider(getContentResolver());
 
         final GridLayoutManager lm = new GridLayoutManager(this, gridWidth);
         mAdapter.setLayoutManager(lm);
-        int spacing = getResources().getDimensionPixelSize(R.dimen.media_grid_spacing);
+        int spacing = getResources().getDimensionPixelSize(com.owncloud.android.R.dimen.media_grid_spacing);
         mRecyclerView.addItemDecoration(new MediaGridItemDecoration(spacing));
         mRecyclerView.setLayoutManager(lm);
         mRecyclerView.setAdapter(mAdapter);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(com.owncloud.android.R.id.bottom_navigation_view);
 
-        if (getResources().getBoolean(R.bool.bottom_toolbar_enabled)) {
+        if (getResources().getBoolean(com.owncloud.android.R.bool.bottom_toolbar_enabled)) {
             bottomNavigationView.setVisibility(View.VISIBLE);
             DisplayUtils.setupBottomBar(bottomNavigationView, getResources(), this, -1);
         }
@@ -325,7 +324,7 @@ public class FolderSyncActivity extends FileActivity implements FolderSyncAdapte
         return new SyncedFolderDisplayItem(
                 UNPERSISTED_ID,
                 mediaFolder.absolutePath,
-                getString(R.string.instant_upload_path) + "/" + mediaFolder.folderName,
+                getString(com.owncloud.android.R.string.instant_upload_path) + "/" + mediaFolder.folderName,
                 true,
                 false,
                 false,
@@ -513,7 +512,7 @@ public class FolderSyncActivity extends FileActivity implements FolderSyncAdapte
                 // If request is cancelled, result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
-                    int gridWidth = getResources().getInteger(R.integer.media_grid_width);
+                    int gridWidth = getResources().getInteger(com.owncloud.android.R.integer.media_grid_width);
                     load(gridWidth * 2, true);
                 } else {
                     // permission denied --> do nothing

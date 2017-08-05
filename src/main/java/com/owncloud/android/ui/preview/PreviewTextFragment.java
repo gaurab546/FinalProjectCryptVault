@@ -34,15 +34,14 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
-import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.FileMenuFilter;
-import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.ui.activity.FileDisplayActivity;
+import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment;
 import com.owncloud.android.ui.dialog.RemoveFilesDialogFragment;
 import com.owncloud.android.ui.fragment.FileFragment;
 import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.utils.MimeTypeUtil;
 
 import java.io.BufferedWriter;
@@ -99,11 +98,11 @@ public class PreviewTextFragment extends FileFragment {
         Log_OC.e(TAG, "onCreateView");
 
 
-        View ret = inflater.inflate(R.layout.text_file_preview, container, false);
+        View ret = inflater.inflate(com.owncloud.android.R.layout.text_file_preview, container, false);
 
-        mTextPreview = (TextView) ret.findViewById(R.id.text_preview);
+        mTextPreview = (TextView) ret.findViewById(com.owncloud.android.R.id.text_preview);
 
-        mMultiView = (RelativeLayout) ret.findViewById(R.id.multi_view);
+        mMultiView = (RelativeLayout) ret.findViewById(com.owncloud.android.R.id.multi_view);
 
         setupMultiView(ret);
         setMultiListLoadingMessage();
@@ -112,16 +111,16 @@ public class PreviewTextFragment extends FileFragment {
     }
 
     protected void setupMultiView(View view) {
-        mMultiListContainer = (LinearLayout) view.findViewById(R.id.empty_list_view);
-        mMultiListMessage = (TextView) view.findViewById(R.id.empty_list_view_text);
-        mMultiListHeadline = (TextView) view.findViewById(R.id.empty_list_view_headline);
-        mMultiListIcon = (ImageView) view.findViewById(R.id.empty_list_icon);
-        mMultiListProgress = (ProgressBar) view.findViewById(R.id.empty_list_progress);
+        mMultiListContainer = (LinearLayout) view.findViewById(com.owncloud.android.R.id.empty_list_view);
+        mMultiListMessage = (TextView) view.findViewById(com.owncloud.android.R.id.empty_list_view_text);
+        mMultiListHeadline = (TextView) view.findViewById(com.owncloud.android.R.id.empty_list_view_headline);
+        mMultiListIcon = (ImageView) view.findViewById(com.owncloud.android.R.id.empty_list_icon);
+        mMultiListProgress = (ProgressBar) view.findViewById(com.owncloud.android.R.id.empty_list_progress);
     }
 
     private void setMultiListLoadingMessage() {
         if (mMultiView != null) {
-            mMultiListHeadline.setText(R.string.file_list_loading);
+            mMultiListHeadline.setText(com.owncloud.android.R.string.file_list_loading);
             mMultiListMessage.setText("");
 
             mMultiListIcon.setVisibility(View.GONE);
@@ -272,7 +271,7 @@ public class PreviewTextFragment extends FileFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.file_actions_menu, menu);
+        inflater.inflate(com.owncloud.android.R.menu.file_actions_menu, menu);
     }
 
     /**
@@ -293,61 +292,61 @@ public class PreviewTextFragment extends FileFragment {
         }
 
         // additional restriction for this fragment
-        MenuItem item = menu.findItem(R.id.action_rename_file);
+        MenuItem item = menu.findItem(com.owncloud.android.R.id.action_rename_file);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_move);
+        item = menu.findItem(com.owncloud.android.R.id.action_move);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // this one doesn't make sense since the file has to be down in order to be previewed
-        item = menu.findItem(R.id.action_download_file);
+        item = menu.findItem(com.owncloud.android.R.id.action_download_file);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
-        item = menu.findItem(R.id.action_sync_file);
+        item = menu.findItem(com.owncloud.android.R.id.action_sync_file);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
-        item = menu.findItem(R.id.action_sync_account);
+        item = menu.findItem(com.owncloud.android.R.id.action_sync_account);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
-        Boolean dualPane = getResources().getBoolean(R.bool.large_land_layout);
+        Boolean dualPane = getResources().getBoolean(com.owncloud.android.R.bool.large_land_layout);
 
-        item = menu.findItem(R.id.action_switch_view);
+        item = menu.findItem(com.owncloud.android.R.id.action_switch_view);
         if (item != null && !dualPane){
             item.setVisible(false);
             item.setEnabled(false);
         }
 
-        item = menu.findItem(R.id.action_sort);
+        item = menu.findItem(com.owncloud.android.R.id.action_sort);
         if (item != null && !dualPane) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_favorite);
+        item = menu.findItem(com.owncloud.android.R.id.action_favorite);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
         }
 
         // additional restriction for this fragment
-        item = menu.findItem(R.id.action_unset_favorite);
+        item = menu.findItem(com.owncloud.android.R.id.action_unset_favorite);
         if (item != null) {
             item.setVisible(false);
             item.setEnabled(false);
@@ -361,28 +360,28 @@ public class PreviewTextFragment extends FileFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_share_file: {
+            case com.owncloud.android.R.id.action_share_file: {
                 mContainerActivity.getFileOperationsHelper().showShareFile(getFile());
                 return true;
             }
-            case R.id.action_open_file_with: {
+            case com.owncloud.android.R.id.action_open_file_with: {
                 openFile();
                 return true;
             }
-            case R.id.action_remove_file: {
+            case com.owncloud.android.R.id.action_remove_file: {
                 RemoveFilesDialogFragment dialog = RemoveFilesDialogFragment.newInstance(getFile());
                 dialog.show(getFragmentManager(), ConfirmationDialogFragment.FTAG_CONFIRMATION);
                 return true;
             }
-            case R.id.action_see_details: {
+            case com.owncloud.android.R.id.action_see_details: {
                 seeDetails();
                 return true;
             }
-            case R.id.action_send_file: {
+            case com.owncloud.android.R.id.action_send_file: {
                 sendFile();
                 return true;
             }
-            case R.id.action_sync_file: {
+            case com.owncloud.android.R.id.action_sync_file: {
                 mContainerActivity.getFileOperationsHelper().syncFile(getFile());
                 return true;
             }

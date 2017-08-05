@@ -27,6 +27,7 @@ package com.owncloud.android.operations;
 
 
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.operations.common.SyncOperation;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
@@ -35,7 +36,6 @@ import com.owncloud.android.lib.resources.shares.CreateRemoteShareOperation;
 import com.owncloud.android.lib.resources.shares.GetRemoteSharesForFileOperation;
 import com.owncloud.android.lib.resources.shares.OCShare;
 import com.owncloud.android.lib.resources.shares.ShareType;
-import com.owncloud.android.operations.common.SyncOperation;
 
 import java.util.ArrayList;
 

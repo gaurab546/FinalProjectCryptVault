@@ -33,20 +33,20 @@ import android.os.IBinder;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.util.Pair;
 
-import com.evernote.android.job.JobManager;
-import com.owncloud.android.authentication.PassCodeManager;
-import com.owncloud.android.datamodel.SyncedFolder;
 import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.db.PreferenceManager;
-import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
-import com.owncloud.android.lib.common.OwnCloudClientManagerFactory.Policy;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.services.NCJobCreator;
 import com.owncloud.android.services.observer.SyncedFolderObserverService;
 import com.owncloud.android.ui.activity.Preferences;
-import com.owncloud.android.ui.activity.WhatsNewActivity;
 import com.owncloud.android.utils.AnalyticsUtils;
+import com.evernote.android.job.JobManager;
+import com.owncloud.android.authentication.PassCodeManager;
+import com.owncloud.android.datamodel.SyncedFolder;
+import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
+import com.owncloud.android.lib.common.OwnCloudClientManagerFactory.Policy;
+import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.ui.activity.WhatsNewActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

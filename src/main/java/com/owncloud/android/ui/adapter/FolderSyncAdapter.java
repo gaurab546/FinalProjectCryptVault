@@ -32,9 +32,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.SyncedFolderDisplayItem;
-import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.utils.ThemeUtils;
 
 import java.io.File;

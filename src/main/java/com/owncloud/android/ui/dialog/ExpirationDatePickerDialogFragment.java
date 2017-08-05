@@ -28,8 +28,8 @@ import android.support.v4.app.DialogFragment;
 import android.text.format.DateUtils;
 import android.widget.DatePicker;
 
-import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.datamodel.OCFile;
 
 import java.util.Calendar;
 

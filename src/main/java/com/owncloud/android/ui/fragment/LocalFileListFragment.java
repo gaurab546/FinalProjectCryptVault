@@ -33,12 +33,11 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.owncloud.android.R;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.adapter.LocalFileListAdapter;
 import com.owncloud.android.utils.AnalyticsUtils;
-import com.owncloud.android.utils.FileStorageUtils;
 import com.owncloud.android.utils.ThemeUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.utils.FileStorageUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -100,8 +99,8 @@ public class LocalFileListFragment extends ExtendedListFragment {
         setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         setSwipeEnabled(false); // Disable pull-to-refresh
         setFabEnabled(false); // Disable FAB
-        setMessageForEmptyList(R.string.file_list_empty_headline, R.string.local_file_list_empty,
-                R.drawable.ic_list_empty_folder, true);
+        setMessageForEmptyList(com.owncloud.android.R.string.file_list_empty_headline, com.owncloud.android.R.string.local_file_list_empty,
+                com.owncloud.android.R.drawable.ic_list_empty_folder, true);
         Log_OC.i(TAG, "onCreateView() end");
         return v;
     }
@@ -140,16 +139,16 @@ public class LocalFileListFragment extends ExtendedListFragment {
                 saveIndexAndTopPosition(position);
             
             } else {    /// Click on a file
-                ImageView checkBoxV = (ImageView) v.findViewById(R.id.custom_checkbox);
+                ImageView checkBoxV = (ImageView) v.findViewById(com.owncloud.android.R.id.custom_checkbox);
                 if (checkBoxV != null) {
                     if (getListView().isItemChecked(position)) {
-                        v.setBackgroundColor(getContext().getResources().getColor(R.color.selected_item_background));
-                        checkBoxV.setImageDrawable(ThemeUtils.tintDrawable(R.drawable.ic_checkbox_marked,
+                        v.setBackgroundColor(getContext().getResources().getColor(com.owncloud.android.R.color.selected_item_background));
+                        checkBoxV.setImageDrawable(ThemeUtils.tintDrawable(com.owncloud.android.R.drawable.ic_checkbox_marked,
                                 ThemeUtils.primaryColor()));
 
                     } else {
                         v.setBackgroundColor(Color.WHITE);
-                        checkBoxV.setImageResource(R.drawable.ic_checkbox_blank_outline);
+                        checkBoxV.setImageResource(com.owncloud.android.R.drawable.ic_checkbox_blank_outline);
                     }
                 }
                 // notify the change to the container Activity

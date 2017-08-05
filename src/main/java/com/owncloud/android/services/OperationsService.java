@@ -35,6 +35,16 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Pair;
 
+import com.owncloud.android.operations.CopyFileOperation;
+import com.owncloud.android.operations.CreateShareWithShareeOperation;
+import com.owncloud.android.operations.MoveFileOperation;
+import com.owncloud.android.operations.OAuth2GetAccessToken;
+import com.owncloud.android.operations.UpdateSharePermissionsOperation;
+import com.owncloud.android.operations.UpdateShareViaLinkOperation;
+import com.owncloud.android.authentication.AccountUtils;
+import com.owncloud.android.operations.CreateFolderOperation;
+import com.owncloud.android.operations.CreateShareViaLinkOperation;
+import com.owncloud.android.operations.common.SyncOperation;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
@@ -53,21 +63,12 @@ import com.owncloud.android.lib.resources.shares.ShareType;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
 import com.owncloud.android.lib.resources.users.GetRemoteUserInfoOperation;
 import com.owncloud.android.operations.CheckCurrentCredentialsOperation;
-import com.owncloud.android.operations.CopyFileOperation;
-import com.owncloud.android.operations.CreateFolderOperation;
-import com.owncloud.android.operations.CreateShareViaLinkOperation;
-import com.owncloud.android.operations.CreateShareWithShareeOperation;
 import com.owncloud.android.operations.GetServerInfoOperation;
-import com.owncloud.android.operations.MoveFileOperation;
-import com.owncloud.android.operations.OAuth2GetAccessToken;
 import com.owncloud.android.operations.RemoveFileOperation;
 import com.owncloud.android.operations.RenameFileOperation;
 import com.owncloud.android.operations.SynchronizeFileOperation;
 import com.owncloud.android.operations.SynchronizeFolderOperation;
 import com.owncloud.android.operations.UnshareOperation;
-import com.owncloud.android.operations.UpdateSharePermissionsOperation;
-import com.owncloud.android.operations.UpdateShareViaLinkOperation;
-import com.owncloud.android.operations.common.SyncOperation;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -441,7 +442,7 @@ public class OperationsService extends Service {
                             mOwnCloudClient = OwnCloudClientManagerFactory.getDefaultSingleton().
                                     getClientFor(ocAccount, mService);
 
-                            OwnCloudVersion version = com.owncloud.android.authentication.AccountUtils.getServerVersion(
+                            OwnCloudVersion version = AccountUtils.getServerVersion(
                                     mLastTarget.mAccount
                             );
                             mOwnCloudClient.setOwnCloudVersion(version);

@@ -28,9 +28,9 @@ package com.owncloud.android.services.observer;
 
 import android.os.SystemClock;
 
+import com.owncloud.android.services.AdvancedFileAlterationListener;
 import com.owncloud.android.datamodel.SyncedFolder;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.services.AdvancedFileAlterationListener;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.comparator.NameFileComparator;

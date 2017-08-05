@@ -23,7 +23,6 @@ package com.owncloud.android.ui.adapter;
 import android.view.View;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.lib.common.network.CertificateCombinedException;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
 
@@ -44,31 +43,31 @@ public class CertificateCombinedExceptionViewAdapter implements SslUntrustedCert
     @Override
     public void updateErrorView(View dialogView) {
         /// clean
-        dialogView.findViewById(R.id.reason_no_info_about_error).setVisibility(View.GONE);
+        dialogView.findViewById(com.owncloud.android.R.id.reason_no_info_about_error).setVisibility(View.GONE);
        
         /// refresh
         if (mSslException.getCertPathValidatorException() != null) {
-            ((TextView)dialogView.findViewById(R.id.reason_cert_not_trusted)).setVisibility(View.VISIBLE);
+            ((TextView)dialogView.findViewById(com.owncloud.android.R.id.reason_cert_not_trusted)).setVisibility(View.VISIBLE);
         } else {
-            dialogView.findViewById(R.id.reason_cert_not_trusted).setVisibility(View.GONE);
+            dialogView.findViewById(com.owncloud.android.R.id.reason_cert_not_trusted).setVisibility(View.GONE);
         }
         
         if (mSslException.getCertificateExpiredException() != null) {
-            ((TextView)dialogView.findViewById(R.id.reason_cert_expired)).setVisibility(View.VISIBLE);
+            ((TextView)dialogView.findViewById(com.owncloud.android.R.id.reason_cert_expired)).setVisibility(View.VISIBLE);
         } else {
-            dialogView.findViewById(R.id.reason_cert_expired).setVisibility(View.GONE);
+            dialogView.findViewById(com.owncloud.android.R.id.reason_cert_expired).setVisibility(View.GONE);
         }
         
         if (mSslException.getCertificateNotYetValidException() != null) {
-            ((TextView)dialogView.findViewById(R.id.reason_cert_not_yet_valid)).setVisibility(View.VISIBLE);
+            ((TextView)dialogView.findViewById(com.owncloud.android.R.id.reason_cert_not_yet_valid)).setVisibility(View.VISIBLE);
         } else {
-            dialogView.findViewById(R.id.reason_cert_not_yet_valid).setVisibility(View.GONE);
+            dialogView.findViewById(com.owncloud.android.R.id.reason_cert_not_yet_valid).setVisibility(View.GONE);
         }
 
         if (mSslException.getSslPeerUnverifiedException() != null) {
-            ((TextView)dialogView.findViewById(R.id.reason_hostname_not_verified)).setVisibility(View.VISIBLE);
+            ((TextView)dialogView.findViewById(com.owncloud.android.R.id.reason_hostname_not_verified)).setVisibility(View.VISIBLE);
         } else {
-            dialogView.findViewById(R.id.reason_hostname_not_verified).setVisibility(View.GONE);
+            dialogView.findViewById(com.owncloud.android.R.id.reason_hostname_not_verified).setVisibility(View.GONE);
         }
         
     }

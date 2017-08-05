@@ -29,7 +29,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.owncloud.android.R;
 import com.owncloud.android.lib.common.utils.Log_OC;
 
 import java.lang.reflect.InvocationTargetException;
@@ -127,17 +126,17 @@ public class ActionEditText extends AppCompatEditText {
 
     private void getAttrs(AttributeSet attr) {
         TypedArray a = getContext().obtainStyledAttributes(attr,
-                R.styleable.ActionEditText);
+                com.owncloud.android.R.styleable.ActionEditText);
         optionOneString = a
-                .getString(R.styleable.ActionEditText_optionOneString);
+                .getString(com.owncloud.android.R.styleable.ActionEditText_optionOneString);
         optionTwoString = a
-                .getString(R.styleable.ActionEditText_optionTwoString);
-        optionOneColor = a.getColor(R.styleable.ActionEditText_optionOneColor,
+                .getString(com.owncloud.android.R.styleable.ActionEditText_optionTwoString);
+        optionOneColor = a.getColor(com.owncloud.android.R.styleable.ActionEditText_optionOneColor,
                 0x00ff00);
-        optionTwoColor = a.getColor(R.styleable.ActionEditText_optionTwoColor,
+        optionTwoColor = a.getColor(com.owncloud.android.R.styleable.ActionEditText_optionTwoColor,
                 0xff0000);
         badgeClickCallback = a
-                .getString(R.styleable.ActionEditText_onBadgeClick);
+                .getString(com.owncloud.android.R.styleable.ActionEditText_onBadgeClick);
     }
 
 }

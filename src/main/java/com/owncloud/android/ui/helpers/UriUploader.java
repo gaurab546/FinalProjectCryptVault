@@ -24,10 +24,10 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 
+import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.R;
 import com.owncloud.android.files.services.FileUploader;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.asynctasks.CopyAndUploadContentUrisTask;
 import com.owncloud.android.ui.fragment.TaskRetainerFragment;

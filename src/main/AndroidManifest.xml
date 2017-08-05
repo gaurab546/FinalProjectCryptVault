@@ -67,7 +67,7 @@
         android:label="@string/app_name"
         android:fullBackupContent="@xml/backup_config"
         android:theme="@style/Theme.ownCloud.Toolbar"
-        android:manageSpaceActivity="com.owncloud.android.ui.activity.ManageSpaceActivity">
+        android:manageSpaceActivity="com.owncloud.android.com.cryptvault.android.ui.activity.ManageSpaceActivity">
         <activity
             android:name=".ui.activity.FileDisplayActivity"
             android:label="@string/app_name"
@@ -159,7 +159,7 @@
             android:label="@string/search_users_and_groups_hint" />
 
         <provider
-            android:name="org.nextcloud.providers.DocumentsStorageProvider"
+            android:name="org.owncloud.providers.DocumentsStorageProvider"
             android:authorities="@string/document_provider_authority"
             android:exported="true"
             android:grantUriPermissions="true"

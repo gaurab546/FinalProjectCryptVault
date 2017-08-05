@@ -30,8 +30,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
-import com.owncloud.android.R;
-
 
 /**
  * Dialog which will be displayed to user upon keep-in-sync file conflict.
@@ -59,11 +57,11 @@ public class ConflictsResolveDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         String remotepath = getArguments().getString("remotepath");
-        return new AlertDialog.Builder(getActivity(), R.style.Theme_ownCloud_Dialog)
-                   .setIcon(R.drawable.ic_warning)
-                   .setTitle(R.string.conflict_title)
-                   .setMessage(String.format(getString(R.string.conflict_message), remotepath))
-                   .setPositiveButton(R.string.conflict_use_local_version,
+        return new AlertDialog.Builder(getActivity(), com.owncloud.android.R.style.Theme_ownCloud_Dialog)
+                   .setIcon(com.owncloud.android.R.drawable.ic_warning)
+                   .setTitle(com.owncloud.android.R.string.conflict_title)
+                   .setMessage(String.format(getString(com.owncloud.android.R.string.conflict_message), remotepath))
+                   .setPositiveButton(com.owncloud.android.R.string.conflict_use_local_version,
                        new DialogInterface.OnClickListener() {
 
                            @Override
@@ -73,7 +71,7 @@ public class ConflictsResolveDialog extends DialogFragment {
                                }
                            }
                        })
-                   .setNeutralButton(R.string.conflict_keep_both,
+                   .setNeutralButton(com.owncloud.android.R.string.conflict_keep_both,
                        new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -82,7 +80,7 @@ public class ConflictsResolveDialog extends DialogFragment {
                                 }
                             }
                         })
-                   .setNegativeButton(R.string.conflict_use_server_version,
+                   .setNegativeButton(com.owncloud.android.R.string.conflict_use_server_version,
                        new DialogInterface.OnClickListener() {
                            @Override
                            public void onClick(DialogInterface dialog, int which) {

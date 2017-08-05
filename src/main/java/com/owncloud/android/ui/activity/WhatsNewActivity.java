@@ -47,11 +47,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountAuthenticatorActivity;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.features.FeatureList;
-import com.owncloud.android.features.FeatureList.FeatureItem;
 import com.owncloud.android.ui.whatsnew.ProgressIndicator;
 import com.owncloud.android.utils.AnalyticsUtils;
 
@@ -74,12 +72,12 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.whats_new_activity);
+        setContentView(com.owncloud.android.R.layout.whats_new_activity);
 
-        mProgress = (ProgressIndicator) findViewById(R.id.progressIndicator);
-        mPager = (ViewPager)findViewById(R.id.contentPanel);
-        final boolean isBeta = getResources().getBoolean(R.bool.is_beta);
-        String[] urls = getResources().getStringArray(R.array.whatsnew_urls);
+        mProgress = (ProgressIndicator) findViewById(com.owncloud.android.R.id.progressIndicator);
+        mPager = (ViewPager)findViewById(com.owncloud.android.R.id.contentPanel);
+        final boolean isBeta = getResources().getBoolean(com.owncloud.android.R.bool.is_beta);
+        String[] urls = getResources().getStringArray(com.owncloud.android.R.array.whatsnew_urls);
 
         // Sometimes, accounts are not deleted when you uninstall the application so we'll do it now
         AccountManager am = (AccountManager) getSystemService(ACCOUNT_SERVICE);
@@ -104,7 +102,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
         mPager.addOnPageChangeListener(this);
 
 
-        mForwardFinishButton = (ImageButton) findViewById(R.id.forward);
+        mForwardFinishButton = (ImageButton) findViewById(com.owncloud.android.R.id.forward);
         mForwardFinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +123,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
             mForwardFinishButton.setBackgroundDrawable(null);
         }
 
-        mSkipButton = (Button) findViewById(R.id.skip);
+        mSkipButton = (Button) findViewById(com.owncloud.android.R.id.skip);
         mSkipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,14 +132,14 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
             }
         });
 
-        TextView tv = (TextView)findViewById(R.id.welcomeText);
+        TextView tv = (TextView)findViewById(com.owncloud.android.R.id.welcomeText);
 
         if (showWebView) {
-            tv.setText(R.string.app_name);
+            tv.setText(com.owncloud.android.R.string.app_name);
         } else if (isFirstRun()) {
-            tv.setText(R.string.empty);
+            tv.setText(com.owncloud.android.R.string.empty);
         } else {
-            tv.setText(R.string.whats_new_title);
+            tv.setText(com.owncloud.android.R.string.whats_new_title);
         }
 
         updateNextButtonIfNeeded();
@@ -162,10 +160,10 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
 
     private void updateNextButtonIfNeeded() {
         if (!mProgress.hasNextStep()) {
-            mForwardFinishButton.setImageResource(R.drawable.ic_done_white);
+            mForwardFinishButton.setImageResource(com.owncloud.android.R.drawable.ic_done_white);
             mSkipButton.setVisibility(View.INVISIBLE);
         } else {
-            mForwardFinishButton.setImageResource(R.drawable.arrow_right);
+            mForwardFinishButton.setImageResource(com.owncloud.android.R.drawable.arrow_right);
             mSkipButton.setVisibility(View.VISIBLE);
         }
     }
@@ -187,7 +185,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
     }
 
     static public void runIfNeeded(Context context) {
-        if (!context.getResources().getBoolean(R.bool.show_whats_new)) {
+        if (!context.getResources().getBoolean(com.owncloud.android.R.bool.show_whats_new)) {
             return;
         }
 
@@ -201,7 +199,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
     }
 
     static private boolean shouldShow(Context context) {
-        final boolean isBeta = context.getResources().getBoolean(R.bool.is_beta);
+        final boolean isBeta = context.getResources().getBoolean(com.owncloud.android.R.bool.is_beta);
         return (isFirstRun() && context instanceof AccountAuthenticatorActivity) ||
                 (
                         !(isFirstRun() && (context instanceof FileDisplayActivity)) &&
@@ -267,9 +265,9 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
         public View onCreateView(LayoutInflater inflater,
                                  @Nullable ViewGroup container,
                                  @Nullable Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.whats_new_webview_element, container, false);
+            View v = inflater.inflate(com.owncloud.android.R.layout.whats_new_webview_element, container, false);
 
-            WebView webView = (WebView) v.findViewById(R.id.whatsNewWebView);
+            WebView webView = (WebView) v.findViewById(com.owncloud.android.R.id.whatsNewWebView);
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setAllowFileAccess(false);
             webView.setWebViewClient(new WebViewClient());
@@ -281,9 +279,9 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
 
     private final class FeaturesViewAdapter extends FragmentPagerAdapter {
 
-        private FeatureItem[] mFeatures;
+        private FeatureList.FeatureItem[] mFeatures;
 
-        public FeaturesViewAdapter(FragmentManager fm, FeatureItem[]features) {
+        public FeaturesViewAdapter(FragmentManager fm, FeatureList.FeatureItem[]features) {
             super(fm);
             mFeatures = features;
         }
@@ -300,9 +298,9 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
     }
 
     public static class FeatureFragment extends Fragment {
-        private FeatureItem mItem;
+        private FeatureList.FeatureItem mItem;
 
-        static public FeatureFragment newInstance(FeatureItem item) {
+        static public FeatureFragment newInstance(FeatureList.FeatureItem item) {
             FeatureFragment f = new FeatureFragment();
             Bundle args = new Bundle();
             args.putParcelable("feature", item);
@@ -313,7 +311,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mItem = getArguments() != null ? (FeatureItem)getArguments().getParcelable("feature") : null;
+            mItem = getArguments() != null ? (FeatureList.FeatureItem)getArguments().getParcelable("feature") : null;
         }
 
         @Nullable
@@ -321,19 +319,19 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
         public View onCreateView(LayoutInflater inflater,
                                  @Nullable ViewGroup container,
                                  @Nullable Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.whats_new_element, container, false);
+            View v = inflater.inflate(com.owncloud.android.R.layout.whats_new_element, container, false);
 
-            ImageView iv = (ImageView)v.findViewById(R.id.whatsNewImage);
+            ImageView iv = (ImageView)v.findViewById(com.owncloud.android.R.id.whatsNewImage);
             if (mItem.shouldShowImage()) {
                 iv.setImageResource(mItem.getImage());
             }
 
-            TextView tv2 = (TextView)v.findViewById(R.id.whatsNewTitle);
+            TextView tv2 = (TextView)v.findViewById(com.owncloud.android.R.id.whatsNewTitle);
             if (mItem.shouldShowTitleText()) {
                 tv2.setText(mItem.getTitleText());
             }
 
-            tv2 = (TextView)v.findViewById(R.id.whatsNewText);
+            tv2 = (TextView)v.findViewById(com.owncloud.android.R.id.whatsNewText);
             if (mItem.shouldShowContentText()) {
                 tv2.setText(mItem.getContentText());
             }

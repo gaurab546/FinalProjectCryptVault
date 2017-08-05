@@ -31,7 +31,7 @@ import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 
 
 /**
- * Operation which execution involves both interactions with an ownCloud server and
+ * Operation which execution involves both interactions with an free server and
  * with local data in the device.
  * 
  * Provides methods to execute the operation both synchronously or asynchronously.
@@ -53,7 +53,7 @@ public abstract class SyncOperation extends RemoteOperation {
      * Do not call this method from the main thread.
      * 
      * This method should be used whenever an ownCloud account is available, instead of
-     * {@link #execute(OwnCloudClient, com.owncloud.android.datamodel.FileDataStorageManager)}.
+     * {@link #execute(OwnCloudClient, FileDataStorageManager)}.
      * 
      * @param storageManager
      * @param context   Android context for the component calling the method.

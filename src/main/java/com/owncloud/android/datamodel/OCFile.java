@@ -31,7 +31,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.content.FileProvider;
 
-import com.owncloud.android.R;
 import com.owncloud.android.lib.common.network.WebdavUtils;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.MimeType;
@@ -283,7 +282,7 @@ public class OCFile implements Parcelable, Comparable<OCFile> {
                 try {
                     mExposedFileUri = FileProvider.getUriForFile(
                         context,
-                        context.getString(R.string.file_provider_authority),
+                        context.getString(com.owncloud.android.R.string.file_provider_authority),
                         new File(mLocalPath)
                     );
                 } catch (IllegalArgumentException e) {

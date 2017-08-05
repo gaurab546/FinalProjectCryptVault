@@ -27,12 +27,11 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.db.OCUpload;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.adapter.ExpandableUploadListAdapter;
 import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 /**
  * A Fragment that lists all files and folders in a given LOCAL path.
@@ -66,8 +65,8 @@ public class UploadListFragment extends ExpandableListFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         setMessageForEmptyList(
-                R.string.upload_list_empty_headline, R.string.upload_list_empty_text_auto_upload,
-                R.drawable.ic_list_empty_upload, true
+                com.owncloud.android.R.string.upload_list_empty_headline, com.owncloud.android.R.string.upload_list_empty_text_auto_upload,
+                com.owncloud.android.R.drawable.ic_list_empty_upload, true
         );
         setOnRefreshListener(this);
         return v;

@@ -33,18 +33,17 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 
-import com.evernote.android.job.Job;
-import com.evernote.android.job.util.support.PersistableBundleCompat;
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.services.FileUploader;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.ui.activity.ContactsPreferenceActivity;
+import com.evernote.android.job.Job;
+import com.evernote.android.job.util.support.PersistableBundleCompat;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -84,9 +83,9 @@ public class ContactsBackupJob extends Job {
         if (force || (lastExecution + 24 * 60 * 60 * 1000) < Calendar.getInstance().getTimeInMillis()) {
             Log_OC.d(TAG, "start contacts backup job");
 
-            String backupFolder = getContext().getResources().getString(R.string.contacts_backup_folder) +
+            String backupFolder = getContext().getResources().getString(com.owncloud.android.R.string.contacts_backup_folder) +
                     OCFile.PATH_SEPARATOR;
-            Integer daysToExpire = getContext().getResources().getInteger(R.integer.contacts_backup_expire);
+            Integer daysToExpire = getContext().getResources().getInteger(com.owncloud.android.R.integer.contacts_backup_expire);
 
             backupContact(account, backupFolder);
 

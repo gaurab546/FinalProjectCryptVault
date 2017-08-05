@@ -46,12 +46,11 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 
-import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.FileDataStorageManager;
-import com.owncloud.android.lib.resources.status.OCCapability;
 import com.owncloud.android.ui.activity.ToolbarActivity;
+import com.owncloud.android.MainApp;
+import com.owncloud.android.lib.resources.status.OCCapability;
 
 /**
  * Utility class with methods for client side theming.
@@ -70,7 +69,7 @@ public class ThemeUtils {
             }
             return adjustLightness(adjust, Color.parseColor(capability.getServerColor()));
         } catch (Exception e) {
-            return MainApp.getAppContext().getResources().getColor(R.color.color_accent);
+            return MainApp.getAppContext().getResources().getColor(com.owncloud.android.R.color.color_accent);
         }
     }
 
@@ -84,7 +83,7 @@ public class ThemeUtils {
         try {
             return adjustLightness(-0.2f, Color.parseColor(capability.getServerColor()));
         } catch (Exception e) {
-            return MainApp.getAppContext().getResources().getColor(R.color.primary_dark);
+            return MainApp.getAppContext().getResources().getColor(com.owncloud.android.R.color.primary_dark);
         }
     }
 
@@ -98,7 +97,7 @@ public class ThemeUtils {
         try {
             return Color.parseColor(capability.getServerColor());
         } catch (Exception e) {
-            return MainApp.getAppContext().getResources().getColor(R.color.primary);
+            return MainApp.getAppContext().getResources().getColor(com.owncloud.android.R.color.primary);
         }
     }
 
@@ -164,7 +163,7 @@ public class ThemeUtils {
         OCCapability capability = getCapability();
 
         if (capability.getServerName() == null || capability.getServerName().isEmpty()) {
-            return MainApp.getAppContext().getResources().getString(R.string.default_display_name_for_root_folder);
+            return MainApp.getAppContext().getResources().getString(com.owncloud.android.R.string.default_display_name_for_root_folder);
         } else {
             return capability.getServerName();
         }
@@ -239,7 +238,7 @@ public class ThemeUtils {
      */
     public static void colorSnackbar(Context context, Snackbar snackbar) {
         // Changing action button text color
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.white));
+        snackbar.setActionTextColor(ContextCompat.getColor(context, com.owncloud.android.R.color.white));
     }
 
     /**

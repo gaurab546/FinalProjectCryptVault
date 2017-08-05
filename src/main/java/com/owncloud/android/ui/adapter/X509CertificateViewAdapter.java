@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
 
 import java.security.MessageDigest;
@@ -55,7 +54,7 @@ public class X509CertificateViewAdapter implements SslUntrustedCertDialog.Certif
     
     @Override
     public void updateCertificateView(View dialogView) {
-        TextView nullCerView = (TextView) dialogView.findViewById(R.id.null_cert);
+        TextView nullCerView = (TextView) dialogView.findViewById(com.owncloud.android.R.id.null_cert);
         
         if (mCertificate != null) {
             nullCerView.setVisibility(View.GONE);
@@ -84,15 +83,15 @@ public class X509CertificateViewAdapter implements SslUntrustedCertDialog.Certif
     private void showSignature(View dialogView) {
         byte[] cert = null;
 
-        TextView certFingerprintView = ((TextView) dialogView.findViewById(R.id.value_certificate_fingerprint));
-        TextView algorithmView = ((TextView) dialogView.findViewById(R.id.value_signature_algorithm));
+        TextView certFingerprintView = ((TextView) dialogView.findViewById(com.owncloud.android.R.id.value_certificate_fingerprint));
+        TextView algorithmView = ((TextView) dialogView.findViewById(com.owncloud.android.R.id.value_signature_algorithm));
 
         try {
             cert = mCertificate.getEncoded();
             if (cert == null) {
 
-                certFingerprintView.setText(R.string.certificate_load_problem);
-                algorithmView.setText(R.string.certificate_load_problem);
+                certFingerprintView.setText(com.owncloud.android.R.string.certificate_load_problem);
+                algorithmView.setText(com.owncloud.android.R.string.certificate_load_problem);
 
             } else {
 
@@ -118,7 +117,7 @@ public class X509CertificateViewAdapter implements SslUntrustedCertDialog.Certif
         rawDigest = getDigest(digestType, cert);
 
         if ( rawDigest == null) {
-            return digestType + ":" + newLine + dialogView.getContext().getString(R.string.digest_algorithm_not_available) + newLine + newLine;
+            return digestType + ":" + newLine + dialogView.getContext().getString(com.owncloud.android.R.string.digest_algorithm_not_available) + newLine + newLine;
         }
 
         final StringBuilder hex = new StringBuilder(3 * rawDigest.length);
@@ -134,8 +133,8 @@ public class X509CertificateViewAdapter implements SslUntrustedCertDialog.Certif
      }    
 
     private void showValidity(Date notBefore, Date notAfter, View dialogView) {
-        TextView fromView = ((TextView)dialogView.findViewById(R.id.value_validity_from));
-        TextView toView = ((TextView)dialogView.findViewById(R.id.value_validity_to));
+        TextView fromView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_validity_from));
+        TextView toView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_validity_to));
         DateFormat dateFormat = DateFormat.getDateInstance();
         fromView.setText(dateFormat.format(notBefore));
         toView.setText(dateFormat.format(notAfter));
@@ -143,12 +142,12 @@ public class X509CertificateViewAdapter implements SslUntrustedCertDialog.Certif
 
     private void showSubject(X500Principal subject, View dialogView) {
         Map<String, String> s = parsePrincipal(subject);
-        TextView cnView = ((TextView)dialogView.findViewById(R.id.value_subject_CN));
-        TextView oView = ((TextView)dialogView.findViewById(R.id.value_subject_O));
-        TextView ouView = ((TextView)dialogView.findViewById(R.id.value_subject_OU));
-        TextView cView = ((TextView)dialogView.findViewById(R.id.value_subject_C));
-        TextView stView = ((TextView)dialogView.findViewById(R.id.value_subject_ST));
-        TextView lView = ((TextView)dialogView.findViewById(R.id.value_subject_L));
+        TextView cnView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_subject_CN));
+        TextView oView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_subject_O));
+        TextView ouView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_subject_OU));
+        TextView cView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_subject_C));
+        TextView stView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_subject_ST));
+        TextView lView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_subject_L));
         
         if (s.get("CN") != null) {
             cnView.setText(s.get("CN"));
@@ -190,12 +189,12 @@ public class X509CertificateViewAdapter implements SslUntrustedCertDialog.Certif
     
     private void showIssuer(X500Principal issuer, View dialogView) {
         Map<String, String> s = parsePrincipal(issuer);
-        TextView cnView = ((TextView)dialogView.findViewById(R.id.value_issuer_CN));
-        TextView oView = ((TextView)dialogView.findViewById(R.id.value_issuer_O));
-        TextView ouView = ((TextView)dialogView.findViewById(R.id.value_issuer_OU));
-        TextView cView = ((TextView)dialogView.findViewById(R.id.value_issuer_C));
-        TextView stView = ((TextView)dialogView.findViewById(R.id.value_issuer_ST));
-        TextView lView = ((TextView)dialogView.findViewById(R.id.value_issuer_L));
+        TextView cnView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_issuer_CN));
+        TextView oView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_issuer_O));
+        TextView ouView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_issuer_OU));
+        TextView cView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_issuer_C));
+        TextView stView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_issuer_ST));
+        TextView lView = ((TextView)dialogView.findViewById(com.owncloud.android.R.id.value_issuer_L));
         
         if (s.get("CN") != null) {
             cnView.setText(s.get("CN"));

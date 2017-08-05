@@ -29,7 +29,6 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 
-import com.owncloud.android.R;
 import com.owncloud.android.lib.common.utils.Log_OC;
 
 /**
@@ -54,13 +53,13 @@ public class ExpandableListFragment extends ExtendedListFragment implements OnCh
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.e(TAG, "onCreateView");
         
-        View v = inflater.inflate(R.layout.list_fragment_expandable, null);
+        View v = inflater.inflate(com.owncloud.android.R.layout.list_fragment_expandable, null);
         setupEmptyList(v);
 
-        mList = (ExpandableListView)(v.findViewById(R.id.list_root));
+        mList = (ExpandableListView)(v.findViewById(com.owncloud.android.R.id.list_root));
         mList.setOnChildClickListener(this);
 
-        mList.setDivider(getResources().getDrawable(R.drawable.uploader_list_separator));
+        mList.setDivider(getResources().getDrawable(com.owncloud.android.R.drawable.uploader_list_separator));
         mList.setDividerHeight(1);
 
 //        if (savedInstanceState != null) {
@@ -69,8 +68,8 @@ public class ExpandableListFragment extends ExtendedListFragment implements OnCh
 //        }
         
         // Pull down refresh
-        mRefreshListLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_files);
-        mRefreshEmptyLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_refresh_files_emptyView);
+        mRefreshListLayout = (SwipeRefreshLayout) v.findViewById(com.owncloud.android.R.id.swipe_refresh_files);
+        mRefreshEmptyLayout = (SwipeRefreshLayout) v.findViewById(com.owncloud.android.R.id.swipe_refresh_files_emptyView);
         
         onCreateSwipeToRefresh(mRefreshListLayout);
         onCreateSwipeToRefresh(mRefreshEmptyLayout);

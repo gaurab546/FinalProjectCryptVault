@@ -27,7 +27,6 @@ import android.preference.PreferenceManager;
 import android.webkit.MimeTypeMap;
 
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -190,7 +189,7 @@ public class FileStorageUtils {
      */
     public static String getInstantVideoUploadFilePath(Context context, String fileName, long dateTaken) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String uploadVideoPathdef = context.getString(R.string.instant_upload_path);
+        String uploadVideoPathdef = context.getString(com.owncloud.android.R.string.instant_upload_path);
         String uploadVideoPath = pref.getString("instant_video_upload_path", uploadVideoPathdef);
         String subPath = "";
         if (com.owncloud.android.db.PreferenceManager.instantVideoUploadPathUseSubfolders(context)) {

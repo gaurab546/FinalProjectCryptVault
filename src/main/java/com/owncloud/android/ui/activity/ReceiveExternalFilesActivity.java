@@ -65,6 +65,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.owncloud.android.operations.CreateFolderOperation;
+import com.owncloud.android.operations.RefreshFolderOperation;
+import com.owncloud.android.operations.UploadFileOperation;
+import com.owncloud.android.ui.adapter.AccountListItem;
+import com.owncloud.android.ui.dialog.CreateFolderDialogFragment;
+import com.owncloud.android.ui.helpers.UriUploader;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
@@ -74,18 +80,12 @@ import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.CreateFolderOperation;
-import com.owncloud.android.operations.RefreshFolderOperation;
-import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.syncadapter.FileSyncAdapter;
 import com.owncloud.android.ui.adapter.AccountListAdapter;
-import com.owncloud.android.ui.adapter.AccountListItem;
 import com.owncloud.android.ui.adapter.UploaderAdapter;
 import com.owncloud.android.ui.asynctasks.CopyAndUploadContentUrisTask;
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment;
-import com.owncloud.android.ui.dialog.CreateFolderDialogFragment;
 import com.owncloud.android.ui.fragment.TaskRetainerFragment;
-import com.owncloud.android.ui.helpers.UriUploader;
 import com.owncloud.android.utils.DataHolderUtil;
 import com.owncloud.android.utils.ErrorMessageAdapter;
 import com.owncloud.android.utils.FileStorageUtils;
@@ -186,7 +186,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     @Override
     protected void setAccount(Account account, boolean savedAccount) {
         if (somethingToUpload()) {
-            mAccountManager = (AccountManager) getSystemService(Context.ACCOUNT_SERVICE);
+            mAccountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
             Account[] accounts = mAccountManager.getAccountsByType(MainApp.getAccountType());
             if (accounts.length == 0) {
                 Log_OC.i(TAG, "No ownCloud account is available");

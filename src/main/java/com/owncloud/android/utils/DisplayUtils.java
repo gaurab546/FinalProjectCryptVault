@@ -54,12 +54,14 @@ import com.bumptech.glide.load.model.StreamEncoder;
 import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.caverock.androidsvg.SVG;
-import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
+import com.owncloud.android.ui.fragment.OCFileListFragment;
+import com.owncloud.android.utils.svg.SvgDecoder;
+import com.owncloud.android.utils.svg.SvgDrawableTranscoder;
+import com.owncloud.android.MainApp;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.SearchOperation;
@@ -67,9 +69,6 @@ import com.owncloud.android.ui.TextDrawable;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.events.MenuItemClickEvent;
 import com.owncloud.android.ui.events.SearchEvent;
-import com.owncloud.android.ui.fragment.OCFileListFragment;
-import com.owncloud.android.utils.svg.SvgDecoder;
-import com.owncloud.android.utils.svg.SvgDrawableTranscoder;
 
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
@@ -134,7 +133,7 @@ public class DisplayUtils {
      */
     public static String bytesToHumanReadable(long bytes) {
         if (bytes < 0) {
-            return MainApp.getAppContext().getString(R.string.common_pending);
+            return MainApp.getAppContext().getString(com.owncloud.android.R.string.common_pending);
         } else {
             double result = bytes;
             int suffixIndex = 0;
@@ -310,15 +309,15 @@ public class DisplayUtils {
     public static int getRelativeInfoColor(Context context, int relative) {
         if (relative < RELATIVE_THRESHOLD_WARNING) {
             if (ThemeUtils.colorToHexString(ThemeUtils.primaryColor()).equalsIgnoreCase(
-                    ThemeUtils.colorToHexString(context.getResources().getColor(R.color.primary)))) {
-                return context.getResources().getColor(R.color.infolevel_info);
+                    ThemeUtils.colorToHexString(context.getResources().getColor(com.owncloud.android.R.color.primary)))) {
+                return context.getResources().getColor(com.owncloud.android.R.color.infolevel_info);
             } else {
                 return Color.GRAY;
             }
         } else if (relative >= RELATIVE_THRESHOLD_WARNING && relative < RELATIVE_THRESHOLD_CRITICAL) {
-            return context.getResources().getColor(R.color.infolevel_warning);
+            return context.getResources().getColor(com.owncloud.android.R.color.infolevel_warning);
         } else {
-            return context.getResources().getColor(R.color.infolevel_critical);
+            return context.getResources().getColor(com.owncloud.android.R.color.infolevel_critical);
         }
     }
 
@@ -333,7 +332,7 @@ public class DisplayUtils {
         }
         // < 60 seconds -> seconds ago
         else if ((System.currentTimeMillis() - time) < 60 * 1000) {
-            return c.getString(R.string.file_list_seconds_ago);
+            return c.getString(com.owncloud.android.R.string.file_list_seconds_ago);
         } else {
             dateString = DateUtils.getRelativeDateTimeString(c, time, minResolution, transitionResolution, flags);
         }
@@ -431,7 +430,7 @@ public class DisplayUtils {
                             listener.avatarGenerated(TextDrawable.createAvatar(account.name, avatarRadius), callContext);
                         } catch (Exception e) {
                             Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e);
-                            listener.avatarGenerated(resources.getDrawable(R.drawable.ic_account_circle), callContext);
+                            listener.avatarGenerated(resources.getDrawable(com.owncloud.android.R.drawable.ic_account_circle), callContext);
                         }
                     } else {
                         final ThumbnailsCacheManager.AsyncAvatarDrawable asyncDrawable =
@@ -500,14 +499,14 @@ public class DisplayUtils {
         boolean searchSupported = AccountUtils.hasSearchSupport(account);
 
         if (!searchSupported) {
-            menu.removeItem(R.id.nav_bar_favorites);
-            menu.removeItem(R.id.nav_bar_photos);
+            menu.removeItem(com.owncloud.android.R.id.nav_bar_favorites);
+            menu.removeItem(com.owncloud.android.R.id.nav_bar_photos);
         }
 
-        if (resources.getBoolean(R.bool.use_home)) {
-            menu.findItem(R.id.nav_bar_files).setTitle(resources.
-                    getString(R.string.drawer_item_home));
-            menu.findItem(R.id.nav_bar_files).setIcon(R.drawable.ic_home);
+        if (resources.getBoolean(com.owncloud.android.R.bool.use_home)) {
+            menu.findItem(com.owncloud.android.R.id.nav_bar_files).setTitle(resources.
+                    getString(com.owncloud.android.R.string.drawer_item_home));
+            menu.findItem(com.owncloud.android.R.id.nav_bar_files).setIcon(com.owncloud.android.R.drawable.ic_home);
         }
 
         setBottomBarItem(view, checkedMenuItem);
@@ -517,27 +516,27 @@ public class DisplayUtils {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.nav_bar_files:
+                            case com.owncloud.android.R.id.nav_bar_files:
                                 EventBus.getDefault().post(new MenuItemClickEvent(item));
                                 if (activity != null) {
                                     activity.invalidateOptionsMenu();
                                 }
                                 break;
-                            case R.id.nav_bar_favorites:
+                            case com.owncloud.android.R.id.nav_bar_favorites:
                                 SearchEvent favoritesEvent = new SearchEvent("",
                                         SearchOperation.SearchType.FAVORITE_SEARCH,
                                         SearchEvent.UnsetType.UNSET_DRAWER);
 
                                 switchToSearchFragment(activity, favoritesEvent);
                                 break;
-                            case R.id.nav_bar_photos:
+                            case com.owncloud.android.R.id.nav_bar_photos:
                                 SearchEvent photosEvent = new SearchEvent("image/%",
                                         SearchOperation.SearchType.CONTENT_TYPE_SEARCH,
                                         SearchEvent.UnsetType.UNSET_DRAWER);
 
                                 switchToSearchFragment(activity, photosEvent);
                                 break;
-                            case R.id.nav_bar_settings:
+                            case com.owncloud.android.R.id.nav_bar_settings:
                                 EventBus.getDefault().post(new MenuItemClickEvent(item));
                                 break;
                             default:

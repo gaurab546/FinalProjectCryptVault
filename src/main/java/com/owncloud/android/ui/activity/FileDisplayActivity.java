@@ -60,49 +60,46 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.datamodel.VirtualFolderType;
-import com.owncloud.android.db.PreferenceManager;
 import com.owncloud.android.files.services.FileDownloader;
-import com.owncloud.android.files.services.FileDownloader.FileDownloaderBinder;
 import com.owncloud.android.files.services.FileUploader;
-import com.owncloud.android.files.services.FileUploader.FileUploaderBinder;
-import com.owncloud.android.lib.common.operations.RemoteOperation;
-import com.owncloud.android.lib.common.operations.RemoteOperationResult;
-import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.operations.CopyFileOperation;
 import com.owncloud.android.operations.CreateFolderOperation;
 import com.owncloud.android.operations.MoveFileOperation;
 import com.owncloud.android.operations.RefreshFolderOperation;
-import com.owncloud.android.operations.RemoveFileOperation;
-import com.owncloud.android.operations.RenameFileOperation;
 import com.owncloud.android.operations.SynchronizeFileOperation;
 import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.services.observer.FileObserverService;
 import com.owncloud.android.syncadapter.FileSyncAdapter;
-import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
-import com.owncloud.android.ui.events.TokenPushEvent;
 import com.owncloud.android.ui.fragment.ExtendedListFragment;
 import com.owncloud.android.ui.fragment.FileDetailFragment;
 import com.owncloud.android.ui.fragment.FileFragment;
 import com.owncloud.android.ui.fragment.OCFileListFragment;
-import com.owncloud.android.ui.fragment.TaskRetainerFragment;
 import com.owncloud.android.ui.fragment.contactsbackup.ContactListFragment;
 import com.owncloud.android.ui.helpers.UriUploader;
 import com.owncloud.android.ui.preview.PreviewImageActivity;
-import com.owncloud.android.ui.preview.PreviewImageFragment;
 import com.owncloud.android.ui.preview.PreviewMediaFragment;
 import com.owncloud.android.ui.preview.PreviewTextFragment;
 import com.owncloud.android.ui.preview.PreviewVideoActivity;
 import com.owncloud.android.utils.DataHolderUtil;
 import com.owncloud.android.utils.ErrorMessageAdapter;
-import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.PermissionUtil;
+import com.owncloud.android.operations.RemoveFileOperation;
+import com.owncloud.android.operations.RenameFileOperation;
+import com.owncloud.android.ui.fragment.TaskRetainerFragment;
+import com.owncloud.android.ui.preview.PreviewImageFragment;
 import com.owncloud.android.utils.PushUtils;
+import com.owncloud.android.MainApp;
+import com.owncloud.android.datamodel.VirtualFolderType;
+import com.owncloud.android.db.PreferenceManager;
+import com.owncloud.android.lib.common.operations.RemoteOperation;
+import com.owncloud.android.lib.common.operations.RemoteOperationResult;
+import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
+import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
+import com.owncloud.android.ui.events.TokenPushEvent;
+import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.ThemeUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -197,22 +194,22 @@ public class FileDisplayActivity extends HookActivity
         /// USER INTERFACE
 
         // Inflate and set the layout view
-        setContentView(R.layout.files);
+        setContentView(com.owncloud.android.R.layout.files);
 
         // setup toolbar
         setupToolbar();
 
         // setup drawer
         if (MainApp.isOnlyOnDevice()) {
-            setupDrawer(R.id.nav_on_device);
+            setupDrawer(com.owncloud.android.R.id.nav_on_device);
         } else {
-            setupDrawer(R.id.nav_all_files);
+            setupDrawer(com.owncloud.android.R.id.nav_all_files);
         }
 
 
-        mDualPane = getResources().getBoolean(R.bool.large_land_layout);
-        mLeftFragmentContainer = findViewById(R.id.left_fragment_container);
-        mRightFragmentContainer = findViewById(R.id.right_fragment_container);
+        mDualPane = getResources().getBoolean(com.owncloud.android.R.bool.large_land_layout);
+        mLeftFragmentContainer = findViewById(com.owncloud.android.R.id.left_fragment_container);
+        mRightFragmentContainer = findViewById(com.owncloud.android.R.id.right_fragment_container);
 
         // Action bar setup
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -240,9 +237,9 @@ public class FileDisplayActivity extends HookActivity
             if (PermissionUtil.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 // Show explanation to the user and then request permission
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.ListLayout), R.string.permission_storage_access,
+                Snackbar snackbar = Snackbar.make(findViewById(com.owncloud.android.R.id.ListLayout), com.owncloud.android.R.string.permission_storage_access,
                         Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.common_ok, new View.OnClickListener() {
+                        .setAction(com.owncloud.android.R.string.common_ok, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 PermissionUtil.requestWriteExternalStoreagePermission(FileDisplayActivity.this);
@@ -302,10 +299,10 @@ public class FileDisplayActivity extends HookActivity
                     .remove("prefs_instant_behaviour").apply();
 
             // show info pop-up
-            new AlertDialog.Builder(this, R.style.Theme_ownCloud_Dialog)
-                    .setTitle(R.string.drawer_folder_sync)
-                    .setMessage(R.string.folder_sync_new_info)
-                    .setPositiveButton(R.string.drawer_open, new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(this, com.owncloud.android.R.style.Theme_ownCloud_Dialog)
+                    .setTitle(com.owncloud.android.R.string.drawer_folder_sync)
+                    .setMessage(com.owncloud.android.R.string.folder_sync_new_info)
+                    .setPositiveButton(com.owncloud.android.R.string.drawer_open, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // show instant upload
                             Intent folderSyncIntent = new Intent(getApplicationContext(), FolderSyncActivity.class);
@@ -313,12 +310,12 @@ public class FileDisplayActivity extends HookActivity
                             startActivity(folderSyncIntent);
                         }
                     })
-                    .setNegativeButton(R.string.drawer_close, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(com.owncloud.android.R.string.drawer_close, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     })
-                    .setIcon(R.drawable.nav_folder_sync)
+                    .setIcon(com.owncloud.android.R.drawable.nav_folder_sync)
                     .show();
         }
     }
@@ -408,7 +405,7 @@ public class FileDisplayActivity extends HookActivity
 
             listOfFiles.setArguments(args);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.left_fragment_container, listOfFiles, TAG_LIST_OF_FILES);
+            transaction.add(com.owncloud.android.R.id.left_fragment_container, listOfFiles, TAG_LIST_OF_FILES);
             transaction.commit();
         } else {
             getSupportFragmentManager().findFragmentByTag(TAG_LIST_OF_FILES);
@@ -422,7 +419,7 @@ public class FileDisplayActivity extends HookActivity
             args.putBoolean(OCFileListFragment.ARG_ALLOW_CONTEXTUAL_ACTIONS, true);
             listOfFiles.setArguments(args);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.left_fragment_container, listOfFiles, TAG_LIST_OF_FILES);
+            transaction.add(com.owncloud.android.R.id.left_fragment_container, listOfFiles, TAG_LIST_OF_FILES);
             transaction.commit();
         } else {
             getSupportFragmentManager().findFragmentByTag(TAG_LIST_OF_FILES);
@@ -517,7 +514,7 @@ public class FileDisplayActivity extends HookActivity
         }
         setDrawerIndicatorEnabled(false);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.right_fragment_container, fragment, TAG_SECOND_FRAGMENT);
+        transaction.replace(com.owncloud.android.R.id.right_fragment_container, fragment, TAG_SECOND_FRAGMENT);
         transaction.commit();
     }
 
@@ -656,10 +653,10 @@ public class FileDisplayActivity extends HookActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.action_create_dir).setVisible(false);
+        inflater.inflate(com.owncloud.android.R.menu.main_menu, menu);
+        menu.findItem(com.owncloud.android.R.id.action_create_dir).setVisible(false);
 
-        final MenuItem item = menu.findItem(R.id.action_search);
+        final MenuItem item = menu.findItem(com.owncloud.android.R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(item);
 
         // hacky as no default way is provided
@@ -672,10 +669,10 @@ public class FileDisplayActivity extends HookActivity
 
         // populate list of menu items to show/hide when drawer is opened/closed
         mDrawerMenuItemstoShowHideList = new ArrayList<>(4);
-        mDrawerMenuItemstoShowHideList.add(menu.findItem(R.id.action_sort));
-        mDrawerMenuItemstoShowHideList.add(menu.findItem(R.id.action_sync_account));
-        mDrawerMenuItemstoShowHideList.add(menu.findItem(R.id.action_switch_view));
-        mDrawerMenuItemstoShowHideList.add(menu.findItem(R.id.action_search));
+        mDrawerMenuItemstoShowHideList.add(menu.findItem(com.owncloud.android.R.id.action_sort));
+        mDrawerMenuItemstoShowHideList.add(menu.findItem(com.owncloud.android.R.id.action_sync_account));
+        mDrawerMenuItemstoShowHideList.add(menu.findItem(com.owncloud.android.R.id.action_switch_view));
+        mDrawerMenuItemstoShowHideList.add(menu.findItem(com.owncloud.android.R.id.action_search));
 
         //focus the SearchView
         if (!TextUtils.isEmpty(searchQuery)) {
@@ -740,7 +737,7 @@ public class FileDisplayActivity extends HookActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean retval = true;
         switch (item.getItemId()) {
-            case R.id.action_sync_account: {
+            case com.owncloud.android.R.id.action_sync_account: {
                 startSynchronization();
                 break;
             }
@@ -758,7 +755,7 @@ public class FileDisplayActivity extends HookActivity
                 }
                 break;
             }
-            case R.id.action_sort: {
+            case com.owncloud.android.R.id.action_sort: {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.addToBackStack(null);
@@ -771,21 +768,21 @@ public class FileDisplayActivity extends HookActivity
 
                 break;
             }
-            case R.id.action_switch_view: {
+            case com.owncloud.android.R.id.action_switch_view: {
                 if (isGridView()) {
-                    item.setTitle(getString(R.string.action_switch_grid_view));
+                    item.setTitle(getString(com.owncloud.android.R.string.action_switch_grid_view));
                     item.setIcon(ContextCompat.getDrawable(getApplicationContext(),
-                            R.drawable.ic_view_module));
+                            com.owncloud.android.R.drawable.ic_view_module));
                     getListOfFilesFragment().setListAsPreferred();
                 } else {
-                    item.setTitle(getApplicationContext().getString(R.string.action_switch_list_view));
+                    item.setTitle(getApplicationContext().getString(com.owncloud.android.R.string.action_switch_list_view));
                     item.setIcon(ContextCompat.getDrawable(getApplicationContext(),
-                            R.drawable.ic_view_list));
+                            com.owncloud.android.R.drawable.ic_view_list));
                     getListOfFilesFragment().setGridAsPreferred();
                 }
                 break;
             }
-            case R.id.action_select_all: {
+            case com.owncloud.android.R.id.action_select_all: {
                 getListOfFilesFragment().selectAllFiles(true);
                 break;
             }
@@ -920,7 +917,7 @@ public class FileDisplayActivity extends HookActivity
 
         } else {
             Log_OC.d(TAG, "User clicked on 'Update' with no selection");
-            Toast t = Toast.makeText(this, getString(R.string.filedisplay_no_file_selected),
+            Toast t = Toast.makeText(this, getString(com.owncloud.android.R.string.filedisplay_no_file_selected),
                     Toast.LENGTH_LONG);
             t.show();
             return;
@@ -993,11 +990,11 @@ public class FileDisplayActivity extends HookActivity
     }
 
     private void revertBottomNavigationBarToAllFiles() {
-        if (getResources().getBoolean(R.bool.bottom_toolbar_enabled)) {
+        if (getResources().getBoolean(com.owncloud.android.R.bool.bottom_toolbar_enabled)) {
             BottomNavigationView bottomNavigationView = (BottomNavigationView) getListOfFilesFragment().getView()
-                    .findViewById(R.id.bottom_navigation_view);
-            if (bottomNavigationView.getMenu().findItem(R.id.nav_bar_settings).isChecked()) {
-                bottomNavigationView.getMenu().findItem(R.id.nav_bar_files).setChecked(true);
+                    .findViewById(com.owncloud.android.R.id.bottom_navigation_view);
+            if (bottomNavigationView.getMenu().findItem(com.owncloud.android.R.id.nav_bar_settings).isChecked()) {
+                bottomNavigationView.getMenu().findItem(com.owncloud.android.R.id.nav_bar_files).setChecked(true);
             }
         }
     }
@@ -1216,7 +1213,7 @@ public class FileDisplayActivity extends HookActivity
                             // current folder was removed from the server 
                             Toast.makeText(FileDisplayActivity.this,
                                     String.format(
-                                            getString(R.string.
+                                            getString(com.owncloud.android.R.string.
                                                     sync_current_folder_was_removed),
                                             synchFolderRemotePath),
 
@@ -1360,7 +1357,7 @@ public class FileDisplayActivity extends HookActivity
                         Toast msg = Toast.makeText(
                                 context,
                                 String.format(
-                                        getString(R.string.filedetails_renamed_in_upload_msg),
+                                        getString(com.owncloud.android.R.string.filedetails_renamed_in_upload_msg),
                                         newName),
                                 Toast.LENGTH_LONG);
                         msg.show();
@@ -1555,7 +1552,7 @@ public class FileDisplayActivity extends HookActivity
             if (component.equals(new ComponentName(
                     FileDisplayActivity.this, FileDownloader.class))) {
                 Log_OC.d(TAG, "Download service connected");
-                mDownloaderBinder = (FileDownloaderBinder) service;
+                mDownloaderBinder = (FileDownloader.FileDownloaderBinder) service;
                 if (mWaitingToPreview != null && getStorageManager() != null) {
                     // update the file
                     mWaitingToPreview =
@@ -1568,7 +1565,7 @@ public class FileDisplayActivity extends HookActivity
             } else if (component.equals(new ComponentName(FileDisplayActivity.this,
                     FileUploader.class))) {
                 Log_OC.d(TAG, "Upload service connected");
-                mUploaderBinder = (FileUploaderBinder) service;
+                mUploaderBinder = (FileUploader.FileUploaderBinder) service;
             } else {
                 return;
             }

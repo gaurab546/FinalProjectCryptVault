@@ -27,17 +27,15 @@ import android.os.Bundle;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.services.FileDownloader;
 import com.owncloud.android.files.services.FileUploader;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.dialog.ConflictsResolveDialog;
-import com.owncloud.android.ui.dialog.ConflictsResolveDialog.Decision;
-import com.owncloud.android.ui.dialog.ConflictsResolveDialog.OnConflictDecisionMadeListener;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 
 /**
  * Wrapper activity which will be launched if keep-in-sync file will be modified by external
  * application.
  */
-public class ConflictsResolveActivity extends FileActivity implements OnConflictDecisionMadeListener {
+public class ConflictsResolveActivity extends FileActivity implements ConflictsResolveDialog.OnConflictDecisionMadeListener {
 
     private static final String TAG = ConflictsResolveActivity.class.getSimpleName();
 
@@ -47,7 +45,7 @@ public class ConflictsResolveActivity extends FileActivity implements OnConflict
     }
 
     @Override
-    public void conflictDecisionMade(Decision decision) {
+    public void conflictDecisionMade(ConflictsResolveDialog.Decision decision) {
 
         Integer behaviour = null;
         Boolean forceOverwrite = null;

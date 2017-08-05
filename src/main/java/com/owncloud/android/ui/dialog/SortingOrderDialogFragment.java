@@ -33,9 +33,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.ThemeUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 /**
  * Dialog to show and choose the sorting order for the file listing.
@@ -81,7 +80,7 @@ public class SortingOrderDialogFragment extends DialogFragment {
         args.putBoolean(KEY_ASCENDING, ascending);
         dialogFragment.setArguments(args);
 
-        dialogFragment.setStyle(STYLE_NORMAL, R.style.Theme_ownCloud_Dialog);
+        dialogFragment.setStyle(STYLE_NORMAL, com.owncloud.android.R.style.Theme_ownCloud_Dialog);
 
         return dialogFragment;
     }
@@ -102,7 +101,7 @@ public class SortingOrderDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.d(TAG, "onCreateView, savedInstanceState is " + savedInstanceState);
 
-        mView = inflater.inflate(R.layout.sorting_order_fragment, container, false);
+        mView = inflater.inflate(com.owncloud.android.R.layout.sorting_order_fragment, container, false);
 
         setupDialogElements(mView);
         setupListeners(mView);
@@ -117,21 +116,21 @@ public class SortingOrderDialogFragment extends DialogFragment {
      */
     private void setupDialogElements(View view) {
         // find/saves UI elements
-        mSortByNameAscendingButton = (ImageButton) view.findViewById(R.id.sortByNameAscending);
-        mSortByNameDescendingButton = (ImageButton) view.findViewById(R.id.sortByNameDescending);
-        mSortByModificationDateAscendingButton = (ImageButton) view.findViewById(R.id.sortByModificationDateAscending);
-        mSortByModificationDateDescendingButton = (ImageButton) view.findViewById(R.id.sortByModificationDateDescending);
-        mSortBySizeAscendingButton = (ImageButton) view.findViewById(R.id.sortBySizeAscending);
-        mSortBySizeDescendingButton = (ImageButton) view.findViewById(R.id.sortBySizeDescending);
-        mCancel = (AppCompatButton) view.findViewById(R.id.cancel);
+        mSortByNameAscendingButton = (ImageButton) view.findViewById(com.owncloud.android.R.id.sortByNameAscending);
+        mSortByNameDescendingButton = (ImageButton) view.findViewById(com.owncloud.android.R.id.sortByNameDescending);
+        mSortByModificationDateAscendingButton = (ImageButton) view.findViewById(com.owncloud.android.R.id.sortByModificationDateAscending);
+        mSortByModificationDateDescendingButton = (ImageButton) view.findViewById(com.owncloud.android.R.id.sortByModificationDateDescending);
+        mSortBySizeAscendingButton = (ImageButton) view.findViewById(com.owncloud.android.R.id.sortBySizeAscending);
+        mSortBySizeDescendingButton = (ImageButton) view.findViewById(com.owncloud.android.R.id.sortBySizeDescending);
+        mCancel = (AppCompatButton) view.findViewById(com.owncloud.android.R.id.cancel);
         mCancel.setTextColor(ThemeUtils.primaryAccentColor());
 
-        mSortByNameAscendingText = (TextView) view.findViewById(R.id.sortByNameAZText);
-        mSortByNameDescendingText = (TextView) view.findViewById(R.id.sortByNameZAText);
-        mSortByModificationDateAscendingText = (TextView) view.findViewById(R.id.sortByModificationDateOldestFirstText);
-        mSortByModificationDateDescendingText = (TextView) view.findViewById(R.id.sortByModificationDateNewestFirstText);
-        mSortBySizeAscendingText = (TextView) view.findViewById(R.id.sortBySizeSmallestFirstText);
-        mSortBySizeDescendingText = (TextView) view.findViewById(R.id.sortBySizeBiggestFirstText);
+        mSortByNameAscendingText = (TextView) view.findViewById(com.owncloud.android.R.id.sortByNameAZText);
+        mSortByNameDescendingText = (TextView) view.findViewById(com.owncloud.android.R.id.sortByNameZAText);
+        mSortByModificationDateAscendingText = (TextView) view.findViewById(com.owncloud.android.R.id.sortByModificationDateOldestFirstText);
+        mSortByModificationDateDescendingText = (TextView) view.findViewById(com.owncloud.android.R.id.sortByModificationDateNewestFirstText);
+        mSortBySizeAscendingText = (TextView) view.findViewById(com.owncloud.android.R.id.sortBySizeSmallestFirstText);
+        mSortBySizeDescendingText = (TextView) view.findViewById(com.owncloud.android.R.id.sortBySizeBiggestFirstText);
 
         mSortByNameAscendingButton.setTag(BY_NAME_ASC);
         mSortByNameDescendingButton.setTag(BY_NAME_DESC);

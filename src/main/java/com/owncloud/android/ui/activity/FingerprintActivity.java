@@ -48,10 +48,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
-import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.ThemeUtils;
+import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -96,19 +95,19 @@ public class FingerprintActivity extends AppCompatActivity {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fingerprintlock);
+        setContentView(com.owncloud.android.R.layout.fingerprintlock);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ThemeUtils.primaryDarkColor());
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(com.owncloud.android.R.id.toolbar);
         toolbar.setTitleTextColor(ThemeUtils.fontColor());
         toolbar.setBackground(new ColorDrawable(ThemeUtils.primaryColor()));
     }
 
     private void startFingerprint() {
-        TextView fingerprintTextView = (TextView) findViewById(R.id.scanfingerprinttext);
+        TextView fingerprintTextView = (TextView) findViewById(com.owncloud.android.R.id.scanfingerprinttext);
 
         FingerprintManager fingerprintManager =
                 (FingerprintManager) MainApp.getAppContext().getSystemService(Context.FINGERPRINT_SERVICE);
@@ -133,7 +132,7 @@ public class FingerprintActivity extends AppCompatActivity {
                     @Override
                     public void onFailed(String error) {
                         Toast.makeText(MainApp.getAppContext(), error, Toast.LENGTH_LONG).show();
-                        ImageView imageView = (ImageView) findViewById(R.id.fingerprinticon);
+                        ImageView imageView = (ImageView) findViewById(com.owncloud.android.R.id.fingerprinticon);
                         int[][] states = new int[][]{
                                 new int[]{android.R.attr.state_activated},
                                 new int[]{-android.R.attr.state_activated}
@@ -162,8 +161,8 @@ public class FingerprintActivity extends AppCompatActivity {
         super.onResume();
         AnalyticsUtils.setCurrentScreenName(this, SCREEN_NAME, TAG);
         startFingerprint();
-        ImageView imageView = (ImageView)findViewById(R.id.fingerprinticon);
-        imageView.setImageDrawable(ThemeUtils.tintDrawable(R.drawable.ic_fingerprint, ThemeUtils.primaryColor()));
+        ImageView imageView = (ImageView)findViewById(com.owncloud.android.R.id.fingerprinticon);
+        imageView.setImageDrawable(ThemeUtils.tintDrawable(com.owncloud.android.R.drawable.ic_fingerprint, ThemeUtils.primaryColor()));
     }
 
     @Override
@@ -246,7 +245,7 @@ public class FingerprintActivity extends AppCompatActivity {
             setResult(RESULT_OK, resultIntent);
             finish();
         } else {
-            showErrorAndRestart(R.string.fingerprint_unknown);
+            showErrorAndRestart(com.owncloud.android.R.string.fingerprint_unknown);
         }
     }
 
@@ -319,7 +318,7 @@ class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     @Override
     public void onAuthenticationFailed() {
-        this.update(MainApp.getAppContext().getString(R.string.fingerprint_unknown), false);
+        this.update(MainApp.getAppContext().getString(com.owncloud.android.R.string.fingerprint_unknown), false);
     }
 
     @Override

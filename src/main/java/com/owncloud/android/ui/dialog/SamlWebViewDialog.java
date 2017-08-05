@@ -40,7 +40,6 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.SsoWebViewClient;
 import com.owncloud.android.authentication.SsoWebViewClient.SsoWebViewClientListener;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -115,7 +114,7 @@ public class SamlWebViewDialog extends DialogFragment {
             mTargetUrl = savedInstanceState.getString(ARG_TARGET_URL);
         }
         
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Theme_ownCloud_Dialog);
+        setStyle(DialogFragment.STYLE_NO_TITLE, com.owncloud.android.R.style.Theme_ownCloud_Dialog);
     }
     
     @SuppressWarnings("deprecation")
@@ -126,7 +125,7 @@ public class SamlWebViewDialog extends DialogFragment {
         Log_OC.v(TAG, "onCreateView, savedInsanceState is " + savedInstanceState);
         
         // Inflate layout of the dialog  
-        RelativeLayout ssoRootView = (RelativeLayout) inflater.inflate(R.layout.sso_dialog,
+        RelativeLayout ssoRootView = (RelativeLayout) inflater.inflate(com.owncloud.android.R.layout.sso_dialog,
                 container, false);  // null parent view because it will go in the dialog layout
         
         if (mSsoWebView == null) {

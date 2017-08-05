@@ -32,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.db.PreferenceManager;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -134,27 +133,27 @@ public class LocalFileListAdapter extends BaseAdapter implements FilterableListA
             if (convertView == null || convertView.getTag() != viewType) {
                 switch (viewType) {
                     case GRID_IMAGE:
-                        view = inflater.inflate(R.layout.grid_image, parent, false);
+                        view = inflater.inflate(com.owncloud.android.R.layout.grid_image, parent, false);
                         view.setTag(ViewType.GRID_IMAGE);
                         break;
                     case GRID_ITEM:
-                        view = inflater.inflate(R.layout.grid_item, parent, false);
+                        view = inflater.inflate(com.owncloud.android.R.layout.grid_item, parent, false);
                         view.setTag(ViewType.GRID_ITEM);
                         break;
                     case LIST_ITEM:
-                        view = inflater.inflate(R.layout.list_item, parent, false);
+                        view = inflater.inflate(com.owncloud.android.R.layout.list_item, parent, false);
                         view.setTag(ViewType.LIST_ITEM);
                         break;
                 }
             }
 
             if(!ViewType.GRID_IMAGE.equals(viewType)) {
-                TextView fileName = (TextView) view.findViewById(R.id.Filename);
+                TextView fileName = (TextView) view.findViewById(com.owncloud.android.R.id.Filename);
                 String name = file.getName();
                 fileName.setText(name);
             }
 
-            ImageView fileIcon = (ImageView) view.findViewById(R.id.thumbnail);
+            ImageView fileIcon = (ImageView) view.findViewById(com.owncloud.android.R.id.thumbnail);
 
             /** Cancellation needs do be checked and done before changing the drawable in fileIcon, or
              * {@link ThumbnailsCacheManager#cancelPotentialThumbnailWork} will NEVER cancel any task.
@@ -162,17 +161,17 @@ public class LocalFileListAdapter extends BaseAdapter implements FilterableListA
             boolean allowedToCreateNewThumbnail = (ThumbnailsCacheManager.cancelPotentialThumbnailWork(file, fileIcon));
 
             if (!file.isDirectory()) {
-                fileIcon.setImageResource(R.drawable.file);
+                fileIcon.setImageResource(com.owncloud.android.R.drawable.file);
             } else {
                 fileIcon.setImageDrawable(MimeTypeUtil.getDefaultFolderIcon());
             }
             fileIcon.setTag(file.hashCode());
 
-            ImageView checkBoxV = (ImageView) view.findViewById(R.id.custom_checkbox);
-            TextView fileSizeV = (TextView) view.findViewById(R.id.file_size);
-            TextView fileSizeSeparatorV = (TextView) view.findViewById(R.id.file_separator);
+            ImageView checkBoxV = (ImageView) view.findViewById(com.owncloud.android.R.id.custom_checkbox);
+            TextView fileSizeV = (TextView) view.findViewById(com.owncloud.android.R.id.file_size);
+            TextView fileSizeSeparatorV = (TextView) view.findViewById(com.owncloud.android.R.id.file_separator);
             if (!isGridView) {
-                TextView lastModV = (TextView) view.findViewById(R.id.last_mod);
+                TextView lastModV = (TextView) view.findViewById(com.owncloud.android.R.id.last_mod);
                 lastModV.setVisibility(View.VISIBLE);
                 lastModV.setText(DisplayUtils.getRelativeTimestamp(mContext, file.lastModified()));
             }
@@ -189,9 +188,9 @@ public class LocalFileListAdapter extends BaseAdapter implements FilterableListA
                     checkBoxV.setVisibility(View.GONE);
                 } else {
                     if (parentList.isItemChecked(position)) {
-                        checkBoxV.setImageResource(R.drawable.ic_checkbox_marked);
+                        checkBoxV.setImageResource(com.owncloud.android.R.drawable.ic_checkbox_marked);
                     } else {
-                        checkBoxV.setImageResource(R.drawable.ic_checkbox_blank_outline);
+                        checkBoxV.setImageResource(com.owncloud.android.R.drawable.ic_checkbox_blank_outline);
                     }
                     checkBoxV.setVisibility(View.VISIBLE);
                 }
@@ -240,11 +239,11 @@ public class LocalFileListAdapter extends BaseAdapter implements FilterableListA
             }
 
             // not GONE; the alignment changes; ugly way to keep it
-            view.findViewById(R.id.localFileIndicator).setVisibility(View.INVISIBLE);   
-            view.findViewById(R.id.keptOfflineIcon).setVisibility(View.GONE);
-            view.findViewById(R.id.favorite_action).setVisibility(View.GONE);
+            view.findViewById(com.owncloud.android.R.id.localFileIndicator).setVisibility(View.INVISIBLE);
+            view.findViewById(com.owncloud.android.R.id.keptOfflineIcon).setVisibility(View.GONE);
+            view.findViewById(com.owncloud.android.R.id.favorite_action).setVisibility(View.GONE);
             
-            view.findViewById(R.id.sharedIcon).setVisibility(View.GONE);
+            view.findViewById(com.owncloud.android.R.id.sharedIcon).setVisibility(View.GONE);
         }
 
         return view;

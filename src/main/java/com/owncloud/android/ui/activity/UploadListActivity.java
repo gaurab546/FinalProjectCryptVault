@@ -41,21 +41,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.UploadsStorageManager;
 import com.owncloud.android.db.OCUpload;
-import com.owncloud.android.db.UploadResult;
 import com.owncloud.android.files.services.FileUploader;
-import com.owncloud.android.files.services.FileUploader.FileUploaderBinder;
+import com.owncloud.android.operations.CheckCurrentCredentialsOperation;
+import com.owncloud.android.db.UploadResult;
+import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.CheckCurrentCredentialsOperation;
 import com.owncloud.android.ui.fragment.UploadListFragment;
 import com.owncloud.android.utils.DisplayUtils;
-import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.MimeTypeUtil;
 
 import java.io.File;
@@ -88,7 +86,7 @@ public class UploadListActivity extends FileActivity implements UploadListFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.upload_list_layout);
+        setContentView(com.owncloud.android.R.layout.upload_list_layout);
 
         // this activity has no file really bound, it's for multiple accounts at the same time; should no inherit
         // from FileActivity; moreover, some behaviours inherited from FileActivity should be delegated to Fragments;
@@ -99,18 +97,18 @@ public class UploadListActivity extends FileActivity implements UploadListFragme
         setupToolbar();
 
         // setup drawer
-        setupDrawer(R.id.nav_uploads);
+        setupDrawer(com.owncloud.android.R.id.nav_uploads);
 
         // Add fragment with a transaction for setting a tag
         if(savedInstanceState == null) {
             createUploadListFragment();
         } // else, the Fragment Manager makes the job on configuration changes
 
-        getSupportActionBar().setTitle(getString(R.string.uploads_view_title));
+        getSupportActionBar().setTitle(getString(com.owncloud.android.R.string.uploads_view_title));
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(com.owncloud.android.R.id.bottom_navigation_view);
 
-        if (getResources().getBoolean(R.bool.bottom_toolbar_enabled)) {
+        if (getResources().getBoolean(com.owncloud.android.R.bool.bottom_toolbar_enabled)) {
             bottomNavigationView.setVisibility(View.VISIBLE);
             DisplayUtils.setupBottomBar(bottomNavigationView, getResources(), this, -1);
         }
@@ -119,7 +117,7 @@ public class UploadListActivity extends FileActivity implements UploadListFragme
     private void createUploadListFragment(){
         UploadListFragment uploadList = new UploadListFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.upload_list_fragment, uploadList, TAG_UPLOAD_LIST_FRAGMENT);
+        transaction.add(com.owncloud.android.R.id.upload_list_fragment, uploadList, TAG_UPLOAD_LIST_FRAGMENT);
         transaction.commit();
     }
 
@@ -211,24 +209,24 @@ public class UploadListActivity extends FileActivity implements UploadListFragme
                 } else {
                     openDrawer();
                 }
-            case R.id.action_retry_uploads:
+            case com.owncloud.android.R.id.action_retry_uploads:
                 FileUploader.UploadRequester requester = new FileUploader.UploadRequester();
                 requester.retryFailedUploads(this, null, null);
                 break;
 
-            case R.id.action_clear_failed_uploads:
+            case com.owncloud.android.R.id.action_clear_failed_uploads:
                 storageManager = new UploadsStorageManager(getContentResolver(), getApplicationContext());
                 storageManager.clearFailedButNotDelayedUploads();
                 uploadListFragment.updateUploads();
                 break;
 
-            case R.id.action_clear_successfull_uploads:
+            case com.owncloud.android.R.id.action_clear_successfull_uploads:
                 storageManager = new UploadsStorageManager(getContentResolver(), getApplicationContext());
                 storageManager.clearSuccessfulUploads();
                 uploadListFragment.updateUploads();
                 break;
 
-            case R.id.action_clear_finished_uploads:
+            case com.owncloud.android.R.id.action_clear_finished_uploads:
                 storageManager = new UploadsStorageManager(getContentResolver(), getApplicationContext());
                 storageManager.clearAllFinishedButNotDelayedUploads();
                 uploadListFragment.updateUploads();
@@ -244,7 +242,7 @@ public class UploadListActivity extends FileActivity implements UploadListFragme
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.upload_list_menu, menu);
+        inflater.inflate(com.owncloud.android.R.menu.upload_list_menu, menu);
         return true;
     }
 
@@ -303,10 +301,10 @@ public class UploadListActivity extends FileActivity implements UploadListFragme
 
         @Override
         public void onServiceConnected(ComponentName component, IBinder service) {
-            if (service instanceof FileUploaderBinder) {
+            if (service instanceof FileUploader.FileUploaderBinder) {
                 if(mUploaderBinder == null)
                 {
-                    mUploaderBinder = (FileUploaderBinder) service;
+                    mUploaderBinder = (FileUploader.FileUploaderBinder) service;
                     Log_OC.d(TAG, "UploadListActivity connected to Upload service. component: " +
                             component + " service: "
                             + service);
@@ -360,7 +358,7 @@ public class UploadListActivity extends FileActivity implements UploadListFragme
     }
 
     protected String getDefaultTitle() {
-        return getString(R.string.uploads_view_title);
+        return getString(com.owncloud.android.R.string.uploads_view_title);
     }
 
 
@@ -370,7 +368,7 @@ public class UploadListActivity extends FileActivity implements UploadListFragme
     @Override
     protected void onAccountSet(boolean stateWasRecovered) {
         super.onAccountSet(stateWasRecovered);
-        getSupportActionBar().setTitle(getString(R.string.uploads_view_title));
+        getSupportActionBar().setTitle(getString(com.owncloud.android.R.string.uploads_view_title));
         if (mAccountWasSet) {
             setAccountInDrawer(getAccount());
         }

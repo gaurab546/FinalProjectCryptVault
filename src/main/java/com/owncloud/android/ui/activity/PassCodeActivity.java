@@ -39,10 +39,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
-import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.ThemeUtils;
+import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 import java.util.Arrays;
 
@@ -91,36 +90,36 @@ public class PassCodeActivity extends AppCompatActivity {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.passcodelock);
+        setContentView(com.owncloud.android.R.layout.passcodelock);
         
-        mBCancel = (Button) findViewById(R.id.cancel);
+        mBCancel = (Button) findViewById(com.owncloud.android.R.id.cancel);
         mBCancel.getBackground().setColorFilter(ThemeUtils.primaryColor(), PorterDuff.Mode.SRC_ATOP);
 
-        mPassCodeHdr = (TextView) findViewById(R.id.header);
-        mPassCodeHdrExplanation = (TextView) findViewById(R.id.explanation);
+        mPassCodeHdr = (TextView) findViewById(com.owncloud.android.R.id.header);
+        mPassCodeHdrExplanation = (TextView) findViewById(com.owncloud.android.R.id.explanation);
 
-        mPassCodeEditTexts[0] = (EditText) findViewById(R.id.txt0);
+        mPassCodeEditTexts[0] = (EditText) findViewById(com.owncloud.android.R.id.txt0);
         mPassCodeEditTexts[0].setTextColor(ThemeUtils.primaryColor());
         mPassCodeEditTexts[0].getBackground().setColorFilter(ThemeUtils.primaryColor(), PorterDuff.Mode.SRC_ATOP);
         mPassCodeEditTexts[0].requestFocus();
         getWindow().setSoftInputMode(
                 android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        mPassCodeEditTexts[1] = (EditText) findViewById(R.id.txt1);
+        mPassCodeEditTexts[1] = (EditText) findViewById(com.owncloud.android.R.id.txt1);
         mPassCodeEditTexts[1].setTextColor(ThemeUtils.primaryColor());
         mPassCodeEditTexts[1].getBackground().setColorFilter(ThemeUtils.primaryColor(), PorterDuff.Mode.SRC_ATOP);
 
-        mPassCodeEditTexts[2] = (EditText) findViewById(R.id.txt2);
+        mPassCodeEditTexts[2] = (EditText) findViewById(com.owncloud.android.R.id.txt2);
         mPassCodeEditTexts[2].setTextColor(ThemeUtils.primaryColor());
         mPassCodeEditTexts[2].getBackground().setColorFilter(ThemeUtils.primaryColor(), PorterDuff.Mode.SRC_ATOP);
 
-        mPassCodeEditTexts[3] = (EditText) findViewById(R.id.txt3);
+        mPassCodeEditTexts[3] = (EditText) findViewById(com.owncloud.android.R.id.txt3);
         mPassCodeEditTexts[3].setTextColor(ThemeUtils.primaryColor());
         mPassCodeEditTexts[3].getBackground().setColorFilter(ThemeUtils.primaryColor(), PorterDuff.Mode.SRC_ATOP);
 
         if (ACTION_CHECK.equals(getIntent().getAction())) {
             /// this is a pass code request; the user has to input the right value
-            mPassCodeHdr.setText(R.string.pass_code_enter_pass_code);
+            mPassCodeHdr.setText(com.owncloud.android.R.string.pass_code_enter_pass_code);
             mPassCodeHdrExplanation.setVisibility(View.INVISIBLE);
             setCancelButtonEnabled(false);      // no option to cancel
 
@@ -135,7 +134,7 @@ public class PassCodeActivity extends AppCompatActivity {
             }else{
                 /// pass code preference has just been activated in Preferences;
                 // will receive and confirm pass code value
-                mPassCodeHdr.setText(R.string.pass_code_configure_your_pass_code);
+                mPassCodeHdr.setText(com.owncloud.android.R.string.pass_code_configure_your_pass_code);
                 //mPassCodeHdr.setText(R.string.pass_code_enter_pass_code);
                 // TODO choose a header, check iOS
                 mPassCodeHdrExplanation.setVisibility(View.VISIBLE);
@@ -145,7 +144,7 @@ public class PassCodeActivity extends AppCompatActivity {
         } else if (ACTION_CHECK_WITH_RESULT.equals(getIntent().getAction())) {
             /// pass code preference has just been disabled in Preferences;
             // will confirm user knows pass code, then remove it
-            mPassCodeHdr.setText(R.string.pass_code_remove_your_pass_code);
+            mPassCodeHdr.setText(com.owncloud.android.R.string.pass_code_remove_your_pass_code);
             mPassCodeHdrExplanation.setVisibility(View.INVISIBLE);
             setCancelButtonEnabled(true);
 
@@ -329,7 +328,7 @@ public class PassCodeActivity extends AppCompatActivity {
                 finish();
 
             }  else {
-                showErrorAndRestart(R.string.pass_code_wrong, R.string.pass_code_enter_pass_code,
+                showErrorAndRestart(com.owncloud.android.R.string.pass_code_wrong, com.owncloud.android.R.string.pass_code_enter_pass_code,
                         View.INVISIBLE);
             }
 
@@ -341,7 +340,7 @@ public class PassCodeActivity extends AppCompatActivity {
                 hideSoftKeyboard();
                 finish();
             } else {
-                showErrorAndRestart(R.string.pass_code_wrong, R.string.pass_code_enter_pass_code,
+                showErrorAndRestart(com.owncloud.android.R.string.pass_code_wrong, com.owncloud.android.R.string.pass_code_enter_pass_code,
                         View.INVISIBLE);
             }
 
@@ -356,7 +355,7 @@ public class PassCodeActivity extends AppCompatActivity {
 
             } else {
                 showErrorAndRestart(
-                        R.string.pass_code_mismatch, R.string.pass_code_configure_your_pass_code, View.VISIBLE
+                        com.owncloud.android.R.string.pass_code_mismatch, com.owncloud.android.R.string.pass_code_configure_your_pass_code, View.VISIBLE
                 );
             }
         }
@@ -391,7 +390,7 @@ public class PassCodeActivity extends AppCompatActivity {
      */
     protected void requestPassCodeConfirmation(){
         clearBoxes();
-        mPassCodeHdr.setText(R.string.pass_code_reenter_your_pass_code);
+        mPassCodeHdr.setText(com.owncloud.android.R.string.pass_code_reenter_your_pass_code);
         mPassCodeHdrExplanation.setVisibility(View.INVISIBLE);
         mConfirmingPassCode = true;
     }

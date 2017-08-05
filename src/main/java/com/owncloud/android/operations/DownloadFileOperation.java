@@ -41,7 +41,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Remote mDownloadOperation performing the download of a file to an ownCloud server
+ * Remote mDownloadOperation performing the download of a file to an free server
  */
 public class DownloadFileOperation extends RemoteOperation {
     

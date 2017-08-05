@@ -23,7 +23,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
 
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
 
 import java.io.File;
@@ -112,11 +111,11 @@ public class MimeTypeUtil {
         int drawableId;
 
         if (isSharedViaLink) {
-            drawableId = R.drawable.folder_public;
+            drawableId = com.owncloud.android.R.drawable.folder_public;
         } else if (isSharedViaUsers) {
-            drawableId = R.drawable.shared_with_me_folder;
+            drawableId = com.owncloud.android.R.drawable.shared_with_me_folder;
         } else {
-            drawableId = R.drawable.ic_menu_archive;
+            drawableId = com.owncloud.android.R.drawable.ic_menu_archive;
         }
 
         return ThemeUtils.tintDrawable(drawableId, ThemeUtils.primaryColor(account));
@@ -266,7 +265,7 @@ public class MimeTypeUtil {
     private static int determineIconIdByMimeTypeList(List<String> mimetypes) {
         // no mime type leads to file
         if (mimetypes == null || mimetypes.size() < 1) {
-            return R.drawable.file;
+            return com.owncloud.android.R.drawable.file;
         } else {
 
             // search for full mime type mapping
@@ -290,7 +289,7 @@ public class MimeTypeUtil {
         }
 
         // no match found at all, falling back to file
-        return R.drawable.file;
+        return com.owncloud.android.R.drawable.file;
     }
 
     /**
@@ -341,104 +340,104 @@ public class MimeTypeUtil {
      * populates the mapping list:  full mime type --> icon.
      */
     private static void populateMimeTypeIconMapping() {
-        MIMETYPE_TO_ICON_MAPPING.put("application/coreldraw", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/epub+zip", R.drawable.file_text);
-        MIMETYPE_TO_ICON_MAPPING.put("application/font-sfnt", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/font-woff", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/illustrator", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/javascript", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("application/json", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("application/msaccess", R.drawable.file);
-        MIMETYPE_TO_ICON_MAPPING.put("application/msexcel", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/mspowerpoint", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/msword", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/octet-stream", R.drawable.file);
-        MIMETYPE_TO_ICON_MAPPING.put("application/postscript", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/pdf", R.drawable.file_pdf);
-        MIMETYPE_TO_ICON_MAPPING.put("application/rss+xml", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("application/rtf", R.drawable.file);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.android.package-archive", R.drawable.file_zip);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel.addin.macroEnabled.12", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel.sheet.binary.macroEnabled.12", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel.sheet.macroEnabled.12", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel.template.macroEnabled.12", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-fontobject", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint.addin.macroEnabled.12", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint.presentation.macroEnabled.12", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint.slideshow.macroEnabled.12", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint.template.macroEnabled.12", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-word.document.macroEnabled.12", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-word.template.macroEnabled.12", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.presentation", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.presentation-template", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.spreadsheet", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.spreadsheet-template", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.text", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.text-master", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.text-template", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.text-web", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.presentationml.presentation", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.presentationml.slideshow", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.presentationml.template", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.spreadsheetml.template", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.wordprocessingml.document", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.wordprocessingml.template", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-7z-compressed", R.drawable.file_zip);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-bin", R.drawable.file_application);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-cbr", R.drawable.file_text);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-compressed", R.drawable.file_zip);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-dcraw", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-deb", R.drawable.file_zip);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-font", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-gimp", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-gzip", R.drawable.file_zip);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-ms-dos-executable", R.drawable.file_application);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-msi", R.drawable.file_application);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-iwork-numbers-sffnumbers", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-iwork-keynote-sffkey", R.drawable.file_ppt);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-iwork-pages-sffpages", R.drawable.file_doc);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-perl", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-photoshop", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-php", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-rar-compressed", R.drawable.file_zip);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-shockwave-flash", R.drawable.file_application);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-tar", R.drawable.file_zip);
-        MIMETYPE_TO_ICON_MAPPING.put("application/x-tex", R.drawable.file_text);
-        MIMETYPE_TO_ICON_MAPPING.put("application/xml", R.drawable.file_text);
-        MIMETYPE_TO_ICON_MAPPING.put("application/yaml", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("application/zip", R.drawable.file_zip);
-        MIMETYPE_TO_ICON_MAPPING.put("database", R.drawable.file);
-        MIMETYPE_TO_ICON_MAPPING.put("httpd/unix-directory", R.drawable.ic_menu_archive);
-        MIMETYPE_TO_ICON_MAPPING.put("image/svg+xml", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("image/vector", R.drawable.file_image);
-        MIMETYPE_TO_ICON_MAPPING.put("text/calendar", R.drawable.file_calendar);
-        MIMETYPE_TO_ICON_MAPPING.put("text/css", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("text/csv", R.drawable.file_xls);
-        MIMETYPE_TO_ICON_MAPPING.put("text/html", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("text/vcard", R.drawable.file_vcard);
-        MIMETYPE_TO_ICON_MAPPING.put("text/x-c", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("text/x-c++src", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("text/x-h", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("text/x-python", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("text/x-shellscript", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put("web", R.drawable.file_code);
-        MIMETYPE_TO_ICON_MAPPING.put(MimeType.DIRECTORY, R.drawable.ic_menu_archive);
+        MIMETYPE_TO_ICON_MAPPING.put("application/coreldraw", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/epub+zip", com.owncloud.android.R.drawable.file_text);
+        MIMETYPE_TO_ICON_MAPPING.put("application/font-sfnt", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/font-woff", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/illustrator", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/javascript", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("application/json", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("application/msaccess", com.owncloud.android.R.drawable.file);
+        MIMETYPE_TO_ICON_MAPPING.put("application/msexcel", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/mspowerpoint", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/msword", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/octet-stream", com.owncloud.android.R.drawable.file);
+        MIMETYPE_TO_ICON_MAPPING.put("application/postscript", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/pdf", com.owncloud.android.R.drawable.file_pdf);
+        MIMETYPE_TO_ICON_MAPPING.put("application/rss+xml", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("application/rtf", com.owncloud.android.R.drawable.file);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.android.package-archive", com.owncloud.android.R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel.addin.macroEnabled.12", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel.sheet.binary.macroEnabled.12", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel.sheet.macroEnabled.12", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-excel.template.macroEnabled.12", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-fontobject", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint.addin.macroEnabled.12", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint.presentation.macroEnabled.12", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint.slideshow.macroEnabled.12", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-powerpoint.template.macroEnabled.12", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-word.document.macroEnabled.12", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.ms-word.template.macroEnabled.12", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.presentation", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.presentation-template", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.spreadsheet", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.spreadsheet-template", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.text", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.text-master", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.text-template", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.oasis.opendocument.text-web", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.presentationml.presentation", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.presentationml.slideshow", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.presentationml.template", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.spreadsheetml.template", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.wordprocessingml.document", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.openxmlformats-officedocument.wordprocessingml.template", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-7z-compressed", com.owncloud.android.R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-bin", com.owncloud.android.R.drawable.file_application);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-cbr", com.owncloud.android.R.drawable.file_text);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-compressed", com.owncloud.android.R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-dcraw", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-deb", com.owncloud.android.R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-font", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-gimp", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-gzip", com.owncloud.android.R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-ms-dos-executable", com.owncloud.android.R.drawable.file_application);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-msi", com.owncloud.android.R.drawable.file_application);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-iwork-numbers-sffnumbers", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-iwork-keynote-sffkey", com.owncloud.android.R.drawable.file_ppt);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-iwork-pages-sffpages", com.owncloud.android.R.drawable.file_doc);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-perl", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-photoshop", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-php", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-rar-compressed", com.owncloud.android.R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-shockwave-flash", com.owncloud.android.R.drawable.file_application);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-tar", com.owncloud.android.R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("application/x-tex", com.owncloud.android.R.drawable.file_text);
+        MIMETYPE_TO_ICON_MAPPING.put("application/xml", com.owncloud.android.R.drawable.file_text);
+        MIMETYPE_TO_ICON_MAPPING.put("application/yaml", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("application/zip", com.owncloud.android.R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("database", com.owncloud.android.R.drawable.file);
+        MIMETYPE_TO_ICON_MAPPING.put("httpd/unix-directory", com.owncloud.android.R.drawable.ic_menu_archive);
+        MIMETYPE_TO_ICON_MAPPING.put("image/svg+xml", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("image/vector", com.owncloud.android.R.drawable.file_image);
+        MIMETYPE_TO_ICON_MAPPING.put("text/calendar", com.owncloud.android.R.drawable.file_calendar);
+        MIMETYPE_TO_ICON_MAPPING.put("text/css", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("text/csv", com.owncloud.android.R.drawable.file_xls);
+        MIMETYPE_TO_ICON_MAPPING.put("text/html", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("text/vcard", com.owncloud.android.R.drawable.file_vcard);
+        MIMETYPE_TO_ICON_MAPPING.put("text/x-c", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("text/x-c++src", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("text/x-h", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("text/x-python", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("text/x-shellscript", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put("web", com.owncloud.android.R.drawable.file_code);
+        MIMETYPE_TO_ICON_MAPPING.put(MimeType.DIRECTORY, com.owncloud.android.R.drawable.ic_menu_archive);
     }
 
     /**
      * populates the mapping list: main mime type --> icon.
      */
     private static void populateMainMimeTypeMapping() {
-        MAIN_MIMETYPE_TO_ICON_MAPPING.put("audio", R.drawable.file_sound);
-        MAIN_MIMETYPE_TO_ICON_MAPPING.put("database", R.drawable.file);
-        MAIN_MIMETYPE_TO_ICON_MAPPING.put("httpd", R.drawable.file_zip);
-        MAIN_MIMETYPE_TO_ICON_MAPPING.put("image", R.drawable.file_image);
-        MAIN_MIMETYPE_TO_ICON_MAPPING.put("text", R.drawable.file_text);
-        MAIN_MIMETYPE_TO_ICON_MAPPING.put("video", R.drawable.file_movie);
-        MAIN_MIMETYPE_TO_ICON_MAPPING.put("web", R.drawable.file_code);
+        MAIN_MIMETYPE_TO_ICON_MAPPING.put("audio", com.owncloud.android.R.drawable.file_sound);
+        MAIN_MIMETYPE_TO_ICON_MAPPING.put("database", com.owncloud.android.R.drawable.file);
+        MAIN_MIMETYPE_TO_ICON_MAPPING.put("httpd", com.owncloud.android.R.drawable.file_zip);
+        MAIN_MIMETYPE_TO_ICON_MAPPING.put("image", com.owncloud.android.R.drawable.file_image);
+        MAIN_MIMETYPE_TO_ICON_MAPPING.put("text", com.owncloud.android.R.drawable.file_text);
+        MAIN_MIMETYPE_TO_ICON_MAPPING.put("video", com.owncloud.android.R.drawable.file_movie);
+        MAIN_MIMETYPE_TO_ICON_MAPPING.put("web", com.owncloud.android.R.drawable.file_code);
     }
 
     /**

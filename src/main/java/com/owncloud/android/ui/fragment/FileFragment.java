@@ -25,8 +25,8 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.files.services.FileUploader;
 import com.owncloud.android.files.services.FileDownloader.FileDownloaderBinder;
-import com.owncloud.android.files.services.FileUploader.FileUploaderBinder;
 import com.owncloud.android.ui.activity.ComponentsGetter;
 
 
@@ -131,7 +131,7 @@ public class FileFragment extends Fragment {
          * 
          * This method is necessary by now to update the user interface of the double-pane layout
          * in tablets because methods {@link FileDownloaderBinder#isDownloading(Account, OCFile)}
-         * and {@link FileUploaderBinder#isUploading(Account, OCFile)}
+         * and {@link FileUploader.FileUploaderBinder#isUploading(Account, OCFile)}
          * won't provide the needed response before the method where this is called finishes. 
          * 
          * TODO Remove this when the transfer state of a file is kept in the database

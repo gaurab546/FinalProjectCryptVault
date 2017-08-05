@@ -29,17 +29,15 @@ package com.owncloud.android.ui.dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.ui.activity.ComponentsGetter;
-import com.owncloud.android.ui.dialog.ConfirmationDialogFragment.ConfirmationDialogFragmentListener;
 
 import java.util.ArrayList;
 import java.util.Vector;
 
 public class RemoveFileDialogFragment extends ConfirmationDialogFragment 
-implements ConfirmationDialogFragmentListener {
+implements ConfirmationDialogFragment.ConfirmationDialogFragmentListener {
 
     private OCFile mTargetFile;
 
@@ -55,19 +53,19 @@ implements ConfirmationDialogFragmentListener {
         RemoveFileDialogFragment frag = new RemoveFileDialogFragment();
         Bundle args = new Bundle();
         
-        int messageStringId = R.string.confirmation_remove_file_alert;
+        int messageStringId = com.owncloud.android.R.string.confirmation_remove_file_alert;
         
         int localRemoveButton = (!file.isAvailableOffline() && (file.isFolder() || file.isDown())) ?
-            R.string.confirmation_remove_local : -1;
+            com.owncloud.android.R.string.confirmation_remove_local : -1;
 
         if (file.isFolder()) {
-            messageStringId = R.string.confirmation_remove_folder_alert;
+            messageStringId = com.owncloud.android.R.string.confirmation_remove_folder_alert;
         }
 
         args.putInt(ARG_MESSAGE_RESOURCE_ID, messageStringId);
         args.putStringArray(ARG_MESSAGE_ARGUMENTS, new String[]{file.getFileName()});
-        args.putInt(ARG_POSITIVE_BTN_RES, R.string.common_yes);
-        args.putInt(ARG_NEUTRAL_BTN_RES, R.string.common_no);
+        args.putInt(ARG_POSITIVE_BTN_RES, com.owncloud.android.R.string.common_yes);
+        args.putInt(ARG_NEUTRAL_BTN_RES, com.owncloud.android.R.string.common_no);
         args.putInt(ARG_NEGATIVE_BTN_RES, localRemoveButton);
         args.putParcelable(ARG_TARGET_FILE, file);
         frag.setArguments(args);

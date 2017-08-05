@@ -55,22 +55,21 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.google.gson.Gson;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.PushConfigurationState;
 import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.UploadsStorageManager;
+import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.utils.PushUtils;
+import com.google.gson.Gson;
 import com.owncloud.android.lib.common.UserInfo;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.users.GetRemoteUserInfoOperation;
 import com.owncloud.android.ui.events.TokenPushEvent;
-import com.owncloud.android.utils.DisplayUtils;
-import com.owncloud.android.utils.PushUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -94,79 +93,79 @@ public class UserInfoActivity extends FileActivity {
 
     private static final int KEY_DELETE_CODE = 101;
 
-    @BindView(R.id.empty_list_view)
+    @BindView(com.owncloud.android.R.id.empty_list_view)
     public LinearLayout emptyContentContainer;
 
-    @BindView(R.id.empty_list_view_text)
+    @BindView(com.owncloud.android.R.id.empty_list_view_text)
     public TextView emptyContentMessage;
 
-    @BindView(R.id.empty_list_view_headline)
+    @BindView(com.owncloud.android.R.id.empty_list_view_headline)
     public TextView emptyContentHeadline;
 
-    @BindView(R.id.empty_list_icon)
+    @BindView(com.owncloud.android.R.id.empty_list_icon)
     public ImageView emptyContentIcon;
 
-    @BindView(R.id.user_info_view)
+    @BindView(com.owncloud.android.R.id.user_info_view)
     public LinearLayout userInfoView;
 
-    @BindView(R.id.user_icon)
+    @BindView(com.owncloud.android.R.id.user_icon)
     public ImageView avatar;
 
-    @BindView(R.id.drawer_username)
+    @BindView(com.owncloud.android.R.id.drawer_username)
     public TextView userName;
 
-    @BindView(R.id.drawer_username_full)
+    @BindView(com.owncloud.android.R.id.drawer_username_full)
     public TextView fullName;
 
-    @BindView(R.id.phone_container)
+    @BindView(com.owncloud.android.R.id.phone_container)
     public View mPhoneNumberContainer;
 
-    @BindView(R.id.phone_number)
+    @BindView(com.owncloud.android.R.id.phone_number)
     public TextView mPhoneNumberTextView;
 
-    @BindView(R.id.phone_icon)
+    @BindView(com.owncloud.android.R.id.phone_icon)
     public ImageView mPhoneNumberIcon;
 
-    @BindView(R.id.email_container)
+    @BindView(com.owncloud.android.R.id.email_container)
     public View mEmailContainer;
 
-    @BindView(R.id.email_address)
+    @BindView(com.owncloud.android.R.id.email_address)
     public TextView mEmailAddressTextView;
 
-    @BindView(R.id.email_icon)
+    @BindView(com.owncloud.android.R.id.email_icon)
     public ImageView mEmailIcon;
 
-    @BindView(R.id.address_container)
+    @BindView(com.owncloud.android.R.id.address_container)
     public View mAddressContainer;
 
-    @BindView(R.id.address)
+    @BindView(com.owncloud.android.R.id.address)
     public TextView mAddressTextView;
 
-    @BindView(R.id.address_icon)
+    @BindView(com.owncloud.android.R.id.address_icon)
     public ImageView mAddressIcon;
 
-    @BindView(R.id.website_container)
+    @BindView(com.owncloud.android.R.id.website_container)
     public View mWebsiteContainer;
 
-    @BindView(R.id.website_address)
+    @BindView(com.owncloud.android.R.id.website_address)
     public TextView mWebsiteTextView;
 
-    @BindView(R.id.website_icon)
+    @BindView(com.owncloud.android.R.id.website_icon)
     public ImageView mWebsiteIcon;
 
-    @BindView(R.id.twitter_container)
+    @BindView(com.owncloud.android.R.id.twitter_container)
     public View mTwitterContainer;
 
-    @BindView(R.id.twitter_handle)
+    @BindView(com.owncloud.android.R.id.twitter_handle)
     public TextView mTwitterHandleTextView;
 
-    @BindView(R.id.twitter_icon)
+    @BindView(com.owncloud.android.R.id.twitter_icon)
     public ImageView mTwitterIcon;
 
-    @BindView(R.id.empty_list_progress)
+    @BindView(com.owncloud.android.R.id.empty_list_progress)
     public ProgressBar multiListProgressBar;
 
-    @BindString(R.string.preview_sorry)
+    @BindString(com.owncloud.android.R.string.preview_sorry)
     public String sorryMessage;
 
     private float mCurrentAccountAvatarRadiusDimension;
@@ -189,9 +188,9 @@ public class UserInfoActivity extends FileActivity {
             userInfo = Parcels.unwrap(savedInstanceState.getParcelable(KEY_USER_DATA));
         }
 
-        mCurrentAccountAvatarRadiusDimension = getResources().getDimension(R.dimen.nav_drawer_header_avatar_radius);
+        mCurrentAccountAvatarRadiusDimension = getResources().getDimension(com.owncloud.android.R.dimen.nav_drawer_header_avatar_radius);
 
-        setContentView(R.layout.user_info_layout);
+        setContentView(com.owncloud.android.R.layout.user_info_layout);
         unbinder = ButterKnife.bind(this);
 
         setAccount(AccountUtils.getCurrentOwnCloudAccount(this));
@@ -219,7 +218,7 @@ public class UserInfoActivity extends FileActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.user_info_menu, menu);
+        inflater.inflate(com.owncloud.android.R.menu.user_info_menu, menu);
 
         return true;
     }
@@ -231,10 +230,10 @@ public class UserInfoActivity extends FileActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.change_password:
+            case com.owncloud.android.R.id.change_password:
                 changeAccountPassword(account);
                 break;
-            case R.id.delete_account:
+            case com.owncloud.android.R.id.delete_account:
                 openAccountRemovalConfirmationDialog(account, getFragmentManager(), false);
                 break;
             default:
@@ -251,7 +250,7 @@ public class UserInfoActivity extends FileActivity {
 
     private void setMultiListLoadingMessage() {
         if (emptyContentContainer != null) {
-            emptyContentHeadline.setText(R.string.file_list_loading);
+            emptyContentHeadline.setText(com.owncloud.android.R.string.file_list_loading);
             emptyContentMessage.setText("");
 
             emptyContentIcon.setVisibility(View.GONE);
@@ -270,7 +269,7 @@ public class UserInfoActivity extends FileActivity {
 
     private void setHeaderImage() {
         if (getStorageManager().getCapability(account.name).getServerBackground() != null) {
-            final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appbar);
+            final AppBarLayout appBar = (AppBarLayout) findViewById(com.owncloud.android.R.id.appbar);
 
             if (appBar != null) {
                 String background = getStorageManager().getCapability(account.name).getServerBackground();
@@ -291,8 +290,8 @@ public class UserInfoActivity extends FileActivity {
                     Glide.with(this)
                             .load(background)
                             .centerCrop()
-                            .placeholder(R.drawable.background)
-                            .error(R.drawable.background)
+                            .placeholder(com.owncloud.android.R.drawable.background)
+                            .error(com.owncloud.android.R.drawable.background)
                             .crossFade()
                             .into(target);
                 } else {
@@ -389,11 +388,11 @@ public class UserInfoActivity extends FileActivity {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final boolean removeDirectly = getArguments().getBoolean(KEY_DIRECT_REMOVE);
-            return new AlertDialog.Builder(getActivity(), R.style.Theme_ownCloud_Dialog)
-                    .setTitle(R.string.delete_account)
-                    .setMessage(getResources().getString(R.string.delete_account_warning, account.name))
-                    .setIcon(R.drawable.ic_warning)
-                    .setPositiveButton(R.string.common_ok,
+            return new AlertDialog.Builder(getActivity(), com.owncloud.android.R.style.Theme_ownCloud_Dialog)
+                    .setTitle(com.owncloud.android.R.string.delete_account)
+                    .setMessage(getResources().getString(com.owncloud.android.R.string.delete_account_warning, account.name))
+                    .setIcon(com.owncloud.android.R.drawable.ic_warning)
+                    .setPositiveButton(com.owncloud.android.R.string.common_ok,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -424,7 +423,7 @@ public class UserInfoActivity extends FileActivity {
 
                                     if (!TextUtils.isEmpty(arbitraryDataPushString = arbitraryDataProvider.getValue(
                                             account, PushUtils.KEY_PUSH)) &&
-                                            !TextUtils.isEmpty(getResources().getString(R.string.push_server_url))) {
+                                            !TextUtils.isEmpty(getResources().getString(com.owncloud.android.R.string.push_server_url))) {
                                         Gson gson = new Gson();
                                         PushConfigurationState pushArbitraryData = gson.fromJson(arbitraryDataPushString,
                                                 PushConfigurationState.class);
@@ -456,7 +455,7 @@ public class UserInfoActivity extends FileActivity {
 
                                 }
                             })
-                    .setNegativeButton(R.string.common_cancel, null)
+                    .setNegativeButton(com.owncloud.android.R.string.common_cancel, null)
                     .create();
         }
     }

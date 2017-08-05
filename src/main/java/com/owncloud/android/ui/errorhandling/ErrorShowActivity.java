@@ -24,8 +24,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
-
 public class ErrorShowActivity extends Activity {
 
 	private static final String TAG = ErrorShowActivity.class.getSimpleName();
@@ -37,8 +35,8 @@ public class ErrorShowActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.e(TAG, "ErrorShowActivity was called. See above for StackTrace.");
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
-		setContentView(R.layout.errorhandling_showerror);
-		mError = (TextView) findViewById(R.id.errorTextView);
+		setContentView(com.owncloud.android.R.layout.errorhandling_showerror);
+		mError = (TextView) findViewById(com.owncloud.android.R.id.errorTextView);
 		mError.setText(getIntent().getStringExtra("error"));
 
 	}

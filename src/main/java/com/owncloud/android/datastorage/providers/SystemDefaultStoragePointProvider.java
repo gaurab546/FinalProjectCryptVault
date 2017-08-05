@@ -21,9 +21,8 @@
 
 package com.owncloud.android.datastorage.providers;
 
-import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.datastorage.StoragePoint;
+import com.owncloud.android.MainApp;
 
 import java.io.File;
 import java.util.Vector;
@@ -43,7 +42,7 @@ public class SystemDefaultStoragePointProvider extends AbstractStoragePointProvi
     public Vector<StoragePoint> getAvailableStoragePoint() {
         Vector<StoragePoint> result = new Vector<>();
 
-        final String defaultStringDesc = MainApp.getAppContext().getString(R.string.storage_description_default);
+        final String defaultStringDesc = MainApp.getAppContext().getString(com.owncloud.android.R.string.storage_description_default);
         File path;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             path = MainApp.getAppContext().getExternalMediaDirs()[0];

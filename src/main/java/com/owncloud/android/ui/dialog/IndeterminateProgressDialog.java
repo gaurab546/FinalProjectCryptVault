@@ -28,7 +28,6 @@ import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.widget.ProgressBar;
 
-import com.owncloud.android.R;
 import com.owncloud.android.utils.ThemeUtils;
 
 
@@ -47,7 +46,7 @@ public class IndeterminateProgressDialog extends DialogFragment {
      */
     public static IndeterminateProgressDialog newInstance(int messageId, boolean cancelable) {
         IndeterminateProgressDialog fragment = new IndeterminateProgressDialog();
-        fragment.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.ownCloud_AlertDialog);
+        fragment.setStyle(DialogFragment.STYLE_NO_FRAME, com.owncloud.android.R.style.ownCloud_AlertDialog);
         Bundle args = new Bundle();
         args.putInt(ARG_MESSAGE_ID, messageId);
         args.putBoolean(ARG_CANCELABLE, cancelable);
@@ -62,7 +61,7 @@ public class IndeterminateProgressDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         /// create indeterminate progress dialog
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity(), R.style.ProgressDialogTheme);
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity(), com.owncloud.android.R.style.ProgressDialogTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -75,7 +74,7 @@ public class IndeterminateProgressDialog extends DialogFragment {
         });
         
         /// set message
-        int messageId = getArguments().getInt(ARG_MESSAGE_ID, R.string.placeholder_sentence);
+        int messageId = getArguments().getInt(ARG_MESSAGE_ID, com.owncloud.android.R.string.placeholder_sentence);
         progressDialog.setMessage(getString(messageId));
 
         /// set cancellation behavior

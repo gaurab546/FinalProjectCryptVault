@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
 import com.owncloud.android.lib.common.utils.Log_OC;
 
 /**
@@ -54,7 +53,7 @@ public class CopyToClipboardActivity extends Activity {
             if (text != null && text.length() > 0) {
                 // minimum API level >= 11 -> only modern Clipboard
                 ClipData clip = ClipData.newPlainText(
-                    getString(R.string.clipboard_label, getString(R.string.app_name)),
+                    getString(com.owncloud.android.R.string.clipboard_label, getString(com.owncloud.android.R.string.app_name)),
                     text
                 );
                 clipboardManager.setPrimaryClip(clip);
@@ -63,13 +62,13 @@ public class CopyToClipboardActivity extends Activity {
                 // clipboardManager.setText(text);
 
                 // alert the user that the text is in the clipboard and we're done
-                Toast.makeText(this, R.string.clipboard_text_copied, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, com.owncloud.android.R.string.clipboard_text_copied, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, R.string.clipboard_no_text_to_copy, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, com.owncloud.android.R.string.clipboard_no_text_to_copy, Toast.LENGTH_SHORT).show();
             }
 
         } catch (Exception e) {
-            Toast.makeText(this, R.string.clipboard_uxexpected_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.owncloud.android.R.string.clipboard_uxexpected_error, Toast.LENGTH_SHORT).show();
             Log_OC.e(TAG, "Exception caught while copying to clipboard", e);
         }
 

@@ -41,18 +41,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.owncloud.android.operations.CreateFolderOperation;
+import com.owncloud.android.operations.RefreshFolderOperation;
+import com.owncloud.android.ui.dialog.CreateFolderDialogFragment;
+import com.owncloud.android.ui.fragment.OCFileListFragment;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.CreateFolderOperation;
-import com.owncloud.android.operations.RefreshFolderOperation;
 import com.owncloud.android.syncadapter.FileSyncAdapter;
-import com.owncloud.android.ui.dialog.CreateFolderDialogFragment;
 import com.owncloud.android.ui.fragment.FileFragment;
-import com.owncloud.android.ui.fragment.OCFileListFragment;
 import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.DataHolderUtil;
 import com.owncloud.android.utils.ErrorMessageAdapter;
@@ -141,7 +141,7 @@ public class FolderPickerActivity extends FileActivity implements FileFragment.C
             }
             
             if (!stateWasRecovered) {
-                OCFileListFragment listOfFolders = getListOfFilesFragment(); 
+                OCFileListFragment listOfFolders = getListOfFilesFragment();
                 listOfFolders.listDirectory(folder, false, false);
                 
                 startSyncFolderOperation(folder, false);
@@ -283,7 +283,7 @@ public class FolderPickerActivity extends FileActivity implements FileFragment.C
         boolean retval = true;
         switch (item.getItemId()) {
         case R.id.action_create_dir: {
-            CreateFolderDialogFragment dialog = 
+            CreateFolderDialogFragment dialog =
                     CreateFolderDialogFragment.newInstance(getCurrentFolder());
             dialog.show(
                     getSupportFragmentManager(), 

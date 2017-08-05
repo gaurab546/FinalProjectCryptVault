@@ -34,27 +34,24 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ortiz.touch.ExtendedViewPager;
-import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.FileDataStorageManager;
-import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.datamodel.VirtualFolderType;
-import com.owncloud.android.files.services.FileDownloader;
-import com.owncloud.android.files.services.FileDownloader.FileDownloaderBinder;
 import com.owncloud.android.files.services.FileUploader;
-import com.owncloud.android.files.services.FileUploader.FileUploaderBinder;
+import com.owncloud.android.operations.SynchronizeFileOperation;
+import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.MainApp;
+import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.files.services.FileDownloader;
+import com.owncloud.android.operations.RemoveFileOperation;
+import com.owncloud.android.ui.activity.FileDisplayActivity;
+import com.owncloud.android.ui.fragment.FileFragment;
+import com.owncloud.android.utils.MimeTypeUtil;
+import com.ortiz.touch.ExtendedViewPager;
+import com.owncloud.android.datamodel.VirtualFolderType;
 import com.owncloud.android.lib.common.operations.OnRemoteOperationListener;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.RemoveFileOperation;
-import com.owncloud.android.operations.SynchronizeFileOperation;
-import com.owncloud.android.ui.activity.FileActivity;
-import com.owncloud.android.ui.activity.FileDisplayActivity;
-import com.owncloud.android.ui.fragment.FileFragment;
-import com.owncloud.android.utils.MimeTypeUtil;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -97,7 +94,7 @@ public class PreviewImageActivity extends FileActivity implements
             actionBar.hide();
         }
 
-        setContentView(R.layout.preview_image_activity);
+        setContentView(com.owncloud.android.R.layout.preview_image_activity);
 
         // Navigation Drawer
         setupDrawer();
@@ -152,7 +149,7 @@ public class PreviewImageActivity extends FileActivity implements
                     parentFolder, getAccount(), getStorageManager(), MainApp.isOnlyOnDevice());
         }
 
-        mViewPager = (ExtendedViewPager) findViewById(R.id.fragmentPager);
+        mViewPager = (ExtendedViewPager) findViewById(com.owncloud.android.R.id.fragmentPager);
 
         int position = mHasSavedPosition ? mSavedPosition : mPreviewImagePagerAdapter.getFilePosition(getFile());
         position = (position >= 0) ? position : 0;
@@ -213,7 +210,7 @@ public class PreviewImageActivity extends FileActivity implements
                 
             if (component.equals(new ComponentName(PreviewImageActivity.this,
                     FileDownloader.class))) {
-                mDownloaderBinder = (FileDownloaderBinder) service;
+                mDownloaderBinder = (FileDownloader.FileDownloaderBinder) service;
                 if (mRequestWaitingForBinder) {
                     mRequestWaitingForBinder = false;
                     Log_OC.d(TAG, "Simulating reselection of current page after connection " +
@@ -224,7 +221,7 @@ public class PreviewImageActivity extends FileActivity implements
             } else if (component.equals(new ComponentName(PreviewImageActivity.this,
                     FileUploader.class))) {
                 Log_OC.d(TAG, "Upload service connected");
-                mUploaderBinder = (FileUploaderBinder) service;
+                mUploaderBinder = (FileUploader.FileUploaderBinder) service;
             } else {
                 return;
             }

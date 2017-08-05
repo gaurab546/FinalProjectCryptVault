@@ -26,11 +26,11 @@ import android.content.Intent;
 import android.os.FileObserver;
 
 import com.owncloud.android.datamodel.FileDataStorageManager;
+import com.owncloud.android.operations.SynchronizeFileOperation;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.SynchronizeFileOperation;
 import com.owncloud.android.ui.activity.ConflictsResolveActivity;
 
 import java.io.File;
@@ -191,13 +191,13 @@ public class FolderObserver extends FileObserver {
      * @param fileName          Name of a file inside the watched folder.
      */
     private void startSyncOperation(String fileName) {
-        FileDataStorageManager storageManager = 
+        FileDataStorageManager storageManager =
                 new FileDataStorageManager(mAccount, mContext.getContentResolver());
         // a fresh object is needed; many things could have occurred to the file
         // since it was registered to observe again, assuming that local files
         // are linked to a remote file AT MOST, SOMETHING TO BE DONE;
         OCFile file = storageManager.getFileByLocalPath(mPath + File.separator + fileName);
-        SynchronizeFileOperation sfo = 
+        SynchronizeFileOperation sfo =
                 new SynchronizeFileOperation(file, null, mAccount, true, mContext);
         RemoteOperationResult result = sfo.execute(storageManager, mContext);
         if (result.getCode() == ResultCode.SYNC_CONFLICT) {

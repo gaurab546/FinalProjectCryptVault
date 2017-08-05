@@ -26,7 +26,6 @@ import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AuthenticatorActivity;
 
 /**
@@ -40,18 +39,18 @@ public class CustomEditText extends android.support.v7.widget.AppCompatEditText 
     public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        String serverInputType = getResources().getString(R.string.server_input_type);
+        String serverInputType = getResources().getString(com.owncloud.android.R.string.server_input_type);
 
         if (serverInputType.equals(AuthenticatorActivity.DIRECTORY_SERVER_INPUT_TYPE)) {
             isPrefixFixed = true;
-            fixedText = getResources().getString(R.string.server_url) + "/";
+            fixedText = getResources().getString(com.owncloud.android.R.string.server_url) + "/";
         } else if (serverInputType.equals(AuthenticatorActivity.SUBDOMAIN_SERVER_INPUT_TYPE)) {
             isPrefixFixed = false;
-            fixedText = "." + getResources().getString(R.string.server_url);
+            fixedText = "." + getResources().getString(com.owncloud.android.R.string.server_url);
         }
 
         if (TextUtils.isEmpty(fixedText)) {
-            setHint(R.string.auth_host_url);
+            setHint(com.owncloud.android.R.string.auth_host_url);
         }
     }
 
@@ -61,9 +60,9 @@ public class CustomEditText extends android.support.v7.widget.AppCompatEditText 
                 || getText().toString().startsWith(AuthenticatorActivity.HTTPS_PROTOCOL)) {
             return getText().toString();
         } else if (isPrefixFixed) {
-            return (getResources().getString(R.string.server_url) + "/" + getText().toString());
+            return (getResources().getString(com.owncloud.android.R.string.server_url) + "/" + getText().toString());
         } else {
-            return (getText().toString() + "." + getResources().getString(R.string.server_url));
+            return (getText().toString() + "." + getResources().getString(com.owncloud.android.R.string.server_url));
         }
     }
 

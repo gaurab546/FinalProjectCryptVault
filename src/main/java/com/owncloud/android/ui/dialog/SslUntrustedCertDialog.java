@@ -33,14 +33,13 @@ import android.view.Window;
 import android.webkit.SslErrorHandler;
 import android.widget.Button;
 
-import com.owncloud.android.R;
-import com.owncloud.android.lib.common.network.CertificateCombinedException;
-import com.owncloud.android.lib.common.network.NetworkUtils;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.adapter.CertificateCombinedExceptionViewAdapter;
 import com.owncloud.android.ui.adapter.SslCertificateViewAdapter;
 import com.owncloud.android.ui.adapter.SslErrorViewAdapter;
 import com.owncloud.android.ui.adapter.X509CertificateViewAdapter;
+import com.owncloud.android.lib.common.network.CertificateCombinedException;
+import com.owncloud.android.lib.common.network.NetworkUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -132,32 +131,32 @@ public class SslUntrustedCertDialog extends DialogFragment {
         Log_OC.d(TAG, "onCreateView, savedInsanceState is " + savedInstanceState);
         // Create a view by inflating desired layout
         if (mView == null) {
-            mView = inflater.inflate(R.layout.ssl_untrusted_cert_layout, container,  false);
-            mView.findViewById(R.id.details_scroll).setVisibility(View.GONE);
+            mView = inflater.inflate(com.owncloud.android.R.layout.ssl_untrusted_cert_layout, container,  false);
+            mView.findViewById(com.owncloud.android.R.id.details_scroll).setVisibility(View.GONE);
             mErrorViewAdapter.updateErrorView(mView);
         } else {
             ((ViewGroup)mView.getParent()).removeView(mView);
         }
         
-        Button ok = (Button) mView.findViewById(R.id.ok);
+        Button ok = (Button) mView.findViewById(com.owncloud.android.R.id.ok);
         ok.setOnClickListener(new OnCertificateTrusted());
         
-        Button cancel = (Button) mView.findViewById(R.id.cancel);
+        Button cancel = (Button) mView.findViewById(com.owncloud.android.R.id.cancel);
         cancel.setOnClickListener(new OnCertificateNotTrusted());
         
-        Button details = (Button) mView.findViewById(R.id.details_btn);
+        Button details = (Button) mView.findViewById(com.owncloud.android.R.id.details_btn);
         details.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                View detailsScroll = mView.findViewById(R.id.details_scroll);
+                View detailsScroll = mView.findViewById(com.owncloud.android.R.id.details_scroll);
                 if (detailsScroll.getVisibility() == View.VISIBLE) {
                     detailsScroll.setVisibility(View.GONE);
-                    ((Button) v).setText(R.string.ssl_validator_btn_details_see);
+                    ((Button) v).setText(com.owncloud.android.R.string.ssl_validator_btn_details_see);
 
                 } else {
                     detailsScroll.setVisibility(View.VISIBLE);
-                    ((Button) v).setText(R.string.ssl_validator_btn_details_hide);
+                    ((Button) v).setText(com.owncloud.android.R.string.ssl_validator_btn_details_hide);
                     mCertificateViewAdapter.updateCertificateView(mView);
                 }
             }

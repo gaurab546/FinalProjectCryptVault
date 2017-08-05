@@ -34,22 +34,22 @@
             android:id="@+id/nav_activity"
             android:icon="@drawable/nav_activity"
             android:title="@string/drawer_item_activities"/>
-        <item
-            android:id="@+id/nav_favorites"
-            android:icon="@drawable/nav_favorites"
-            android:orderInCategory="0"
-            android:title="@string/drawer_item_favorites"/>
-        <item
-            android:id="@+id/nav_photos"
-            android:icon="@drawable/nav_photos"
-            android:title="@string/drawer_item_photos"
-            android:visible="false"/>
-        <item
-            android:id="@+id/nav_videos"
-            android:icon="@drawable/nav_videos"
-            android:orderInCategory="0"
-            android:title="@string/drawer_item_videos"
-            android:visible="false"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_favorites"-->
+            <!--android:icon="@drawable/nav_favorites"-->
+            <!--android:orderInCategory="0"-->
+            <!--android:title="@string/drawer_item_favorites"/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_photos"-->
+            <!--android:icon="@drawable/nav_photos"-->
+            <!--android:title="@string/drawer_item_photos"-->
+            <!--android:visible="false"/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_videos"-->
+            <!--android:icon="@drawable/nav_videos"-->
+            <!--android:orderInCategory="0"-->
+            <!--android:title="@string/drawer_item_videos"-->
+            <!--android:visible="false"/>-->
         <!--<item-->
             <!--android:id="@+id/nav_shared"-->
             <!--android:orderInCategory="0"-->
@@ -78,11 +78,11 @@
             <!--android:id="@+id/nav_notifications"-->
             <!--android:icon="@drawable/nav_notifications"-->
             <!--android:title="@string/drawer_item_notifications"/>-->
-        <item
-            android:orderInCategory="0"
-            android:id="@+id/nav_folder_sync"
-            android:icon="@drawable/nav_folder_sync"
-            android:title="@string/drawer_folder_sync"/>
+        <!--<item-->
+            <!--android:orderInCategory="0"-->
+            <!--android:id="@+id/nav_folder_sync"-->
+            <!--android:icon="@drawable/nav_folder_sync"-->
+            <!--android:title="@string/drawer_folder_sync"/>-->
         <item
             android:id="@+id/nav_uploads"
             android:icon="@drawable/nav_uploads"
@@ -122,11 +122,11 @@
     <group
         android:id="@+id/drawer_menu_bottom"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_contacts"
-            android:icon="@drawable/nav_contacts"
-            android:orderInCategory="3"
-            android:title="@string/actionbar_contacts"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_contacts"-->
+            <!--android:icon="@drawable/nav_contacts"-->
+            <!--android:orderInCategory="3"-->
+            <!--android:title="@string/actionbar_contacts"/>-->
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/nav_settings"
@@ -154,4 +154,5 @@
             android:orderInCategory="200"
             android:title=""/>
     </group>
+
 </menu>

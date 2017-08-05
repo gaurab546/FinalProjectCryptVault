@@ -39,7 +39,6 @@ import com.owncloud.android.lib.common.utils.Log_OC;
  * 
  * Later can be added: - Signal connectivity to download service, deletion
  * service, ... - Handle offline mode (cf.
- * https://github.com/owncloud/android/issues/162)
  *
  * Have fun with the comments :S
  */

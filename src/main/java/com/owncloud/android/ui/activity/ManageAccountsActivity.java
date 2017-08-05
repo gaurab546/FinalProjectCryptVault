@@ -39,26 +39,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.evernote.android.job.JobRequest;
-import com.evernote.android.job.util.support.PersistableBundleCompat;
-import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.files.services.FileDownloader;
 import com.owncloud.android.files.services.FileUploader;
-import com.owncloud.android.lib.common.OwnCloudAccount;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.services.AccountRemovalJob;
 import com.owncloud.android.services.AutoUploadJob;
 import com.owncloud.android.services.OperationsService;
 import com.owncloud.android.ui.adapter.AccountListAdapter;
 import com.owncloud.android.ui.adapter.AccountListItem;
+import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.utils.AnalyticsUtils;
+import com.evernote.android.job.JobRequest;
+import com.evernote.android.job.util.support.PersistableBundleCompat;
+import com.owncloud.android.MainApp;
+import com.owncloud.android.lib.common.OwnCloudAccount;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.events.AccountRemovedEvent;
 import com.owncloud.android.ui.helpers.FileOperationsHelper;
-import com.owncloud.android.utils.AnalyticsUtils;
-import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.ThemeUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -102,16 +101,16 @@ public class ManageAccountsActivity extends FileActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTintedCheck = DrawableCompat.wrap(ContextCompat.getDrawable(this, R.drawable.ic_account_circle_white_18dp));
+        mTintedCheck = DrawableCompat.wrap(ContextCompat.getDrawable(this, com.owncloud.android.R.drawable.ic_account_circle_white_18dp));
         int tint = ThemeUtils.primaryColor();
         DrawableCompat.setTint(mTintedCheck, tint);
 
-        setContentView(R.layout.accounts_layout);
+        setContentView(com.owncloud.android.R.layout.accounts_layout);
 
-        mListView = (ListView) findViewById(R.id.account_list);
+        mListView = (ListView) findViewById(com.owncloud.android.R.id.account_list);
 
         setupToolbar();
-        updateActionBarTitleAndHomeButtonByString(getResources().getString(R.string.prefs_manage_accounts));
+        updateActionBarTitleAndHomeButtonByString(getResources().getString(com.owncloud.android.R.string.prefs_manage_accounts));
 
         Account[] accountList = AccountManager.get(this).getAccountsByType(MainApp.getAccountType());
         mOriginalAccounts = DisplayUtils.toAccountNameSet(Arrays.asList(accountList));
@@ -251,7 +250,7 @@ public class ManageAccountsActivity extends FileActivity
         }
 
         // Add Create Account item at the end of account list if multi-account is enabled
-        if (getResources().getBoolean(R.bool.multiaccount_support)) {
+        if (getResources().getBoolean(com.owncloud.android.R.bool.multiaccount_support)) {
             adapterAccountList.add(new AccountListItem());
         }
 

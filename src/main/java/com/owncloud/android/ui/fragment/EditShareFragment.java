@@ -34,6 +34,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.FileDataStorageManager;
@@ -44,7 +45,6 @@ import com.owncloud.android.lib.resources.shares.OCShare;
 import com.owncloud.android.lib.resources.shares.SharePermissionsBuilder;
 import com.owncloud.android.lib.resources.shares.ShareType;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
-import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.ThemeUtils;
 
@@ -411,7 +411,7 @@ public class EditShareFragment extends Fragment {
     /**
      * Get {@link OCShare} instance from DB and updates the UI.
      *
-     * Depends on the parent Activity provides a {@link com.owncloud.android.datamodel.FileDataStorageManager}
+     * Depends on the parent Activity provides a {@link FileDataStorageManager}
      * instance ready to use. If not ready, does nothing.
      */
     public void refreshUiFromDB() {
@@ -424,7 +424,7 @@ public class EditShareFragment extends Fragment {
     /**
      * Get {@link OCShare} instance from DB and updates the UI.
      *
-     * Depends on the parent Activity provides a {@link com.owncloud.android.datamodel.FileDataStorageManager}
+     * Depends on the parent Activity provides a {@link FileDataStorageManager}
      * instance ready to use. If not ready, does nothing.
      *
      * @param editShareView     Root view in the fragment.

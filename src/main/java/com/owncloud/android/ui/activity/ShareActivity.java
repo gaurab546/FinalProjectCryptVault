@@ -30,6 +30,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
+import com.owncloud.android.operations.UpdateSharePermissionsOperation;
+import com.owncloud.android.providers.UsersAndGroupsSearchProvider;
+import com.owncloud.android.ui.fragment.SearchShareesFragment;
+import com.owncloud.android.ui.fragment.ShareFragmentListener;
+import com.owncloud.android.datamodel.FileDataStorageManager;
+import com.owncloud.android.ui.dialog.ShareLinkToDialog;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.accounts.AccountUtils;
@@ -42,13 +48,8 @@ import com.owncloud.android.lib.resources.status.OwnCloudVersion;
 import com.owncloud.android.operations.CreateShareViaLinkOperation;
 import com.owncloud.android.operations.GetSharesForFileOperation;
 import com.owncloud.android.operations.UnshareOperation;
-import com.owncloud.android.operations.UpdateSharePermissionsOperation;
-import com.owncloud.android.providers.UsersAndGroupsSearchProvider;
-import com.owncloud.android.ui.dialog.ShareLinkToDialog;
 import com.owncloud.android.ui.fragment.EditShareFragment;
-import com.owncloud.android.ui.fragment.SearchShareesFragment;
 import com.owncloud.android.ui.fragment.ShareFileFragment;
-import com.owncloud.android.ui.fragment.ShareFragmentListener;
 import com.owncloud.android.utils.ErrorMessageAdapter;
 import com.owncloud.android.utils.GetShareWithUsersAsyncTask;
 
@@ -247,7 +248,7 @@ public class ShareActivity extends FileActivity
 
 
     /**
-     * Updates the view, reading data from {@link com.owncloud.android.datamodel.FileDataStorageManager}
+     * Updates the view, reading data from {@link FileDataStorageManager}
      */
     private void refreshSharesFromStorageManager() {
 

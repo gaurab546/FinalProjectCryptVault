@@ -19,11 +19,11 @@
  */
 package com.owncloud.android.operations;
 
+import com.owncloud.android.operations.common.SyncOperation;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.resources.status.GetRemoteCapabilitiesOperation;
 import com.owncloud.android.lib.resources.status.OCCapability;
-import com.owncloud.android.operations.common.SyncOperation;
 
 /**
  * Get and save capabilities from the server

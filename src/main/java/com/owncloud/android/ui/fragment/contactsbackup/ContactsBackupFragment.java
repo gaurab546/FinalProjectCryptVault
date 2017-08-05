@@ -43,13 +43,9 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.evernote.android.job.JobRequest;
-import com.evernote.android.job.util.support.PersistableBundleCompat;
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.operations.RefreshFolderOperation;
 import com.owncloud.android.services.ContactsBackupJob;
 import com.owncloud.android.ui.activity.ContactsPreferenceActivity;
@@ -58,6 +54,9 @@ import com.owncloud.android.ui.fragment.FileFragment;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.ThemeUtils;
+import com.evernote.android.job.JobRequest;
+import com.evernote.android.job.util.support.PersistableBundleCompat;
+import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -69,19 +68,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFERENCE_CONTACTS_AUTOMATIC_BACKUP;
-import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFERENCE_CONTACTS_LAST_BACKUP;
-
 public class ContactsBackupFragment extends FileFragment implements DatePickerDialog.OnDateSetListener {
     public static final String TAG = ContactsBackupFragment.class.getSimpleName();
 
-    @BindView(R.id.contacts_automatic_backup)
+    @BindView(com.owncloud.android.R.id.contacts_automatic_backup)
     public SwitchCompat backupSwitch;
 
-    @BindView(R.id.contacts_datepicker)
+    @BindView(com.owncloud.android.R.id.contacts_datepicker)
     public AppCompatButton contactsDatePickerBtn;
 
-    @BindView(R.id.contacts_last_backup_timestamp)
+    @BindView(com.owncloud.android.R.id.contacts_last_backup_timestamp)
     public TextView lastBackup;
 
     private Date selectedDate = null;
@@ -105,9 +101,9 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
 
         // use grey as fallback for elements where custom theming is not available
         if (ThemeUtils.themingEnabled()) {
-            getContext().getTheme().applyStyle(R.style.FallbackThemingTheme, true);
+            getContext().getTheme().applyStyle(com.owncloud.android.R.style.FallbackThemingTheme, true);
         }
-        View view = inflater.inflate(R.layout.contacts_backup_fragment, null);
+        View view = inflater.inflate(com.owncloud.android.R.layout.contacts_backup_fragment, null);
         ButterKnife.bind(this, view);
 
         setHasOptionsMenu(true);
@@ -120,13 +116,13 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
 
         account = (Account) getArguments().get(ContactListFragment.ACCOUNT);
 
-        contactsPreferenceActivity.getSupportActionBar().setTitle(R.string.actionbar_contacts);
+        contactsPreferenceActivity.getSupportActionBar().setTitle(com.owncloud.android.R.string.actionbar_contacts);
         contactsPreferenceActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         arbitraryDataProvider = new ArbitraryDataProvider(getContext().getContentResolver());
 
         ThemeUtils.tintSwitch(backupSwitch, ThemeUtils.primaryAccentColor());
-        backupSwitch.setChecked(arbitraryDataProvider.getBooleanValue(account, PREFERENCE_CONTACTS_AUTOMATIC_BACKUP));
+        backupSwitch.setChecked(arbitraryDataProvider.getBooleanValue(account, ContactsPreferenceActivity.PREFERENCE_CONTACTS_AUTOMATIC_BACKUP));
 
         onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -144,10 +140,10 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
         backupSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
 
         // display last backup
-        Long lastBackupTimestamp = arbitraryDataProvider.getLongValue(account, PREFERENCE_CONTACTS_LAST_BACKUP);
+        Long lastBackupTimestamp = arbitraryDataProvider.getLongValue(account, ContactsPreferenceActivity.PREFERENCE_CONTACTS_LAST_BACKUP);
 
         if (lastBackupTimestamp == -1) {
-            lastBackup.setText(R.string.contacts_preference_backup_never);
+            lastBackup.setText(com.owncloud.android.R.string.contacts_preference_backup_never);
         } else {
             lastBackup.setText(DisplayUtils.getRelativeTimestamp(contactsPreferenceActivity, lastBackupTimestamp));
         }
@@ -164,10 +160,10 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
 
         int accentColor = ThemeUtils.primaryAccentColor();
         contactsDatePickerBtn.getBackground().setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP);
-        view.findViewById(R.id.contacts_backup_now).getBackground()
+        view.findViewById(com.owncloud.android.R.id.contacts_backup_now).getBackground()
                 .setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP);
 
-        AppCompatButton chooseDate = (AppCompatButton) view.findViewById(R.id.contacts_datepicker);
+        AppCompatButton chooseDate = (AppCompatButton) view.findViewById(com.owncloud.android.R.id.contacts_datepicker);
         chooseDate.getBackground().setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP);
         chooseDate.setTextColor(ThemeUtils.fontColor());
 
@@ -193,7 +189,7 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
 
         ContactsPreferenceActivity contactsPreferenceActivity = (ContactsPreferenceActivity) getActivity();
 
-        String backupFolderPath = getResources().getString(R.string.contacts_backup_folder) + OCFile.PATH_SEPARATOR;
+        String backupFolderPath = getResources().getString(com.owncloud.android.R.string.contacts_backup_folder) + OCFile.PATH_SEPARATOR;
         refreshBackupFolder(backupFolderPath, contactsPreferenceActivity);
     }
 
@@ -299,7 +295,7 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
         }
     }
 
-    @OnClick(R.id.contacts_backup_now)
+    @OnClick(com.owncloud.android.R.id.contacts_backup_now)
     public void backupContacts() {
         if (checkAndAskForContactsReadPermission()) {
             startContactsBackupJob();
@@ -322,8 +318,8 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
                 .build()
                 .schedule();
 
-        Snackbar.make(getView().findViewById(R.id.contacts_linear_layout),
-                R.string.contacts_preferences_backup_scheduled,
+        Snackbar.make(getView().findViewById(com.owncloud.android.R.id.contacts_linear_layout),
+                com.owncloud.android.R.string.contacts_preferences_backup_scheduled,
                 Snackbar.LENGTH_LONG).show();
     }
 
@@ -338,7 +334,7 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
                     contactsPreferenceActivity.getAccount());
         }
 
-        arbitraryDataProvider.storeOrUpdateKeyValue(account, PREFERENCE_CONTACTS_AUTOMATIC_BACKUP,
+        arbitraryDataProvider.storeOrUpdateKeyValue(account, ContactsPreferenceActivity.PREFERENCE_CONTACTS_AUTOMATIC_BACKUP,
                 String.valueOf(bool));
     }
 
@@ -353,10 +349,10 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
             if (PermissionUtil.shouldShowRequestPermissionRationale(contactsPreferenceActivity,
                     android.Manifest.permission.READ_CONTACTS)) {
                 // Show explanation to the user and then request permission
-                Snackbar snackbar = Snackbar.make(getView().findViewById(R.id.contacts_linear_layout),
-                        R.string.contacts_read_permission,
+                Snackbar snackbar = Snackbar.make(getView().findViewById(com.owncloud.android.R.id.contacts_linear_layout),
+                        com.owncloud.android.R.string.contacts_read_permission,
                         Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.common_ok, new View.OnClickListener() {
+                        .setAction(com.owncloud.android.R.string.common_ok, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},
@@ -378,7 +374,7 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
         }
     }
 
-    @OnClick(R.id.contacts_datepicker)
+    @OnClick(com.owncloud.android.R.id.contacts_datepicker)
     public void openCleanDate() {
         openDate(null);
     }
@@ -386,7 +382,7 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
     public void openDate(@Nullable Date savedDate) {
         final ContactsPreferenceActivity contactsPreferenceActivity = (ContactsPreferenceActivity) getActivity();
 
-        String backupFolderString = getResources().getString(R.string.contacts_backup_folder) + OCFile.PATH_SEPARATOR;
+        String backupFolderString = getResources().getString(com.owncloud.android.R.string.contacts_backup_folder) + OCFile.PATH_SEPARATOR;
         OCFile backupFolder = contactsPreferenceActivity.getStorageManager().getFileByPath(backupFolderString);
 
         Vector<OCFile> backupFiles = contactsPreferenceActivity.getStorageManager().getFolderContent(backupFolder,
@@ -436,7 +432,7 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
 
             datePickerDialog.show();
         } else {
-            Toast.makeText(contactsPreferenceActivity, R.string.contacts_preferences_something_strange_happened,
+            Toast.makeText(contactsPreferenceActivity, com.owncloud.android.R.string.contacts_preferences_something_strange_happened,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -468,7 +464,7 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
         final ContactsPreferenceActivity contactsPreferenceActivity = (ContactsPreferenceActivity) getActivity();
         selectedDate = new Date(year, month, dayOfMonth);
 
-        String backupFolderString = getResources().getString(R.string.contacts_backup_folder) + OCFile.PATH_SEPARATOR;
+        String backupFolderString = getResources().getString(com.owncloud.android.R.string.contacts_backup_folder) + OCFile.PATH_SEPARATOR;
         OCFile backupFolder = contactsPreferenceActivity.getStorageManager().getFileByPath(backupFolderString);
         Vector<OCFile> backupFiles = contactsPreferenceActivity.getStorageManager().getFolderContent(
                 backupFolder, false);
@@ -510,11 +506,11 @@ public class ContactsBackupFragment extends FileFragment implements DatePickerDi
 
             contactsPreferenceActivity.getSupportFragmentManager().
                     beginTransaction()
-                    .replace(R.id.frame_container, contactListFragment, ContactListFragment.TAG)
+                    .replace(com.owncloud.android.R.id.frame_container, contactListFragment, ContactListFragment.TAG)
                     .addToBackStack(ContactsPreferenceActivity.BACKUP_TO_LIST)
                     .commit();
         } else {
-            Toast.makeText(contactsPreferenceActivity, R.string.contacts_preferences_no_file_found,
+            Toast.makeText(contactsPreferenceActivity, com.owncloud.android.R.string.contacts_preferences_no_file_found,
                     Toast.LENGTH_SHORT).show();
         }
     }

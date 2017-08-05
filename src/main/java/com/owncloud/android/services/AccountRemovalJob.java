@@ -28,12 +28,12 @@ import android.accounts.AccountManagerFuture;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.owncloud.android.authentication.AccountUtils;
+import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.util.support.PersistableBundleCompat;
 import com.owncloud.android.MainApp;
-import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
-import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.ui.events.AccountRemovedEvent;
 import com.owncloud.android.utils.FileStorageUtils;
 

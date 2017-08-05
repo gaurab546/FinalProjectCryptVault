@@ -43,16 +43,14 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
-import com.owncloud.android.db.PreferenceManager;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment;
-import com.owncloud.android.ui.dialog.ConfirmationDialogFragment.ConfirmationDialogFragmentListener;
 import com.owncloud.android.ui.dialog.IndeterminateProgressDialog;
-import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.ui.fragment.ExtendedListFragment;
 import com.owncloud.android.ui.fragment.LocalFileListFragment;
+import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.db.PreferenceManager;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.FileStorageUtils;
 import com.owncloud.android.utils.ThemeUtils;
 
@@ -67,8 +65,8 @@ import static com.owncloud.android.db.PreferenceManager.getSortOrder;
  * to the current ownCloud account.
  */
 public class UploadFilesActivity extends FileActivity implements
-    LocalFileListFragment.ContainerActivity, ActionBar.OnNavigationListener,
-        OnClickListener, ConfirmationDialogFragmentListener, SortingOrderDialogFragment.OnSortingOrderListener {
+        LocalFileListFragment.ContainerActivity, ActionBar.OnNavigationListener,
+        OnClickListener, ConfirmationDialogFragment.ConfirmationDialogFragmentListener, SortingOrderDialogFragment.OnSortingOrderListener {
 
     private static final String SORT_ORDER_DIALOG_TAG = "SORT_ORDER_DIALOG";
 
@@ -119,7 +117,7 @@ public class UploadFilesActivity extends FileActivity implements
         /// USER INTERFACE
             
         // Drop-down navigation 
-        mDirectories = new CustomArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item);
+        mDirectories = new CustomArrayAdapter<>(this, com.owncloud.android.R.layout.support_simple_spinner_dropdown_item);
         File currDir = mCurrentDir;
         while(currDir != null && currDir.getParentFile() != null) {
             mDirectories.add(currDir.getName());
@@ -128,24 +126,24 @@ public class UploadFilesActivity extends FileActivity implements
         mDirectories.add(File.separator);
 
         // Inflate and set the layout view
-        setContentView(R.layout.upload_files_layout);
+        setContentView(com.owncloud.android.R.layout.upload_files_layout);
 
-        mFileListFragment = (LocalFileListFragment) getSupportFragmentManager().findFragmentById(R.id.local_files_list);
+        mFileListFragment = (LocalFileListFragment) getSupportFragmentManager().findFragmentById(com.owncloud.android.R.id.local_files_list);
         
         
         // Set input controllers
-        mCancelBtn = (Button) findViewById(R.id.upload_files_btn_cancel);
+        mCancelBtn = (Button) findViewById(com.owncloud.android.R.id.upload_files_btn_cancel);
         mCancelBtn.setOnClickListener(this);
-        mUploadBtn = (AppCompatButton) findViewById(R.id.upload_files_btn_upload);
+        mUploadBtn = (AppCompatButton) findViewById(com.owncloud.android.R.id.upload_files_btn_upload);
         mUploadBtn.getBackground().setColorFilter(ThemeUtils.primaryAccentColor(), PorterDuff.Mode.SRC_ATOP);
         mUploadBtn.setOnClickListener(this);
 
         int localBehaviour = PreferenceManager.getUploaderBehaviour(this);
 
         // file upload spinner
-        mBehaviourSpinner = (Spinner) findViewById(R.id.upload_files_spinner_behaviour);
+        mBehaviourSpinner = (Spinner) findViewById(com.owncloud.android.R.id.upload_files_spinner_behaviour);
         ArrayAdapter<CharSequence> behaviourAdapter = ArrayAdapter.createFromResource(this,
-                R.array.upload_files_behaviour, android.R.layout.simple_spinner_item);
+                com.owncloud.android.R.array.upload_files_behaviour, android.R.layout.simple_spinner_item);
         behaviourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mBehaviourSpinner.setAdapter(behaviourAdapter);
         mBehaviourSpinner.setSelection(localBehaviour);
@@ -189,11 +187,11 @@ public class UploadFilesActivity extends FileActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mOptionsMenu = menu;
-        getMenuInflater().inflate(R.menu.upload_files_picker, menu);
-        MenuItem selectAll = menu.findItem(R.id.action_select_all);
+        getMenuInflater().inflate(com.owncloud.android.R.menu.upload_files_picker, menu);
+        MenuItem selectAll = menu.findItem(com.owncloud.android.R.id.action_select_all);
         setSelectAllMenuItem(selectAll, mSelectAll);
-        MenuItem switchView = menu.findItem(R.id.action_switch_view);
-        switchView.setTitle(isGridView() ? R.string.action_switch_list_view : R.string.action_switch_grid_view);
+        MenuItem switchView = menu.findItem(com.owncloud.android.R.id.action_switch_view);
+        switchView.setTitle(isGridView() ? com.owncloud.android.R.string.action_switch_list_view : com.owncloud.android.R.string.action_switch_grid_view);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -207,14 +205,14 @@ public class UploadFilesActivity extends FileActivity implements
                 }
                 break;
             }
-            case R.id.action_select_all: {
+            case com.owncloud.android.R.id.action_select_all: {
                 item.setChecked(!item.isChecked());
                 mSelectAll = item.isChecked();
                 setSelectAllMenuItem(item, mSelectAll);
                 mFileListFragment.selectAllFiles(item.isChecked());
                 break;
             }
-            case R.id.action_sort: {
+            case com.owncloud.android.R.id.action_sort: {
                 // Read sorting order, default to sort by name ascending
                 Integer sortOrder = PreferenceManager.getSortOrder(this);
 
@@ -230,14 +228,14 @@ public class UploadFilesActivity extends FileActivity implements
 
                 break;
             }
-            case R.id.action_switch_view: {
+            case com.owncloud.android.R.id.action_switch_view: {
                 if (isGridView()) {
-                    item.setTitle(getString(R.string.action_switch_grid_view));
-                    item.setIcon(R.drawable.ic_view_module);
+                    item.setTitle(getString(com.owncloud.android.R.string.action_switch_grid_view));
+                    item.setIcon(com.owncloud.android.R.drawable.ic_view_module);
                     mFileListFragment.switchToListView();
                 } else {
-                    item.setTitle(getApplicationContext().getString(R.string.action_switch_list_view));
-                    item.setIcon(R.drawable.ic_view_list);
+                    item.setTitle(getApplicationContext().getString(com.owncloud.android.R.string.action_switch_list_view));
+                    item.setIcon(com.owncloud.android.R.drawable.ic_view_list);
                     mFileListFragment.switchToGridView();
                 }
             }
@@ -308,7 +306,7 @@ public class UploadFilesActivity extends FileActivity implements
         }
 
         // invalidate checked state when navigating directories
-        setSelectAllMenuItem(mOptionsMenu.findItem(R.id.action_select_all), false);
+        setSelectAllMenuItem(mOptionsMenu.findItem(com.owncloud.android.R.id.action_select_all), false);
     }
 
     
@@ -320,7 +318,7 @@ public class UploadFilesActivity extends FileActivity implements
         super.onSaveInstanceState(outState);
         outState.putString(UploadFilesActivity.KEY_DIRECTORY_PATH, mCurrentDir.getAbsolutePath());
         outState.putBoolean(UploadFilesActivity.KEY_ALL_SELECTED,
-                mOptionsMenu.findItem(R.id.action_select_all).isChecked());
+                mOptionsMenu.findItem(com.owncloud.android.R.id.action_select_all).isChecked());
         Log_OC.d(TAG, "onSaveInstanceState() end");
     }
 
@@ -355,9 +353,9 @@ public class UploadFilesActivity extends FileActivity implements
     private void setSelectAllMenuItem(MenuItem selectAll, boolean checked) {
         selectAll.setChecked(checked);
         if(checked) {
-            selectAll.setIcon(R.drawable.ic_select_none);
+            selectAll.setIcon(com.owncloud.android.R.drawable.ic_select_none);
         } else {
-            selectAll.setIcon(ThemeUtils.tintDrawable(R.drawable.ic_select_all, ThemeUtils.primaryColor()));
+            selectAll.setIcon(ThemeUtils.tintDrawable(com.owncloud.android.R.drawable.ic_select_all, ThemeUtils.primaryColor()));
         }
     }
 
@@ -395,7 +393,7 @@ public class UploadFilesActivity extends FileActivity implements
     @Override
     public void onDirectoryClick(File directory) {
         // invalidate checked state when navigating directories
-        MenuItem selectAll = mOptionsMenu.findItem(R.id.action_select_all);
+        MenuItem selectAll = mOptionsMenu.findItem(com.owncloud.android.R.id.action_select_all);
         setSelectAllMenuItem(selectAll, false);
 
         pushDirname(directory);
@@ -427,11 +425,11 @@ public class UploadFilesActivity extends FileActivity implements
      */
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.upload_files_btn_cancel) {
+        if (v.getId() == com.owncloud.android.R.id.upload_files_btn_cancel) {
             setResult(RESULT_CANCELED);
             finish();
 
-        } else if (v.getId() == R.id.upload_files_btn_upload) {
+        } else if (v.getId() == com.owncloud.android.R.id.upload_files_btn_upload) {
             new CheckAvailableSpaceTask().execute(mBehaviourSpinner.getSelectedItemPosition()==0);
         }
     }
@@ -450,7 +448,7 @@ public class UploadFilesActivity extends FileActivity implements
         @Override
         protected void onPreExecute () {
             /// progress dialog and disable 'Move' button
-            mCurrentDialog = IndeterminateProgressDialog.newInstance(R.string.wait_a_moment, false);
+            mCurrentDialog = IndeterminateProgressDialog.newInstance(com.owncloud.android.R.string.wait_a_moment, false);
             mCurrentDialog.show(getSupportFragmentManager(), WAIT_DIALOG_TAG);
         }
 
@@ -519,10 +517,10 @@ public class UploadFilesActivity extends FileActivity implements
             } else {
                 // show a dialog to query the user if wants to move the selected files
                 // to the ownCloud folder instead of copying
-                String[] args = {getString(R.string.app_name)};
+                String[] args = {getString(com.owncloud.android.R.string.app_name)};
                 ConfirmationDialogFragment dialog = ConfirmationDialogFragment.newInstance(
-                    R.string.upload_query_move_foreign_files, args, 0, R.string.common_yes, -1,
-                        R.string.common_no
+                    com.owncloud.android.R.string.upload_query_move_foreign_files, args, 0, com.owncloud.android.R.string.common_yes, -1,
+                        com.owncloud.android.R.string.common_no
                 );
                 dialog.setOnConfirmationListener(UploadFilesActivity.this);
                 dialog.show(getSupportFragmentManager(), QUERY_TO_MOVE_DIALOG_TAG);

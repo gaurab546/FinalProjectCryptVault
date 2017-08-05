@@ -24,12 +24,12 @@ import android.content.Context;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.owncloud.android.services.OperationsService;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.services.FileDownloader.FileDownloaderBinder;
 import com.owncloud.android.files.services.FileUploader.FileUploaderBinder;
 import com.owncloud.android.lib.resources.status.OCCapability;
-import com.owncloud.android.services.OperationsService.OperationsServiceBinder;
 import com.owncloud.android.ui.activity.ComponentsGetter;
 import com.owncloud.android.utils.MimeTypeUtil;
 
@@ -286,7 +286,7 @@ public class FileMenuFilter {
     private boolean anyFileSynchronizing() {
         boolean synchronizing = false;
         if (mComponentsGetter != null && !mFiles.isEmpty() && mAccount != null) {
-            OperationsServiceBinder opsBinder = mComponentsGetter.getOperationsServiceBinder();
+            OperationsService.OperationsServiceBinder opsBinder = mComponentsGetter.getOperationsServiceBinder();
             FileUploaderBinder uploaderBinder = mComponentsGetter.getFileUploaderBinder();
             FileDownloaderBinder downloaderBinder = mComponentsGetter.getFileDownloaderBinder();
             synchronizing = (
@@ -298,7 +298,7 @@ public class FileMenuFilter {
         return synchronizing;
     }
 
-    private boolean anyFileSynchronizing(OperationsServiceBinder opsBinder) {
+    private boolean anyFileSynchronizing(OperationsService.OperationsServiceBinder opsBinder) {
         boolean synchronizing = false;
         if (opsBinder != null) {
             for (Iterator<OCFile> iterator = mFiles.iterator(); !synchronizing && iterator.hasNext(); ) {

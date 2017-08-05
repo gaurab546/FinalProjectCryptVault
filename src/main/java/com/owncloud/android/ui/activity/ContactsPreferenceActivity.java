@@ -31,17 +31,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
+import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.ui.fragment.FileFragment;
+import com.owncloud.android.ui.fragment.contactsbackup.ContactListFragment;
+import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.ui.fragment.contactsbackup.ContactsBackupFragment;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 import com.evernote.android.job.util.support.PersistableBundleCompat;
-import com.owncloud.android.R;
-import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.services.ContactsBackupJob;
-import com.owncloud.android.ui.fragment.FileFragment;
-import com.owncloud.android.ui.fragment.contactsbackup.ContactListFragment;
-import com.owncloud.android.ui.fragment.contactsbackup.ContactsBackupFragment;
-import com.owncloud.android.utils.DisplayUtils;
 
 import org.parceler.Parcels;
 
@@ -63,13 +62,13 @@ public class ContactsPreferenceActivity extends FileActivity implements FileFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.contacts_preference);
+        setContentView(com.owncloud.android.R.layout.contacts_preference);
 
         // setup toolbar
         setupToolbar();
 
         // setup drawer
-        setupDrawer(R.id.nav_contacts);
+        //setupDrawer(com.owncloud.android.R.id.nav_contacts);
 
         // show sidebar?
         boolean showSidebar = getIntent().getBooleanExtra(EXTRA_SHOW_SIDEBAR, true);
@@ -89,19 +88,19 @@ public class ContactsPreferenceActivity extends FileActivity implements FileFrag
                 bundle.putParcelable(ContactListFragment.ACCOUNT, getAccount());
                 bundle.putBoolean(EXTRA_SHOW_SIDEBAR, showSidebar);
                 fragment.setArguments(bundle);
-                transaction.add(R.id.frame_container, fragment);
+                transaction.add(com.owncloud.android.R.id.frame_container, fragment);
             } else {
                 OCFile file = Parcels.unwrap(intent.getParcelableExtra(ContactListFragment.FILE_NAME));
                 Account account = Parcels.unwrap(intent.getParcelableExtra(ContactListFragment.ACCOUNT));
                 ContactListFragment contactListFragment = ContactListFragment.newInstance(file, account);
-                transaction.add(R.id.frame_container, contactListFragment);
+                transaction.add(com.owncloud.android.R.id.frame_container, contactListFragment);
             }
             transaction.commit();
         }
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(com.owncloud.android.R.id.bottom_navigation_view);
 
-        if (getResources().getBoolean(R.bool.bottom_toolbar_enabled)) {
+        if (getResources().getBoolean(com.owncloud.android.R.bool.bottom_toolbar_enabled)) {
             bottomNavigationView.setVisibility(View.VISIBLE);
             DisplayUtils.setupBottomBar(bottomNavigationView, getResources(), this, -1);
         }

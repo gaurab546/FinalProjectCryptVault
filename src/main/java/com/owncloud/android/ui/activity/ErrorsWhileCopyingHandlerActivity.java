@@ -39,12 +39,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.dialog.IndeterminateProgressDialog;
 import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.FileStorageUtils;
 
 import java.io.File;
@@ -105,18 +104,18 @@ public class ErrorsWhileCopyingHandlerActivity  extends AppCompatActivity
         }
         
         /// load generic layout
-        setContentView(R.layout.generic_explanation);
+        setContentView(com.owncloud.android.R.layout.generic_explanation);
         
         /// customize text message
-        TextView textView = (TextView) findViewById(R.id.message);
-        String appName = getString(R.string.app_name);
-        String message = String.format(getString(R.string.sync_foreign_files_forgotten_explanation),
+        TextView textView = (TextView) findViewById(com.owncloud.android.R.id.message);
+        String appName = getString(com.owncloud.android.R.string.app_name);
+        String message = String.format(getString(com.owncloud.android.R.string.sync_foreign_files_forgotten_explanation),
                 appName, appName, appName, appName, mAccount.name);
         textView.setText(message);
         textView.setMovementMethod(new ScrollingMovementMethod());
         
         /// load the list of local and remote files that failed
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(com.owncloud.android.R.id.list);
         if (mLocalPaths != null && mLocalPaths.size() > 0) {
             mAdapter = new ErrorsWhileCopyingListAdapter();
             listView.setAdapter(mAdapter);
@@ -126,10 +125,10 @@ public class ErrorsWhileCopyingHandlerActivity  extends AppCompatActivity
         }
         
         /// customize buttons
-        Button cancelBtn = (Button) findViewById(R.id.cancel);
-        Button okBtn = (Button) findViewById(R.id.ok);
+        Button cancelBtn = (Button) findViewById(com.owncloud.android.R.id.cancel);
+        Button okBtn = (Button) findViewById(com.owncloud.android.R.id.ok);
         
-        okBtn.setText(R.string.foreign_files_move);
+        okBtn.setText(com.owncloud.android.R.string.foreign_files_move);
         cancelBtn.setOnClickListener(this);
         okBtn.setOnClickListener(this);
     }
@@ -172,7 +171,7 @@ public class ErrorsWhileCopyingHandlerActivity  extends AppCompatActivity
                 if (localPath != null) {
                     TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                     if (text1 != null) {
-                        text1.setText(String.format(getString(R.string.foreign_files_local_text), localPath));
+                        text1.setText(String.format(getString(com.owncloud.android.R.string.foreign_files_local_text), localPath));
                     }
                 }
                 if (mRemotePaths != null && mRemotePaths.size() > 0 && position >= 0 &&
@@ -180,7 +179,7 @@ public class ErrorsWhileCopyingHandlerActivity  extends AppCompatActivity
                     TextView text2 = (TextView) view.findViewById(android.R.id.text2);
                     String remotePath = mRemotePaths.get(position);
                     if (text2 != null && remotePath != null) {
-                        text2.setText(String.format(getString(R.string.foreign_files_remote_text), remotePath));
+                        text2.setText(String.format(getString(com.owncloud.android.R.string.foreign_files_remote_text), remotePath));
                     }
                 }
             }
@@ -196,12 +195,12 @@ public class ErrorsWhileCopyingHandlerActivity  extends AppCompatActivity
      */
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.ok) {
+        if (v.getId() == com.owncloud.android.R.id.ok) {
             /// perform movement operation in background thread
             Log_OC.d(TAG, "Clicked MOVE, start movement");
             new MoveFilesTask().execute();            
             
-        } else if (v.getId() == R.id.cancel) {
+        } else if (v.getId() == com.owncloud.android.R.id.cancel) {
             /// just finish
             Log_OC.d(TAG, "Clicked CANCEL, bye");
             finish();
@@ -223,9 +222,9 @@ public class ErrorsWhileCopyingHandlerActivity  extends AppCompatActivity
         @Override
         protected void onPreExecute () {
             /// progress dialog and disable 'Move' button
-            mCurrentDialog = IndeterminateProgressDialog.newInstance(R.string.wait_a_moment, false);
+            mCurrentDialog = IndeterminateProgressDialog.newInstance(com.owncloud.android.R.string.wait_a_moment, false);
             mCurrentDialog.show(getSupportFragmentManager(), WAIT_DIALOG_TAG);
-            findViewById(R.id.ok).setEnabled(false);
+            findViewById(com.owncloud.android.R.id.ok).setEnabled(false);
         }
         
         
@@ -272,18 +271,18 @@ public class ErrorsWhileCopyingHandlerActivity  extends AppCompatActivity
             mAdapter.notifyDataSetChanged();
             mCurrentDialog.dismiss();
             mCurrentDialog = null;
-            findViewById(R.id.ok).setEnabled(true);
+            findViewById(com.owncloud.android.R.id.ok).setEnabled(true);
             
             if (result) {
                 // nothing else to do in this activity
                 Toast t = Toast.makeText(ErrorsWhileCopyingHandlerActivity.this,
-                        getString(R.string.foreign_files_success), Toast.LENGTH_LONG);
+                        getString(com.owncloud.android.R.string.foreign_files_success), Toast.LENGTH_LONG);
                 t.show();
                 finish();
                 
             } else {
                 Toast t = Toast.makeText(ErrorsWhileCopyingHandlerActivity.this,
-                        getString(R.string.foreign_files_fail), Toast.LENGTH_LONG);
+                        getString(com.owncloud.android.R.string.foreign_files_fail), Toast.LENGTH_LONG);
                 t.show();
             }
         }

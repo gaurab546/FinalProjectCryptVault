@@ -30,11 +30,9 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
-import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
-import com.owncloud.android.datamodel.ThumbnailsCacheManager.AsyncThumbnailDrawable;
+import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.MimeTypeUtil;
 
@@ -64,23 +62,23 @@ public class UploaderAdapter extends SimpleAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if (convertView == null) {
-            vi = inflater.inflate(R.layout.uploader_list_item_layout, null);
+            vi = inflater.inflate(com.owncloud.android.R.layout.uploader_list_item_layout, null);
         }
 
         HashMap<String, OCFile> data = (HashMap<String, OCFile>) getItem(position);
         OCFile file = data.get("dirname");
 
-        TextView filename = (TextView) vi.findViewById(R.id.filename);
+        TextView filename = (TextView) vi.findViewById(com.owncloud.android.R.id.filename);
         filename.setText(file.getFileName());
         
-        ImageView fileIcon = (ImageView) vi.findViewById(R.id.thumbnail);
+        ImageView fileIcon = (ImageView) vi.findViewById(com.owncloud.android.R.id.thumbnail);
         fileIcon.setTag(file.getFileId());
 
-        TextView lastModV = (TextView) vi.findViewById(R.id.last_mod);
+        TextView lastModV = (TextView) vi.findViewById(com.owncloud.android.R.id.last_mod);
         lastModV.setText(DisplayUtils.getRelativeTimestamp(mContext, file.getModificationTimestamp()));
 
-        TextView fileSizeV = (TextView) vi.findViewById(R.id.file_size);
-        TextView fileSizeSeparatorV = (TextView) vi.findViewById(R.id.file_separator);
+        TextView fileSizeV = (TextView) vi.findViewById(com.owncloud.android.R.id.file_size);
+        TextView fileSizeSeparatorV = (TextView) vi.findViewById(com.owncloud.android.R.id.file_separator);
 
         if(!file.isFolder()) {
             fileSizeV.setVisibility(View.VISIBLE);
@@ -116,7 +114,7 @@ public class UploaderAdapter extends SimpleAdapter {
                                 thumbnail = ThumbnailsCacheManager.mDefaultImg;
                             }
                         }
-                        final AsyncThumbnailDrawable asyncDrawable = new AsyncThumbnailDrawable(
+                        final ThumbnailsCacheManager.AsyncThumbnailDrawable asyncDrawable = new ThumbnailsCacheManager.AsyncThumbnailDrawable(
                                 mContext.getResources(),
                                 thumbnail,
                                 task

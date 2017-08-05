@@ -22,16 +22,16 @@ package com.owncloud.android.operations;
 
 import android.accounts.Account;
 
+import com.owncloud.android.operations.common.SyncOperation;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.resources.files.MoveRemoteFileOperation;
-import com.owncloud.android.operations.common.SyncOperation;
 
 
 /**
- * Operation mmoving an {@link OCFile} to a different folder.
+ * Operation moving an {@link OCFile} to a different folder.
  */
 public class MoveFileOperation extends SyncOperation {
     

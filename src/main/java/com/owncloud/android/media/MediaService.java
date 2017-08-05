@@ -37,10 +37,9 @@ import android.os.PowerManager;
 import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.utils.ThemeUtils;
 
@@ -165,28 +164,28 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
                 but the media framework does not support the feature.
                 Constant Value: -1010 (0xfffffc0e)
              */
-            messageId = R.string.media_err_unsupported;
+            messageId = com.owncloud.android.R.string.media_err_unsupported;
 
         } else if (extra == MediaPlayer.MEDIA_ERROR_IO) {
             /*  Added in API level 17
                 File or network related operation errors.
                 Constant Value: -1004 (0xfffffc14) 
              */
-            messageId = R.string.media_err_io;
+            messageId = com.owncloud.android.R.string.media_err_io;
 
         } else if (extra == MediaPlayer.MEDIA_ERROR_MALFORMED) {
             /*  Added in API level 17
                 Bitstream is not conforming to the related coding standard or file spec.
                 Constant Value: -1007 (0xfffffc11) 
              */
-            messageId = R.string.media_err_malformed;
+            messageId = com.owncloud.android.R.string.media_err_malformed;
 
         } else if (extra == MediaPlayer.MEDIA_ERROR_TIMED_OUT) {
             /*  Added in API level 17
                 Some operation takes too long to complete, usually more than 3-5 seconds.
                 Constant Value: -110 (0xffffff92)
             */
-            messageId = R.string.media_err_timeout;
+            messageId = com.owncloud.android.R.string.media_err_timeout;
 
         } else if (what == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK) {
             /*  Added in API level 3
@@ -194,7 +193,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
                 (e.g moov atom) is not at the start of the file.
                 Constant Value: 200 (0x000000c8)
             */
-            messageId = R.string.media_err_invalid_progressive_playback;
+            messageId = com.owncloud.android.R.string.media_err_invalid_progressive_playback;
 
         } else {
             /*  MediaPlayer.MEDIA_ERROR_UNKNOWN
@@ -208,7 +207,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
                 object and instantiate a new one.
                 Constant Value: 100 (0x00000064) 
              */
-            messageId = R.string.media_err_unknown;
+            messageId = com.owncloud.android.R.string.media_err_unknown;
         }
         return context.getString(messageId);
     }
@@ -288,7 +287,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         } else if (mState == State.PAUSED) {
             // continue playback
             mState = State.PLAYING;
-            setUpAsForeground(String.format(getString(R.string.media_state_playing), mFile.getFileName()));
+            setUpAsForeground(String.format(getString(com.owncloud.android.R.string.media_state_playing), mFile.getFileName()));
             configAndStartMediaPlayer();
         }
     }
@@ -434,12 +433,12 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
 
         try {
             if (mFile == null) {
-                Toast.makeText(this, R.string.media_err_nothing_to_play, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, com.owncloud.android.R.string.media_err_nothing_to_play, Toast.LENGTH_LONG).show();
                 processStopRequest(true);
                 return;
 
             } else if (mAccount == null) {
-                Toast.makeText(this, R.string.media_err_not_in_owncloud, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, com.owncloud.android.R.string.media_err_not_in_owncloud, Toast.LENGTH_LONG).show();
                 processStopRequest(true);
                 return;
             }
@@ -458,7 +457,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
             mPlayer.setDataSource(url);
 
             mState = State.PREPARING;
-            setUpAsForeground(String.format(getString(R.string.media_state_loading), mFile.getFileName()));
+            setUpAsForeground(String.format(getString(com.owncloud.android.R.string.media_state_loading), mFile.getFileName()));
 
             // starts preparing the media player in background
             mPlayer.prepareAsync();
@@ -472,25 +471,25 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
 
         } catch (SecurityException e) {
             Log_OC.e(TAG, "SecurityException playing " + mAccount.name + mFile.getRemotePath(), e);
-            Toast.makeText(this, String.format(getString(R.string.media_err_security_ex), mFile.getFileName()),
+            Toast.makeText(this, String.format(getString(com.owncloud.android.R.string.media_err_security_ex), mFile.getFileName()),
                     Toast.LENGTH_LONG).show();
             processStopRequest(true);
 
         } catch (IOException e) {
             Log_OC.e(TAG, "IOException playing " + mAccount.name + mFile.getRemotePath(), e);
-            Toast.makeText(this, String.format(getString(R.string.media_err_io_ex), mFile.getFileName()),
+            Toast.makeText(this, String.format(getString(com.owncloud.android.R.string.media_err_io_ex), mFile.getFileName()),
                     Toast.LENGTH_LONG).show();
             processStopRequest(true);
 
         } catch (IllegalStateException e) {
             Log_OC.e(TAG, "IllegalStateException " + mAccount.name + mFile.getRemotePath(), e);
-            Toast.makeText(this, String.format(getString(R.string.media_err_unexpected), mFile.getFileName()),
+            Toast.makeText(this, String.format(getString(com.owncloud.android.R.string.media_err_unexpected), mFile.getFileName()),
                     Toast.LENGTH_LONG).show();
             processStopRequest(true);
 
         } catch (IllegalArgumentException e) {
             Log_OC.e(TAG, "IllegalArgumentException " + mAccount.name + mFile.getRemotePath(), e);
-            Toast.makeText(this, String.format(getString(R.string.media_err_unexpected), mFile.getFileName()),
+            Toast.makeText(this, String.format(getString(com.owncloud.android.R.string.media_err_unexpected), mFile.getFileName()),
                     Toast.LENGTH_LONG).show();
             processStopRequest(true);
         }
@@ -499,7 +498,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
 
     /** Called when media player is done playing current song. */
     public void onCompletion(MediaPlayer player) {
-        Toast.makeText(this, String.format(getString(R.string.media_event_done, mFile.getFileName())), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.format(getString(com.owncloud.android.R.string.media_event_done, mFile.getFileName())), Toast.LENGTH_LONG).show();
         if (mMediaController != null) {
             // somebody is still bound to the service
             player.seekTo(0);
@@ -519,7 +518,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
      */
     public void onPrepared(MediaPlayer player) {
         mState = State.PLAYING;
-        updateNotification(String.format(getString(R.string.media_state_playing), mFile.getFileName()));
+        updateNotification(String.format(getString(com.owncloud.android.R.string.media_state_playing), mFile.getFileName()));
         if (mMediaController != null) {
             mMediaController.setEnabled(true);
         }
@@ -539,7 +538,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
      * Updates the status notification
      */
     private void updateNotification(String content) {
-        String ticker = String.format(getString(R.string.media_notif_ticker), getString(R.string.app_name));
+        String ticker = String.format(getString(com.owncloud.android.R.string.media_notif_ticker), getString(com.owncloud.android.R.string.app_name));
 
         // TODO check if updating the Intent is really necessary
         Intent showDetailsIntent = new Intent(this, FileDisplayActivity.class);
@@ -556,7 +555,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         mNotificationBuilder.setContentTitle(ticker);
         mNotificationBuilder.setContentText(content);
 
-        mNotificationManager.notify(R.string.media_notif_ticker, mNotificationBuilder.build());
+        mNotificationManager.notify(com.owncloud.android.R.string.media_notif_ticker, mNotificationBuilder.build());
     }
 
 
@@ -568,11 +567,11 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
      * A notification must be created to keep the user aware of the existence of the service.
      */
     private void setUpAsForeground(String content) {
-        String ticker = String.format(getString(R.string.media_notif_ticker), getString(R.string.app_name));
+        String ticker = String.format(getString(com.owncloud.android.R.string.media_notif_ticker), getString(com.owncloud.android.R.string.app_name));
 
         /// creates status notification
         // TODO put a progress bar to follow the playback progress
-        mNotificationBuilder.setSmallIcon(R.drawable.ic_play_arrow);
+        mNotificationBuilder.setSmallIcon(com.owncloud.android.R.drawable.ic_play_arrow);
         //mNotification.tickerText = text;
         mNotificationBuilder.setWhen(System.currentTimeMillis());
         mNotificationBuilder.setOngoing(true);
@@ -589,7 +588,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         mNotificationBuilder.setContentTitle(ticker);
         mNotificationBuilder.setContentText(content);
 
-        startForeground(R.string.media_notif_ticker, mNotificationBuilder.build());
+        startForeground(com.owncloud.android.R.string.media_notif_ticker, mNotificationBuilder.build());
     }
 
     /**

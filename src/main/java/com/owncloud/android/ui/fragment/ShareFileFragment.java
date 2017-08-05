@@ -45,20 +45,20 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
+import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
-import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.lib.resources.shares.OCShare;
-import com.owncloud.android.lib.resources.shares.ShareType;
-import com.owncloud.android.lib.resources.status.OCCapability;
 import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.adapter.ShareUserListAdapter;
 import com.owncloud.android.ui.dialog.ExpirationDatePickerDialogFragment;
 import com.owncloud.android.ui.dialog.SharePasswordDialogFragment;
-import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.utils.AnalyticsUtils;
+import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.lib.resources.shares.OCShare;
+import com.owncloud.android.lib.resources.shares.ShareType;
+import com.owncloud.android.lib.resources.status.OCCapability;
 import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.ThemeUtils;
 
@@ -195,17 +195,17 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
 
         // use grey as fallback for elements where custom theming is not available
         if (ThemeUtils.themingEnabled()) {
-            getContext().getTheme().applyStyle(R.style.FallbackThemingTheme, true);
+            getContext().getTheme().applyStyle(com.owncloud.android.R.style.FallbackThemingTheme, true);
         }
 
         int accentColor = ThemeUtils.primaryAccentColor();
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.share_file_layout, container, false);
+        View view = inflater.inflate(com.owncloud.android.R.layout.share_file_layout, container, false);
 
         // Setup layout
         // Image
-        ImageView icon = (ImageView) view.findViewById(R.id.shareFileIcon);
+        ImageView icon = (ImageView) view.findViewById(com.owncloud.android.R.id.shareFileIcon);
         icon.setImageResource(MimeTypeUtil.getFileTypeIconId(mFile.getMimetype(),
                 mFile.getFileName()));
         if (MimeTypeUtil.isImage(mFile)) {
@@ -217,18 +217,18 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
         }
 
         // Title
-        TextView title = (TextView) view.findViewById(R.id.shareWithUsersSectionTitle);
+        TextView title = (TextView) view.findViewById(com.owncloud.android.R.id.shareWithUsersSectionTitle);
         title.setTextColor(accentColor);
 
         // Name
-        TextView fileNameHeader = (TextView) view.findViewById(R.id.shareFileName);
-        fileNameHeader.setText(getResources().getString(R.string.share_file, mFile.getFileName()));
+        TextView fileNameHeader = (TextView) view.findViewById(com.owncloud.android.R.id.shareFileName);
+        fileNameHeader.setText(getResources().getString(com.owncloud.android.R.string.share_file, mFile.getFileName()));
 
-        View headerDivider = view.findViewById(R.id.share_header_divider);
+        View headerDivider = view.findViewById(com.owncloud.android.R.id.share_header_divider);
         headerDivider.getBackground().setColorFilter(ThemeUtils.primaryAccentColor(), PorterDuff.Mode.SRC_ATOP);
 
         // Size
-        TextView size = (TextView) view.findViewById(R.id.shareFileSize);
+        TextView size = (TextView) view.findViewById(com.owncloud.android.R.id.shareFileSize);
         if (mFile.isFolder()) {
             size.setVisibility(View.GONE);
         } else {
@@ -236,7 +236,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
         }
 
         //  Add User Button
-        Button addUserGroupButton = (Button) view.findViewById(R.id.addUserButton);
+        Button addUserGroupButton = (Button) view.findViewById(com.owncloud.android.R.id.addUserButton);
         addUserGroupButton.getBackground().setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP);
         addUserGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,7 +246,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
                     // Show Search Fragment
                     mListener.showSearchUsersAndGroups();
                 } else {
-                    String message = getString(R.string.share_sharee_unavailable);
+                    String message = getString(com.owncloud.android.R.string.share_sharee_unavailable);
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 }
             }
@@ -282,7 +282,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
      */
     private void initShareViaLinkListener(View shareView) {
         mOnShareViaLinkSwitchCheckedChangeListener = new OnShareViaLinkListener();
-        SwitchCompat shareViaLinkSwitch = (SwitchCompat) shareView.findViewById(R.id.shareViaLinkSectionSwitch);
+        SwitchCompat shareViaLinkSwitch = (SwitchCompat) shareView.findViewById(com.owncloud.android.R.id.shareViaLinkSectionSwitch);
         ThemeUtils.tintSwitch(shareViaLinkSwitch, ThemeUtils.primaryAccentColor(), true);
         shareViaLinkSwitch.setOnCheckedChangeListener(mOnShareViaLinkSwitchCheckedChangeListener);
     }
@@ -344,15 +344,15 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
     private void initExpirationListener(View shareView) {
         mOnExpirationDateInteractionListener = new OnExpirationDateInteractionListener();
 
-        SwitchCompat expirationSwitch = (SwitchCompat) shareView.findViewById(R.id.shareViaLinkExpirationSwitch);
+        SwitchCompat expirationSwitch = (SwitchCompat) shareView.findViewById(com.owncloud.android.R.id.shareViaLinkExpirationSwitch);
         expirationSwitch.setOnCheckedChangeListener(mOnExpirationDateInteractionListener);
 
         ThemeUtils.tintSwitch(expirationSwitch, ThemeUtils.primaryAccentColor());
 
-        shareView.findViewById(R.id.shareViaLinkExpirationLabel).
+        shareView.findViewById(com.owncloud.android.R.id.shareViaLinkExpirationLabel).
                 setOnClickListener(mOnExpirationDateInteractionListener);
 
-        shareView.findViewById(R.id.shareViaLinkExpirationValue).
+        shareView.findViewById(com.owncloud.android.R.id.shareViaLinkExpirationValue).
                 setOnClickListener(mOnExpirationDateInteractionListener);
     }
 
@@ -424,13 +424,13 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
     private void initPasswordListener(View shareView) {
         mOnPasswordInteractionListener = new OnPasswordInteractionListener();
 
-        SwitchCompat passwordSwitch = (SwitchCompat) shareView.findViewById(R.id.shareViaLinkPasswordSwitch);
+        SwitchCompat passwordSwitch = (SwitchCompat) shareView.findViewById(com.owncloud.android.R.id.shareViaLinkPasswordSwitch);
         passwordSwitch.setOnCheckedChangeListener(mOnPasswordInteractionListener);
         ThemeUtils.tintSwitch(passwordSwitch, ThemeUtils.primaryAccentColor());
 
-        shareView.findViewById(R.id.shareViaLinkPasswordLabel).setOnClickListener(mOnPasswordInteractionListener);
+        shareView.findViewById(com.owncloud.android.R.id.shareViaLinkPasswordLabel).setOnClickListener(mOnPasswordInteractionListener);
 
-        shareView.findViewById(R.id.shareViaLinkPasswordValue).setOnClickListener(mOnPasswordInteractionListener);
+        shareView.findViewById(com.owncloud.android.R.id.shareViaLinkPasswordValue).setOnClickListener(mOnPasswordInteractionListener);
     }
 
 
@@ -489,7 +489,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
     private void initEditPermissionListener(View shareView) {
         mOnEditPermissionInteractionListener = new OnEditPermissionInteractionListener();
 
-        SwitchCompat permissionSwitch = (SwitchCompat) shareView.findViewById(R.id.shareViaLinkEditPermissionSwitch);
+        SwitchCompat permissionSwitch = (SwitchCompat) shareView.findViewById(com.owncloud.android.R.id.shareViaLinkEditPermissionSwitch);
         permissionSwitch.setOnCheckedChangeListener(mOnEditPermissionInteractionListener);
         ThemeUtils.tintSwitch(permissionSwitch, ThemeUtils.primaryAccentColor());
     }
@@ -503,7 +503,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
     private void initHideFileListingListener(View shareView) {
         mOnHideFileListingPermissionInteractionListener = new OnHideFileListingPermissionInteractionListener();
 
-        SwitchCompat permissionSwitch = (SwitchCompat) shareView.findViewById(R.id.shareViaLinkFileListingPermissionSwitch);
+        SwitchCompat permissionSwitch = (SwitchCompat) shareView.findViewById(com.owncloud.android.R.id.shareViaLinkFileListingPermissionSwitch);
         permissionSwitch.setOnCheckedChangeListener(mOnHideFileListingPermissionInteractionListener);
         ThemeUtils.tintSwitch(permissionSwitch, ThemeUtils.primaryAccentColor());
     }
@@ -563,12 +563,12 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
                         );
             } else {
                 // not supported in ownCloud
-                Snackbar.make(getView(), R.string.files_drop_not_supported, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.learn_more, new View.OnClickListener(){
+                Snackbar.make(getView(), com.owncloud.android.R.string.files_drop_not_supported, Snackbar.LENGTH_LONG)
+                        .setAction(com.owncloud.android.R.string.learn_more, new View.OnClickListener(){
                             @Override
                             public void onClick(View v) {
                                 Intent i = new Intent(Intent.ACTION_VIEW);
-                                i.setData(Uri.parse(getString(R.string.url_server_install)));
+                                i.setData(Uri.parse(getString(com.owncloud.android.R.string.url_server_install)));
                                 startActivity(i);
                             }
                         })
@@ -617,7 +617,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
     /**
      * Get known server capabilities from DB
      * <p/>
-     * Depends on the parent Activity provides a {@link com.owncloud.android.datamodel.FileDataStorageManager}
+     * Depends on the parent Activity provides a {@link FileDataStorageManager}
      * instance ready to use. If not ready, does nothing.
      */
     public void refreshCapabilitiesFromDB() {
@@ -629,7 +629,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
     /**
      * Get users and groups from the DB to fill in the "share with" list.
      * <p/>
-     * Depends on the parent Activity provides a {@link com.owncloud.android.datamodel.FileDataStorageManager}
+     * Depends on the parent Activity provides a {@link FileDataStorageManager}
      * instance ready to use. If not ready, does nothing.
      */
     public void refreshUsersOrGroupsListFromDB() {
@@ -650,14 +650,14 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
         // TODO Refactoring: create a new {@link ShareUserListAdapter} instance with every call should not be needed
         mUserGroupsAdapter = new ShareUserListAdapter(
                 getActivity(),
-                R.layout.share_user_item,
+                com.owncloud.android.R.layout.share_user_item,
                 mPrivateShares,
                 this
         );
 
         // Show data
-        TextView noShares = (TextView) getView().findViewById(R.id.shareNoUsers);
-        ListView usersList = (ListView) getView().findViewById(R.id.shareUsersList);
+        TextView noShares = (TextView) getView().findViewById(com.owncloud.android.R.id.shareNoUsers);
+        ListView usersList = (ListView) getView().findViewById(com.owncloud.android.R.id.shareUsersList);
 
         if (mPrivateShares.size() > 0) {
             noShares.setVisibility(View.GONE);
@@ -670,7 +670,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
         }
 
         // Set Scroll to initial position
-        ScrollView scrollView = (ScrollView) getView().findViewById(R.id.shareScroll);
+        ScrollView scrollView = (ScrollView) getView().findViewById(com.owncloud.android.R.id.shareScroll);
         scrollView.scrollTo(0, 0);
     }
 
@@ -693,7 +693,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
      * <p/>
      * Takes into account server capabilities before reading database.
      * <p/>
-     * Depends on the parent Activity provides a {@link com.owncloud.android.datamodel.FileDataStorageManager}
+     * Depends on the parent Activity provides a {@link FileDataStorageManager}
      * instance ready to use. If not ready, does nothing.
      */
     public void refreshPublicShareFromDB() {
@@ -779,7 +779,7 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
                 if (expirationDateSwitch.isChecked()) {
                     expirationDateSwitch.toggle();
                 }
-                getExpirationDateValue().setText(R.string.empty);
+                getExpirationDateValue().setText(com.owncloud.android.R.string.empty);
             }
 
             // recover listener
@@ -860,51 +860,51 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
     /// BEWARE: next methods will failed with NullPointerException if called before onCreateView() finishes
 
     private SwitchCompat getShareViaLinkSwitch() {
-        return (SwitchCompat) getView().findViewById(R.id.shareViaLinkSectionSwitch);
+        return (SwitchCompat) getView().findViewById(com.owncloud.android.R.id.shareViaLinkSectionSwitch);
     }
 
     private View getExpirationDateSection() {
-        return getView().findViewById(R.id.shareViaLinkExpirationSection);
+        return getView().findViewById(com.owncloud.android.R.id.shareViaLinkExpirationSection);
     }
 
     private SwitchCompat getExpirationDateSwitch() {
-        return (SwitchCompat) getView().findViewById(R.id.shareViaLinkExpirationSwitch);
+        return (SwitchCompat) getView().findViewById(com.owncloud.android.R.id.shareViaLinkExpirationSwitch);
     }
 
     private TextView getExpirationDateValue() {
-        return (TextView) getView().findViewById(R.id.shareViaLinkExpirationValue);
+        return (TextView) getView().findViewById(com.owncloud.android.R.id.shareViaLinkExpirationValue);
     }
 
     private View getPasswordSection() {
-        return getView().findViewById(R.id.shareViaLinkPasswordSection);
+        return getView().findViewById(com.owncloud.android.R.id.shareViaLinkPasswordSection);
     }
 
     private SwitchCompat getPasswordSwitch() {
-        return (SwitchCompat) getView().findViewById(R.id.shareViaLinkPasswordSwitch);
+        return (SwitchCompat) getView().findViewById(com.owncloud.android.R.id.shareViaLinkPasswordSwitch);
     }
 
     private TextView getPasswordValue() {
-        return (TextView) getView().findViewById(R.id.shareViaLinkPasswordValue);
+        return (TextView) getView().findViewById(com.owncloud.android.R.id.shareViaLinkPasswordValue);
     }
 
     private View getEditPermissionSection() {
-        return getView().findViewById(R.id.shareViaLinkEditPermissionSection);
+        return getView().findViewById(com.owncloud.android.R.id.shareViaLinkEditPermissionSection);
     }
 
     private SwitchCompat getEditPermissionSwitch() {
-        return (SwitchCompat) getView().findViewById(R.id.shareViaLinkEditPermissionSwitch);
+        return (SwitchCompat) getView().findViewById(com.owncloud.android.R.id.shareViaLinkEditPermissionSwitch);
     }
 
     private SwitchCompat getHideFileListingPermissionSwitch() {
-        return (SwitchCompat) getView().findViewById(R.id.shareViaLinkFileListingPermissionSwitch);
+        return (SwitchCompat) getView().findViewById(com.owncloud.android.R.id.shareViaLinkFileListingPermissionSwitch);
     }
 
     private View getHideFileListingPermissionSection() {
-        return getView().findViewById(R.id.shareViaLinkHideFileListingPermissionSection);
+        return getView().findViewById(com.owncloud.android.R.id.shareViaLinkHideFileListingPermissionSection);
     }
 
     private AppCompatButton getGetLinkButton() {
-        return (AppCompatButton) getView().findViewById(R.id.shareViaLinkGetLinkButton);
+        return (AppCompatButton) getView().findViewById(com.owncloud.android.R.id.shareViaLinkGetLinkButton);
     }
 
     /**
@@ -960,11 +960,11 @@ public class ShareFileFragment extends Fragment implements ShareUserListAdapter.
      * @param view share file view
      */
     private void hideNotEnabledShareSections(View view) {
-        LinearLayout shareWithUsersSection = (LinearLayout) view.findViewById(R.id.shareWithUsersSection);
-        LinearLayout shareViaLinkSection = (LinearLayout) view.findViewById(R.id.shareViaLinkSection);
+        LinearLayout shareWithUsersSection = (LinearLayout) view.findViewById(com.owncloud.android.R.id.shareWithUsersSection);
+        LinearLayout shareViaLinkSection = (LinearLayout) view.findViewById(com.owncloud.android.R.id.shareViaLinkSection);
 
-        boolean shareViaLinkAllowed = getActivity().getResources().getBoolean(R.bool.share_via_link_feature);
-        boolean shareWithUsersAllowed = getActivity().getResources().getBoolean(R.bool.share_with_users_feature);
+        boolean shareViaLinkAllowed = getActivity().getResources().getBoolean(com.owncloud.android.R.bool.share_via_link_feature);
+        boolean shareWithUsersAllowed = getActivity().getResources().getBoolean(com.owncloud.android.R.bool.share_with_users_feature);
 
         // Hide share via link section if it is not enabled
         if (!shareViaLinkAllowed) {

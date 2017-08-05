@@ -45,24 +45,23 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.StreamEncoder;
 import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
 import com.caverock.androidsvg.SVG;
-import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.ui.interfaces.ActivityListInterface;
+import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.utils.glide.CustomGlideStreamLoader;
+import com.owncloud.android.utils.svg.SvgDecoder;
+import com.owncloud.android.utils.svg.SvgDrawableTranscoder;
+import com.owncloud.android.utils.svg.SvgSoftwareLayerSetter;
+import com.owncloud.android.MainApp;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.activities.models.Activity;
 import com.owncloud.android.lib.resources.activities.models.RichElement;
 import com.owncloud.android.lib.resources.activities.models.RichObject;
 import com.owncloud.android.lib.resources.files.FileUtils;
-import com.owncloud.android.ui.interfaces.ActivityListInterface;
-import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.ThemeUtils;
-import com.owncloud.android.utils.glide.CustomGlideStreamLoader;
-import com.owncloud.android.utils.svg.SvgDecoder;
-import com.owncloud.android.utils.svg.SvgDrawableTranscoder;
-import com.owncloud.android.utils.svg.SvgSoftwareLayerSetter;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -128,10 +127,10 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ACTIVITY_TYPE) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_list_item, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(com.owncloud.android.R.layout.activity_list_item, parent, false);
             return new ActivityViewHolder(v);
         } else {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_list_item_header, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(com.owncloud.android.R.layout.activity_list_item_header, parent, false);
             return new ActivityViewHeaderHolder(v);
         }
 
@@ -274,8 +273,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 .sourceEncoder(new StreamEncoder())
                 .cacheDecoder(new FileToStreamDecoder<>(new SvgDecoder()))
                 .decoder(new SvgDecoder())
-                .placeholder(R.drawable.ic_activity)
-                .error(R.drawable.ic_activity)
+                .placeholder(com.owncloud.android.R.drawable.ic_activity)
+                .error(com.owncloud.android.R.drawable.ic_activity)
                 .animate(android.R.anim.fade_in)
                 .listener(new SvgSoftwareLayerSetter<Uri>());
 
@@ -348,7 +347,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private int getThumbnailDimension() {
         // Converts dp to pixel
         Resources r = MainApp.getAppContext().getResources();
-        Double d = Math.pow(2, Math.floor(Math.log(r.getDimension(R.dimen.file_icon_size_grid)) / Math.log(2))) / 2;
+        Double d = Math.pow(2, Math.floor(Math.log(r.getDimension(com.owncloud.android.R.dimen.file_icon_size_grid)) / Math.log(2))) / 2;
         return d.intValue();
     }
 
@@ -362,11 +361,11 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         private ActivityViewHolder(View itemView) {
             super(itemView);
-            activityIcon = (ImageView) itemView.findViewById(R.id.activity_icon);
-            subject = (TextView) itemView.findViewById(R.id.activity_subject);
-            message = (TextView) itemView.findViewById(R.id.activity_message);
-            dateTime = (TextView) itemView.findViewById(R.id.activity_datetime);
-            list = (GridLayout) itemView.findViewById(R.id.list);
+            activityIcon = (ImageView) itemView.findViewById(com.owncloud.android.R.id.activity_icon);
+            subject = (TextView) itemView.findViewById(com.owncloud.android.R.id.activity_subject);
+            message = (TextView) itemView.findViewById(com.owncloud.android.R.id.activity_message);
+            dateTime = (TextView) itemView.findViewById(com.owncloud.android.R.id.activity_datetime);
+            list = (GridLayout) itemView.findViewById(com.owncloud.android.R.id.list);
         }
     }
 
@@ -376,7 +375,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         private ActivityViewHeaderHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_header);
+            title = (TextView) itemView.findViewById(com.owncloud.android.R.id.title_header);
 
         }
     }

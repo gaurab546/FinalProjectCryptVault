@@ -26,10 +26,10 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
+import com.owncloud.android.ui.fragment.contactsbackup.ContactListFragment;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.util.support.PersistableBundleCompat;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.ui.fragment.contactsbackup.ContactListFragment;
 
 import java.io.File;
 import java.io.IOException;

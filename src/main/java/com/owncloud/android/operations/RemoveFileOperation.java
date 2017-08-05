@@ -22,11 +22,11 @@
 package com.owncloud.android.operations;
 
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.operations.common.SyncOperation;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.resources.files.RemoveRemoteFileOperation;
-import com.owncloud.android.operations.common.SyncOperation;
 
 
 /**

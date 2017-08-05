@@ -88,9 +88,16 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.owncloud.android.operations.GetServerInfoOperation;
+import com.owncloud.android.operations.OAuth2GetAccessToken;
+import com.owncloud.android.services.OperationsService;
+import com.owncloud.android.ui.components.CustomEditText;
+import com.owncloud.android.ui.dialog.CredentialsDialogFragment;
+import com.owncloud.android.ui.dialog.IndeterminateProgressDialog;
+import com.owncloud.android.ui.dialog.SamlWebViewDialog;
+import com.owncloud.android.utils.DisplayUtils;
+import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
-import com.owncloud.android.authentication.SsoWebViewClient.SsoWebViewClientListener;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
 import com.owncloud.android.lib.common.OwnCloudCredentials;
@@ -108,18 +115,8 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
 import com.owncloud.android.lib.resources.users.GetRemoteUserInfoOperation;
 import com.owncloud.android.operations.DetectAuthenticationMethodOperation.AuthenticationMethod;
-import com.owncloud.android.operations.GetServerInfoOperation;
-import com.owncloud.android.operations.OAuth2GetAccessToken;
-import com.owncloud.android.services.OperationsService;
-import com.owncloud.android.services.OperationsService.OperationsServiceBinder;
-import com.owncloud.android.ui.components.CustomEditText;
-import com.owncloud.android.ui.dialog.CredentialsDialogFragment;
-import com.owncloud.android.ui.dialog.IndeterminateProgressDialog;
-import com.owncloud.android.ui.dialog.SamlWebViewDialog;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog.OnSslUntrustedCertListener;
-import com.owncloud.android.utils.AnalyticsUtils;
-import com.owncloud.android.utils.DisplayUtils;
 
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
@@ -132,7 +129,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 public class AuthenticatorActivity extends AccountAuthenticatorActivity
         implements OnRemoteOperationListener, OnFocusChangeListener, OnEditorActionListener,
-        SsoWebViewClientListener, OnSslUntrustedCertListener,
+        SsoWebViewClient.SsoWebViewClientListener, OnSslUntrustedCertListener,
         AuthenticatorAsyncTask.OnAuthenticatorTaskListener {
 
     private static final String TAG = AuthenticatorActivity.class.getSimpleName();
@@ -193,7 +190,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     /// activity-level references / state
     private final Handler mHandler = new Handler();
     private ServiceConnection mOperationsServiceConnection = null;
-    private OperationsServiceBinder mOperationsServiceBinder = null;
+    private OperationsService.OperationsServiceBinder mOperationsServiceBinder = null;
     private AccountManager mAccountMgr;
     private Uri mNewCapturedUriFromOAuth2Redirection;
 
@@ -283,7 +280,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             mIsFirstAuthAttempt = savedInstanceState.getBoolean(KEY_AUTH_IS_FIRST_ATTEMPT_TAG);
         }
 
-        webViewLoginMethod = !TextUtils.isEmpty(getResources().getString(R.string.webview_login_url));
+        webViewLoginMethod = !TextUtils.isEmpty(getResources().getString(com.owncloud.android.R.string.webview_login_url));
 
         if (webViewLoginMethod) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -291,15 +288,15 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         /// load user interface
         if (!webViewLoginMethod) {
-            setContentView(R.layout.account_setup);
+            setContentView(com.owncloud.android.R.layout.account_setup);
 
             /// initialize general UI elements
             initOverallUi();
 
-            mUsernameInputLayout = (TextInputLayout) findViewById(R.id.input_layout_account_username);
-            mPasswordInputLayout = (TextInputLayout) findViewById(R.id.input_layout_account_password);
+            mUsernameInputLayout = (TextInputLayout) findViewById(com.owncloud.android.R.id.input_layout_account_username);
+            mPasswordInputLayout = (TextInputLayout) findViewById(com.owncloud.android.R.id.input_layout_account_password);
 
-            mOkButton = findViewById(R.id.buttonOK);
+            mOkButton = findViewById(com.owncloud.android.R.id.buttonOK);
             mOkButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -308,7 +305,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 }
             });
 
-            findViewById(R.id.centeredRefreshButton).setOnClickListener(new View.OnClickListener() {
+            findViewById(com.owncloud.android.R.id.centeredRefreshButton).setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -316,7 +313,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 }
             });
 
-            findViewById(R.id.embeddedRefreshButton).setOnClickListener(new View.OnClickListener() {
+            findViewById(com.owncloud.android.R.id.embeddedRefreshButton).setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -330,8 +327,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             initAuthorizationPreFragment(savedInstanceState);
 
         } else {
-            setContentView(R.layout.account_setup_webview);
-            mLoginWebView = (WebView) findViewById(R.id.login_webview);
+            setContentView(com.owncloud.android.R.layout.account_setup_webview);
+            mLoginWebView = (WebView) findViewById(com.owncloud.android.R.id.login_webview);
             initWebViewLogin(null);
         }
 
@@ -357,7 +354,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private void initWebViewLogin(String baseURL) {
         mLoginWebView.setVisibility(View.GONE);
 
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.login_webview_progress_bar);
+        final ProgressBar progressBar = (ProgressBar) findViewById(com.owncloud.android.R.id.login_webview_progress_bar);
 
         mLoginWebView.getSettings().setAllowFileAccess(false);
         mLoginWebView.getSettings().setJavaScriptEnabled(true);
@@ -370,13 +367,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             headers.put(RemoteOperation.OCS_API_HEADER, RemoteOperation.OCS_API_HEADER_VALUE);
             mLoginWebView.loadUrl(baseURL + WEB_LOGIN, headers);
         } else {
-            mLoginWebView.loadUrl(getResources().getString(R.string.webview_login_url));
+            mLoginWebView.loadUrl(getResources().getString(com.owncloud.android.R.string.webview_login_url));
         }
 
         mLoginWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith(getString(R.string.login_data_own_scheme) + PROTOCOL_SUFFIX + "login/")) {
+                if (url.startsWith(getString(com.owncloud.android.R.string.login_data_own_scheme) + PROTOCOL_SUFFIX + "login/")) {
                     parseAndLoginFromWebView(url);
                     return true;
                 }
@@ -394,13 +391,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 progressBar.setVisibility(View.GONE);
                 mLoginWebView.setVisibility(View.VISIBLE);
-                mLoginWebView.loadData(DisplayUtils.getData(getResources().openRawResource(R.raw.custom_error)),"text/html; charset=UTF-8", null);
+                mLoginWebView.loadData(DisplayUtils.getData(getResources().openRawResource(com.owncloud.android.R.raw.custom_error)),"text/html; charset=UTF-8", null);
             }
         });
     }
 
     private void parseAndLoginFromWebView(String dataString) {
-        String prefix = getString(R.string.login_data_own_scheme) + PROTOCOL_SUFFIX + "login/";
+        String prefix = getString(com.owncloud.android.R.string.login_data_own_scheme) + PROTOCOL_SUFFIX + "login/";
         LoginUrlInfo loginUrlInfo = parseLoginDataUrl(prefix, dataString);
 
         if (loginUrlInfo != null) {
@@ -414,8 +411,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     private void populateLoginFields(String dataString) throws IllegalArgumentException {
         // check if it is cloud://login/
-        if (dataString.startsWith(getString(R.string.login_data_own_scheme) + PROTOCOL_SUFFIX + "login/")) {
-            String prefix = getString(R.string.login_data_own_scheme) + PROTOCOL_SUFFIX + "login/";
+        if (dataString.startsWith(getString(com.owncloud.android.R.string.login_data_own_scheme) + PROTOCOL_SUFFIX + "login/")) {
+            String prefix = getString(com.owncloud.android.R.string.login_data_own_scheme) + PROTOCOL_SUFFIX + "login/";
             LoginUrlInfo loginUrlInfo = parseLoginDataUrl(prefix, dataString);
 
             if (loginUrlInfo != null) {
@@ -483,8 +480,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 mAuthTokenType = chooseAuthTokenType(oAuthRequired, samlWebSsoRequired);
 
             } else {
-                boolean oAuthSupported = AUTH_ON.equals(getString(R.string.auth_method_oauth2));
-                boolean samlWebSsoSupported = AUTH_ON.equals(getString(R.string.auth_method_saml_web_sso));
+                boolean oAuthSupported = AUTH_ON.equals(getString(com.owncloud.android.R.string.auth_method_oauth2));
+                boolean samlWebSsoSupported = AUTH_ON.equals(getString(com.owncloud.android.R.string.auth_method_saml_web_sso));
                 mAuthTokenType = chooseAuthTokenType(oAuthSupported, samlWebSsoSupported);
             }
         }
@@ -507,28 +504,28 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private void initOverallUi() {
 
         /// step 1 - load and process relevant inputs (resources, intent, savedInstanceState)
-        boolean isWelcomeLinkVisible = getResources().getBoolean(R.bool.show_welcome_link);
+        boolean isWelcomeLinkVisible = getResources().getBoolean(com.owncloud.android.R.bool.show_welcome_link);
 
         String instructionsMessageText = null;
         if (mAction == ACTION_UPDATE_EXPIRED_TOKEN) {
             if (AccountTypeUtils.getAuthTokenTypeAccessToken(MainApp.getAccountType()).equals(mAuthTokenType)) {
-                instructionsMessageText = getString(R.string.auth_expired_oauth_token_toast);
+                instructionsMessageText = getString(com.owncloud.android.R.string.auth_expired_oauth_token_toast);
 
             } else if (AccountTypeUtils.getAuthTokenTypeSamlSessionCookie(MainApp.getAccountType())
                     .equals(mAuthTokenType)) {
-                instructionsMessageText = getString(R.string.auth_expired_saml_sso_token_toast);
+                instructionsMessageText = getString(com.owncloud.android.R.string.auth_expired_saml_sso_token_toast);
 
             } else {
-                instructionsMessageText = getString(R.string.auth_expired_basic_auth_toast);
+                instructionsMessageText = getString(com.owncloud.android.R.string.auth_expired_basic_auth_toast);
             }
         }
 
         /// step 2 - set properties of UI elements (text, visibility, enabled...)
-        Button welcomeLink = (Button) findViewById(R.id.welcome_link);
+        Button welcomeLink = (Button) findViewById(com.owncloud.android.R.id.welcome_link);
         welcomeLink.setVisibility(isWelcomeLinkVisible ? View.VISIBLE : View.GONE);
-        welcomeLink.setText(String.format(getString(R.string.auth_register), getString(R.string.app_name)));
+        welcomeLink.setText(String.format(getString(com.owncloud.android.R.string.auth_register), getString(com.owncloud.android.R.string.app_name)));
 
-        TextView instructionsView = (TextView) findViewById(R.id.instructions_message);
+        TextView instructionsView = (TextView) findViewById(com.owncloud.android.R.id.instructions_message);
         if (instructionsMessageText != null) {
             instructionsView.setVisibility(View.VISIBLE);
             instructionsView.setText(instructionsMessageText);
@@ -548,7 +545,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private void initServerPreFragment(Bundle savedInstanceState) {
 
         /// step 1 - load and process relevant inputs (resources, intent, savedInstanceState)
-        boolean isUrlInputAllowed = getResources().getBoolean(R.bool.show_server_url_input);
+        boolean isUrlInputAllowed = getResources().getBoolean(com.owncloud.android.R.bool.show_server_url_input);
         if (savedInstanceState == null) {
             if (mAccount != null) {
                 mServerInfo.mBaseUrl = mAccountMgr.getUserData(mAccount, Constants.KEY_OC_BASE_URL);
@@ -557,9 +554,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 mServerInfo.mVersion = AccountUtils.getServerVersion(mAccount);
             } else {
                 if (!webViewLoginMethod) {
-                    mServerInfo.mBaseUrl = getString(R.string.server_url).trim();
+                    mServerInfo.mBaseUrl = getString(com.owncloud.android.R.string.server_url).trim();
                 } else {
-                    mServerInfo.mBaseUrl = getString(R.string.webview_login_url).trim();
+                    mServerInfo.mBaseUrl = getString(com.owncloud.android.R.string.webview_login_url).trim();
                 }
                 mServerInfo.mIsSslConn = mServerInfo.mBaseUrl.startsWith(HTTPS_PROTOCOL);
             }
@@ -584,7 +581,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         if (!webViewLoginMethod) {
             /// step 2 - set properties of UI elements (text, visibility, enabled...)
-            mHostUrlInput = (CustomEditText) findViewById(R.id.hostUrlInput);
+            mHostUrlInput = (CustomEditText) findViewById(com.owncloud.android.R.id.hostUrlInput);
             // Convert IDN to Unicode
             mHostUrlInput.setText(DisplayUtils.convertIdn(mServerInfo.mBaseUrl, false));
             if (mAction != ACTION_CREATE) {
@@ -593,14 +590,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 mHostUrlInput.setFocusable(false);
             }
             if (isUrlInputAllowed) {
-                mRefreshButton = findViewById(R.id.embeddedRefreshButton);
+                mRefreshButton = findViewById(com.owncloud.android.R.id.embeddedRefreshButton);
             } else {
-                findViewById(R.id.hostUrlFrame).setVisibility(View.GONE);
-                mRefreshButton = findViewById(R.id.centeredRefreshButton);
+                findViewById(com.owncloud.android.R.id.hostUrlFrame).setVisibility(View.GONE);
+                mRefreshButton = findViewById(com.owncloud.android.R.id.centeredRefreshButton);
             }
             showRefreshButton(mServerIsChecked && !mServerIsValid &&
                     mWaitingForOpId > Integer.MAX_VALUE);
-            mServerStatusView = (TextView) findViewById(R.id.server_status_text);
+            mServerStatusView = (TextView) findViewById(com.owncloud.android.R.id.server_status_text);
             showServerStatus();
 
             /// step 3 - bind some listeners and options
@@ -637,7 +634,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
 
             // TODO find out if this is really necessary, or if it can done in a different way
-            findViewById(R.id.scroll).setOnTouchListener(new OnTouchListener() {
+            findViewById(com.owncloud.android.R.id.scroll).setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent event) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN &&
@@ -660,12 +657,12 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private void initAuthorizationPreFragment(Bundle savedInstanceState) {
 
         /// step 0 - get UI elements in layout
-        mOAuth2Check = (CheckBox) findViewById(R.id.oauth_onOff_check);
-        mOAuthAuthEndpointText = (TextView) findViewById(R.id.oAuthEntryPoint_1);
-        mOAuthTokenEndpointText = (TextView) findViewById(R.id.oAuthEntryPoint_2);
-        mUsernameInput = (EditText) findViewById(R.id.account_username);
-        mPasswordInput = (EditText) findViewById(R.id.account_password);
-        mAuthStatusView = (TextView) findViewById(R.id.auth_status_text);
+        mOAuth2Check = (CheckBox) findViewById(com.owncloud.android.R.id.oauth_onOff_check);
+        mOAuthAuthEndpointText = (TextView) findViewById(com.owncloud.android.R.id.oAuthEntryPoint_1);
+        mOAuthTokenEndpointText = (TextView) findViewById(com.owncloud.android.R.id.oAuthEntryPoint_2);
+        mUsernameInput = (EditText) findViewById(com.owncloud.android.R.id.account_username);
+        mPasswordInput = (EditText) findViewById(com.owncloud.android.R.id.account_password);
+        mAuthStatusView = (TextView) findViewById(com.owncloud.android.R.id.auth_status_text);
 
         /// step 1 - load and process relevant inputs (resources, intent, savedInstanceState)
         String presetUserName = null;
@@ -735,7 +732,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         } else {
             if (mAction == ACTION_CREATE &&
-                    AUTH_OPTIONAL.equals(getString(R.string.auth_method_oauth2))) {
+                    AUTH_OPTIONAL.equals(getString(com.owncloud.android.R.string.auth_method_oauth2))) {
                 mOAuth2Check.setVisibility(View.VISIBLE);
             } else {
                 mOAuth2Check.setVisibility(View.GONE);
@@ -855,7 +852,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     protected void onNewIntent(Intent intent) {
         Log_OC.d(TAG, "onNewIntent()");
         Uri data = intent.getData();
-        if (data != null && data.toString().startsWith(getString(R.string.oauth2_redirect_uri))) {
+        if (data != null && data.toString().startsWith(getString(com.owncloud.android.R.string.oauth2_redirect_uri))) {
             mNewCapturedUriFromOAuth2Redirection = data;
         }
     }
@@ -897,7 +894,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 mOperationsServiceConnection,
                 Context.BIND_AUTO_CREATE)) {
             Toast.makeText(this,
-                    R.string.error_cant_bind_to_operations_service,
+                    com.owncloud.android.R.string.error_cant_bind_to_operations_service,
                     Toast.LENGTH_LONG)
                     .show();
             finish();
@@ -951,7 +948,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         /// Showing the dialog with instructions for the user.
         IndeterminateProgressDialog dialog =
-                IndeterminateProgressDialog.newInstance(R.string.auth_getting_authorization, true);
+                IndeterminateProgressDialog.newInstance(com.owncloud.android.R.string.auth_getting_authorization, true);
         dialog.show(getSupportFragmentManager(), WAIT_DIALOG_TAG);
 
         /// GET ACCESS TOKEN to the oAuth server
@@ -977,14 +974,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * Handles the change of focus on the text inputs for the server URL and the password
      */
     public void onFocusChange(View view, boolean hasFocus) {
-        if (view.getId() == R.id.hostUrlInput) {
+        if (view.getId() == com.owncloud.android.R.id.hostUrlInput) {
             if (!hasFocus) {
                 onUrlInputFocusLost();
             } else {
                 showRefreshButton(false);
             }
 
-        } else if (view.getId() == R.id.account_password) {
+        } else if (view.getId() == com.owncloud.android.R.id.account_password) {
             onPasswordFocusChanged(hasFocus);
         }
     }
@@ -1038,8 +1035,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
 
             if (mHostUrlInput != null) {
-                mServerStatusText = R.string.auth_testing_connection;
-                mServerStatusIcon = R.drawable.progress_small;
+                mServerStatusText = com.owncloud.android.R.string.auth_testing_connection;
+                mServerStatusIcon = com.owncloud.android.R.drawable.progress_small;
                 showServerStatus();
             }
 
@@ -1084,9 +1081,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
 
     private void showViewPasswordButton() {
-        int drawable = R.drawable.ic_view;
+        int drawable = com.owncloud.android.R.drawable.ic_view;
         if (isPasswordVisible()) {
-            drawable = R.drawable.ic_hide;
+            drawable = com.owncloud.android.R.drawable.ic_hide;
         }
         mPasswordInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, drawable, 0);
     }
@@ -1136,8 +1133,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 !mServerInfo.mVersion.isVersionValid() ||
                 mServerInfo.mBaseUrl == null ||
                 mServerInfo.mBaseUrl.length() == 0) {
-            mServerStatusIcon = R.drawable.ic_alert;
-            mServerStatusText = R.string.auth_wtf_reenter_URL;
+            mServerStatusIcon = com.owncloud.android.R.drawable.ic_alert;
+            mServerStatusText = com.owncloud.android.R.string.auth_wtf_reenter_URL;
             showServerStatus();
             mOkButton.setEnabled(false);
             return;
@@ -1174,7 +1171,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         /// be gentle with the user
         IndeterminateProgressDialog dialog =
-                IndeterminateProgressDialog.newInstance(R.string.auth_trying_to_login, true);
+                IndeterminateProgressDialog.newInstance(com.owncloud.android.R.string.auth_trying_to_login, true);
         dialog.show(getSupportFragmentManager(), WAIT_DIALOG_TAG);
 
         /// validate credentials accessing the root folder
@@ -1195,24 +1192,24 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      */
     private void startOauthorization() {
         // be gentle with the user
-        mAuthStatusIcon = R.drawable.progress_small;
-        mAuthStatusText = R.string.oauth_login_connection;
+        mAuthStatusIcon = com.owncloud.android.R.drawable.progress_small;
+        mAuthStatusText = com.owncloud.android.R.string.oauth_login_connection;
         showAuthStatus();
 
         // GET AUTHORIZATION request
         Uri uri = Uri.parse(mOAuthAuthEndpointText.getText().toString().trim());
         Uri.Builder uriBuilder = uri.buildUpon();
         uriBuilder.appendQueryParameter(
-                OAuth2Constants.KEY_RESPONSE_TYPE, getString(R.string.oauth2_response_type)
+                OAuth2Constants.KEY_RESPONSE_TYPE, getString(com.owncloud.android.R.string.oauth2_response_type)
         );
         uriBuilder.appendQueryParameter(
-                OAuth2Constants.KEY_REDIRECT_URI, getString(R.string.oauth2_redirect_uri)
+                OAuth2Constants.KEY_REDIRECT_URI, getString(com.owncloud.android.R.string.oauth2_redirect_uri)
         );
         uriBuilder.appendQueryParameter(
-                OAuth2Constants.KEY_CLIENT_ID, getString(R.string.oauth2_client_id)
+                OAuth2Constants.KEY_CLIENT_ID, getString(com.owncloud.android.R.string.oauth2_client_id)
         );
         uriBuilder.appendQueryParameter(
-                OAuth2Constants.KEY_SCOPE, getString(R.string.oauth2_scope)
+                OAuth2Constants.KEY_SCOPE, getString(com.owncloud.android.R.string.oauth2_scope)
         );
         uri = uriBuilder.build();
         Log_OC.d(TAG, "Starting browser to view " + uri.toString());
@@ -1227,8 +1224,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      */
     private void startSamlBasedFederatedSingleSignOnAuthorization() {
         /// be gentle with the user
-        mAuthStatusIcon = R.drawable.progress_small;
-        mAuthStatusText = R.string.auth_connecting_auth_server;
+        mAuthStatusIcon = com.owncloud.android.R.drawable.progress_small;
+        mAuthStatusText = com.owncloud.android.R.string.auth_connecting_auth_server;
         showAuthStatus();
 
         /// Show SAML-based SSO web dialog
@@ -1293,7 +1290,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
                     } catch (AccountNotFoundException e) {
                         Log_OC.e(TAG, "Account " + mAccount + " was removed!", e);
-                        Toast.makeText(this, R.string.auth_account_does_not_exist,
+                        Toast.makeText(this, com.owncloud.android.R.string.auth_account_does_not_exist,
                                 Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -1305,7 +1302,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
         } else {
             if (!webViewLoginMethod) {
-                int statusText = result.getCode() == ResultCode.MAINTENANCE_MODE ? R.string.maintenance_mode : R.string.auth_fail_get_user_name;
+                int statusText = result.getCode() == ResultCode.MAINTENANCE_MODE ? com.owncloud.android.R.string.maintenance_mode : com.owncloud.android.R.string.auth_fail_get_user_name;
                 updateStatusIconFailUserName(statusText);
                 showAuthStatus();
             }
@@ -1349,8 +1346,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 mUsernameInputLayout.setVisibility(View.GONE);
                 mPasswordInputLayout.setVisibility(View.GONE);
 
-                setContentView(R.layout.account_setup_webview);
-                mLoginWebView = (WebView) findViewById(R.id.login_webview);
+                setContentView(com.owncloud.android.R.layout.account_setup_webview);
+                mLoginWebView = (WebView) findViewById(com.owncloud.android.R.id.login_webview);
                 initWebViewLogin(mServerInfo.mBaseUrl);
             } else {
                 // show old login
@@ -1463,76 +1460,76 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * @param result Result of a remote operation performed in this activity
      */
     private void updateServerStatusIconAndText(RemoteOperationResult result) {
-        mServerStatusIcon = R.drawable.ic_alert;    // the most common case in the switch below
+        mServerStatusIcon = com.owncloud.android.R.drawable.ic_alert;    // the most common case in the switch below
 
         switch (result.getCode()) {
             case OK_SSL:
-                mServerStatusIcon = R.drawable.ic_lock_white;
-                mServerStatusText = R.string.auth_secure_connection;
+                mServerStatusIcon = com.owncloud.android.R.drawable.ic_lock_white;
+                mServerStatusText = com.owncloud.android.R.string.auth_secure_connection;
                 break;
 
             case OK_NO_SSL:
             case OK:
                 if (mHostUrlInput.getText().toString().trim().toLowerCase().startsWith(HTTP_PROTOCOL)) {
-                    mServerStatusText = R.string.auth_connection_established;
-                    mServerStatusIcon = R.drawable.ic_ok;
+                    mServerStatusText = com.owncloud.android.R.string.auth_connection_established;
+                    mServerStatusIcon = com.owncloud.android.R.drawable.ic_ok;
                 } else {
-                    mServerStatusText = R.string.auth_nossl_plain_ok_title;
-                    mServerStatusIcon = R.drawable.ic_lock_open_white;
+                    mServerStatusText = com.owncloud.android.R.string.auth_nossl_plain_ok_title;
+                    mServerStatusIcon = com.owncloud.android.R.drawable.ic_lock_open_white;
                 }
                 break;
 
             case NO_NETWORK_CONNECTION:
-                mServerStatusIcon = R.drawable.no_network;
-                mServerStatusText = R.string.auth_no_net_conn_title;
+                mServerStatusIcon = com.owncloud.android.R.drawable.no_network;
+                mServerStatusText = com.owncloud.android.R.string.auth_no_net_conn_title;
                 break;
 
             case SSL_RECOVERABLE_PEER_UNVERIFIED:
-                mServerStatusText = R.string.auth_ssl_unverified_server_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_ssl_unverified_server_title;
                 break;
             case BAD_OC_VERSION:
-                mServerStatusText = R.string.auth_bad_oc_version_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_bad_oc_version_title;
                 break;
             case WRONG_CONNECTION:
-                mServerStatusText = R.string.auth_wrong_connection_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_wrong_connection_title;
                 break;
             case TIMEOUT:
-                mServerStatusText = R.string.auth_timeout_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_timeout_title;
                 break;
             case INCORRECT_ADDRESS:
-                mServerStatusText = R.string.auth_incorrect_address_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_incorrect_address_title;
                 break;
             case SSL_ERROR:
-                mServerStatusText = R.string.auth_ssl_general_error_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_ssl_general_error_title;
                 break;
             case UNAUTHORIZED:
-                mServerStatusText = R.string.auth_unauthorized;
+                mServerStatusText = com.owncloud.android.R.string.auth_unauthorized;
                 break;
             case HOST_NOT_AVAILABLE:
-                mServerStatusText = R.string.auth_unknown_host_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_unknown_host_title;
                 break;
             case INSTANCE_NOT_CONFIGURED:
-                mServerStatusText = R.string.auth_not_configured_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_not_configured_title;
                 break;
             case FILE_NOT_FOUND:
-                mServerStatusText = R.string.auth_incorrect_path_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_incorrect_path_title;
                 break;
             case OAUTH2_ERROR:
-                mServerStatusText = R.string.auth_oauth_error;
+                mServerStatusText = com.owncloud.android.R.string.auth_oauth_error;
                 break;
             case OAUTH2_ERROR_ACCESS_DENIED:
-                mServerStatusText = R.string.auth_oauth_error_access_denied;
+                mServerStatusText = com.owncloud.android.R.string.auth_oauth_error_access_denied;
                 break;
             case UNHANDLED_HTTP_CODE:
             case UNKNOWN_ERROR:
-                mServerStatusText = R.string.auth_unknown_error_title;
+                mServerStatusText = com.owncloud.android.R.string.auth_unknown_error_title;
                 break;
             case OK_REDIRECT_TO_NON_SECURE_CONNECTION:
-                mServerStatusIcon = R.drawable.ic_lock_open_white;
-                mServerStatusText = R.string.auth_redirect_non_secure_connection_title;
+                mServerStatusIcon = com.owncloud.android.R.drawable.ic_lock_open_white;
+                mServerStatusText = com.owncloud.android.R.string.auth_redirect_non_secure_connection_title;
                 break;
             case MAINTENANCE_MODE:
-                mServerStatusText = R.string.maintenance_mode;
+                mServerStatusText = com.owncloud.android.R.string.maintenance_mode;
                 break;
             default:
                 mServerStatusText = 0;
@@ -1548,75 +1545,75 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * @param result Result of a remote operation performed in this activity
      */
     private void updateAuthStatusIconAndText(RemoteOperationResult result) {
-        mAuthStatusIcon = R.drawable.ic_alert;    // the most common case in the switch below
+        mAuthStatusIcon = com.owncloud.android.R.drawable.ic_alert;    // the most common case in the switch below
 
         switch (result.getCode()) {
             case OK_SSL:
-                mAuthStatusIcon = R.drawable.ic_lock_white;
-                mAuthStatusText = R.string.auth_secure_connection;
+                mAuthStatusIcon = com.owncloud.android.R.drawable.ic_lock_white;
+                mAuthStatusText = com.owncloud.android.R.string.auth_secure_connection;
                 break;
 
             case OK_NO_SSL:
             case OK:
                 if (mHostUrlInput.getText().toString().trim().toLowerCase().startsWith(HTTP_PROTOCOL)) {
-                    mAuthStatusText = R.string.auth_connection_established;
-                    mAuthStatusIcon = R.drawable.ic_ok;
+                    mAuthStatusText = com.owncloud.android.R.string.auth_connection_established;
+                    mAuthStatusIcon = com.owncloud.android.R.drawable.ic_ok;
                 } else {
-                    mAuthStatusText = R.string.auth_nossl_plain_ok_title;
-                    mAuthStatusIcon = R.drawable.ic_lock_open_white;
+                    mAuthStatusText = com.owncloud.android.R.string.auth_nossl_plain_ok_title;
+                    mAuthStatusIcon = com.owncloud.android.R.drawable.ic_lock_open_white;
                 }
                 break;
 
             case NO_NETWORK_CONNECTION:
-                mAuthStatusIcon = R.drawable.no_network;
-                mAuthStatusText = R.string.auth_no_net_conn_title;
+                mAuthStatusIcon = com.owncloud.android.R.drawable.no_network;
+                mAuthStatusText = com.owncloud.android.R.string.auth_no_net_conn_title;
                 break;
 
             case SSL_RECOVERABLE_PEER_UNVERIFIED:
-                mAuthStatusText = R.string.auth_ssl_unverified_server_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_ssl_unverified_server_title;
                 break;
             case BAD_OC_VERSION:
-                mAuthStatusText = R.string.auth_bad_oc_version_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_bad_oc_version_title;
                 break;
             case WRONG_CONNECTION:
-                mAuthStatusText = R.string.auth_wrong_connection_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_wrong_connection_title;
                 break;
             case TIMEOUT:
-                mAuthStatusText = R.string.auth_timeout_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_timeout_title;
                 break;
             case INCORRECT_ADDRESS:
-                mAuthStatusText = R.string.auth_incorrect_address_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_incorrect_address_title;
                 break;
             case SSL_ERROR:
-                mAuthStatusText = R.string.auth_ssl_general_error_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_ssl_general_error_title;
                 break;
             case UNAUTHORIZED:
-                mAuthStatusText = R.string.auth_unauthorized;
+                mAuthStatusText = com.owncloud.android.R.string.auth_unauthorized;
                 break;
             case HOST_NOT_AVAILABLE:
-                mAuthStatusText = R.string.auth_unknown_host_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_unknown_host_title;
                 break;
             case INSTANCE_NOT_CONFIGURED:
-                mAuthStatusText = R.string.auth_not_configured_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_not_configured_title;
                 break;
             case FILE_NOT_FOUND:
-                mAuthStatusText = R.string.auth_incorrect_path_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_incorrect_path_title;
                 break;
             case OAUTH2_ERROR:
-                mAuthStatusText = R.string.auth_oauth_error;
+                mAuthStatusText = com.owncloud.android.R.string.auth_oauth_error;
                 break;
             case OAUTH2_ERROR_ACCESS_DENIED:
-                mAuthStatusText = R.string.auth_oauth_error_access_denied;
+                mAuthStatusText = com.owncloud.android.R.string.auth_oauth_error_access_denied;
                 break;
             case ACCOUNT_NOT_NEW:
-                mAuthStatusText = R.string.auth_account_not_new;
+                mAuthStatusText = com.owncloud.android.R.string.auth_account_not_new;
                 break;
             case ACCOUNT_NOT_THE_SAME:
-                mAuthStatusText = R.string.auth_account_not_the_same;
+                mAuthStatusText = com.owncloud.android.R.string.auth_account_not_the_same;
                 break;
             case UNHANDLED_HTTP_CODE:
             case UNKNOWN_ERROR:
-                mAuthStatusText = R.string.auth_unknown_error_title;
+                mAuthStatusText = com.owncloud.android.R.string.auth_unknown_error_title;
                 break;
             default:
                 mAuthStatusText = 0;
@@ -1625,13 +1622,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     }
 
     private void updateStatusIconFailUserName(int failedStatusText){
-        mAuthStatusIcon = R.drawable.ic_alert;
+        mAuthStatusIcon = com.owncloud.android.R.drawable.ic_alert;
         mAuthStatusText = failedStatusText;
     }
 
     private void updateServerStatusIconNoRegularAuth() {
-        mServerStatusIcon = R.drawable.ic_alert;
-        mServerStatusText = R.string.auth_can_not_auth_against_server;
+        mServerStatusIcon = com.owncloud.android.R.drawable.ic_alert;
+        mServerStatusText = com.owncloud.android.R.string.auth_can_not_auth_against_server;
     }
 
     /**
@@ -1647,7 +1644,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (result.isSuccess()) {
             /// be gentle with the user
             IndeterminateProgressDialog dialog =
-                    IndeterminateProgressDialog.newInstance(R.string.auth_trying_to_login, true);
+                    IndeterminateProgressDialog.newInstance(com.owncloud.android.R.string.auth_trying_to_login, true);
             dialog.show(getSupportFragmentManager(), WAIT_DIALOG_TAG);
 
             /// time to test the retrieved access token on the ownCloud server
@@ -1697,7 +1694,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
                 } catch (AccountNotFoundException e) {
                     Log_OC.e(TAG, "Account " + mAccount + " was removed!", e);
-                    Toast.makeText(this, R.string.auth_account_does_not_exist,
+                    Toast.makeText(this, com.owncloud.android.R.string.auth_account_does_not_exist,
                             Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -1713,14 +1710,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             } else {
                 // init webView again
                 mLoginWebView.setVisibility(View.GONE);
-                setContentView(R.layout.account_setup);
+                setContentView(com.owncloud.android.R.layout.account_setup);
 
-                CustomEditText serverAddressField = (CustomEditText) findViewById(R.id.hostUrlInput);
+                CustomEditText serverAddressField = (CustomEditText) findViewById(com.owncloud.android.R.id.hostUrlInput);
                 serverAddressField.setText(mServerInfo.mBaseUrl);
 
-                findViewById(R.id.oauth_onOff_check).setVisibility(View.GONE);
-                findViewById(R.id.server_status_text).setVisibility(View.GONE);
-                mAuthStatusView = (TextView) findViewById(R.id.auth_status_text);
+                findViewById(com.owncloud.android.R.id.oauth_onOff_check).setVisibility(View.GONE);
+                findViewById(com.owncloud.android.R.id.server_status_text).setVisibility(View.GONE);
+                mAuthStatusView = (TextView) findViewById(com.owncloud.android.R.id.auth_status_text);
 
                 showAuthStatus();
             }
@@ -1942,7 +1939,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      */
     public void onRegisterClick(View view) {
         Intent register = new Intent(
-                Intent.ACTION_VIEW, Uri.parse(getString(R.string.welcome_link_url))
+                Intent.ACTION_VIEW, Uri.parse(getString(com.owncloud.android.R.string.welcome_link_url))
         );
         setResult(RESULT_CANCELED);
         startActivity(register);
@@ -2182,7 +2179,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     @Override
     public void onFailedSavingCertificate() {
         dismissDialog(SAML_DIALOG_TAG);
-        Toast.makeText(this, R.string.ssl_validator_not_saved, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, com.owncloud.android.R.string.ssl_validator_not_saved, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -2224,7 +2221,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             if (component.equals(
                     new ComponentName(AuthenticatorActivity.this, OperationsService.class)
             )) {
-                mOperationsServiceBinder = (OperationsServiceBinder) service;
+                mOperationsServiceBinder = (OperationsService.OperationsServiceBinder) service;
 
                 doOnResumeAndBound();
 
@@ -2262,7 +2259,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (!mIsFirstAuthAttempt) {
             Toast.makeText(
                     getApplicationContext(),
-                    getText(R.string.saml_authentication_wrong_pass),
+                    getText(com.owncloud.android.R.string.saml_authentication_wrong_pass),
                     Toast.LENGTH_LONG
             ).show();
         } else {

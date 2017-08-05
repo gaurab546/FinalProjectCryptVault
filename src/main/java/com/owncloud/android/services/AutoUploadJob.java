@@ -26,12 +26,12 @@ import android.accounts.Account;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.owncloud.android.operations.UploadFileOperation;
+import com.owncloud.android.authentication.AccountUtils;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.util.support.PersistableBundleCompat;
 import com.owncloud.android.MainApp;
-import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.files.services.FileUploader;
-import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.utils.MimeTypeUtil;
 
 import java.io.File;

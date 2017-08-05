@@ -28,11 +28,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.owncloud.android.R;
+import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.files.services.FileUploader;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.utils.FileStorageUtils;
 
 import java.io.File;
@@ -245,21 +244,21 @@ public class CopyAndUploadContentUrisTask extends AsyncTask<Object, Void, Result
                 int messageId;
                 switch (result) {
                     case LOCAL_FILE_NOT_FOUND:
-                        messageId = R.string.uploader_error_message_source_file_not_found;
+                        messageId = com.owncloud.android.R.string.uploader_error_message_source_file_not_found;
                         break;
                     case LOCAL_STORAGE_NOT_COPIED:
-                        messageId = R.string.uploader_error_message_source_file_not_copied;
+                        messageId = com.owncloud.android.R.string.uploader_error_message_source_file_not_copied;
                         break;
                     case FORBIDDEN:
-                        messageId = R.string.uploader_error_message_read_permission_not_granted;
+                        messageId = com.owncloud.android.R.string.uploader_error_message_read_permission_not_granted;
                         break;
                     default:
-                        messageId = R.string.common_error_unknown;
+                        messageId = com.owncloud.android.R.string.common_error_unknown;
                         break;
                 }
                 String message = String.format(
                     mAppContext.getString(messageId),
-                    mAppContext.getString(R.string.app_name)
+                    mAppContext.getString(com.owncloud.android.R.string.app_name)
                 );
                 Toast.makeText(mAppContext, message, Toast.LENGTH_LONG).show();
             }

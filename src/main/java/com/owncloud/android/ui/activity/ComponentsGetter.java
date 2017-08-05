@@ -21,9 +21,9 @@
 package com.owncloud.android.ui.activity;
 
 import com.owncloud.android.datamodel.FileDataStorageManager;
-import com.owncloud.android.files.services.FileDownloader.FileDownloaderBinder;
-import com.owncloud.android.files.services.FileUploader.FileUploaderBinder;
-import com.owncloud.android.services.OperationsService.OperationsServiceBinder;
+import com.owncloud.android.files.services.FileDownloader;
+import com.owncloud.android.files.services.FileUploader;
+import com.owncloud.android.services.OperationsService;
 import com.owncloud.android.ui.helpers.FileOperationsHelper;
 
 public interface ComponentsGetter {
@@ -32,21 +32,21 @@ public interface ComponentsGetter {
      * To be invoked when the parent activity is fully created to get a reference
      * to the FileDownloader service API.
      */
-    public FileDownloaderBinder getFileDownloaderBinder();
+    public FileDownloader.FileDownloaderBinder getFileDownloaderBinder();
 
     
     /**
      * To be invoked when the parent activity is fully created to get a reference
      * to the FileUploader service API.
      */
-    public FileUploaderBinder getFileUploaderBinder();
+    public FileUploader.FileUploaderBinder getFileUploaderBinder();
 
     
     /**
      * To be invoked when the parent activity is fully created to get a reference
      * to the OperationsSerivce service API.
      */
-    public OperationsServiceBinder getOperationsServiceBinder();
+    public OperationsService.OperationsServiceBinder getOperationsServiceBinder();
 
     
     public FileDataStorageManager getStorageManager();

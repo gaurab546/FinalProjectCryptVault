@@ -34,7 +34,7 @@ import com.owncloud.android.utils.MimeType;
 
 
 /**
- * Access to remote operation performing the creation of a new folder in the ownCloud server.
+ * Access to remote operation performing the creation of a new folder in the free server.
  * Save the new folder in Database
  */
 public class CreateFolderOperation extends SyncOperation implements OnRemoteOperationListener{

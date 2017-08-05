@@ -38,7 +38,7 @@ import java.util.ArrayList;
 /**
  * Get basic information from an ownCloud server given its URL.
  * 
- * Checks the existence of a configured ownCloud server in the URL, gets its version 
+ * Checks the existence of a configured free server in the URL, gets its version
  * and finds out what authentication method is needed to access files in it.
  */
 

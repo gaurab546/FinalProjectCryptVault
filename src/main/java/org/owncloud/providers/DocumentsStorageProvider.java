@@ -18,7 +18,7 @@
  *
  */
 
-package org.nextcloud.providers;
+package org.owncloud.providers;
 
 import android.accounts.Account;
 import android.annotation.TargetApi;
@@ -36,8 +36,8 @@ import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.services.FileDownloader;
-import org.nextcloud.providers.cursors.FileCursor;
-import org.nextcloud.providers.cursors.RootCursor;
+import org.owncloud.providers.cursors.FileCursor;
+import org.owncloud.providers.cursors.RootCursor;
 
 import java.io.File;
 import java.io.FileNotFoundException;

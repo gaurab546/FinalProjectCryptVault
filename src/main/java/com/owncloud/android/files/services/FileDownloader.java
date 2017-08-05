@@ -38,11 +38,17 @@ import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.util.Pair;
 
-import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
-import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.operations.DownloadFileOperation;
+import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.ui.fragment.OCFileListFragment;
+import com.owncloud.android.ui.notifications.NotificationUtils;
+import com.owncloud.android.ui.preview.PreviewImageActivity;
+import com.owncloud.android.utils.ErrorMessageAdapter;
+import com.owncloud.android.ui.preview.PreviewImageFragment;
+import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
@@ -51,14 +57,7 @@ import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.FileUtils;
-import com.owncloud.android.operations.DownloadFileOperation;
-import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
-import com.owncloud.android.ui.fragment.OCFileListFragment;
-import com.owncloud.android.ui.notifications.NotificationUtils;
-import com.owncloud.android.ui.preview.PreviewImageActivity;
-import com.owncloud.android.ui.preview.PreviewImageFragment;
-import com.owncloud.android.utils.ErrorMessageAdapter;
 
 import java.io.File;
 import java.util.AbstractList;
@@ -126,7 +125,7 @@ public class FileDownloader extends Service
         mBinder = new FileDownloaderBinder();
 
         mNotification = new NotificationCompat.Builder(this).setContentTitle(getApplicationContext().
-                getResources().getString(R.string.app_name))
+                getResources().getString(com.owncloud.android.R.string.app_name))
                 .build();
 
         // add AccountsUpdatedListener
@@ -507,13 +506,13 @@ public class FileDownloader extends Service
         mNotificationBuilder =
                 NotificationUtils.newNotificationBuilder(this);
         mNotificationBuilder
-                .setSmallIcon(R.drawable.notification_icon)
-                .setTicker(getString(R.string.downloader_download_in_progress_ticker))
-                .setContentTitle(getString(R.string.downloader_download_in_progress_ticker))
+                .setSmallIcon(com.owncloud.android.R.drawable.notification_icon)
+                .setTicker(getString(com.owncloud.android.R.string.downloader_download_in_progress_ticker))
+                .setContentTitle(getString(com.owncloud.android.R.string.downloader_download_in_progress_ticker))
                 .setOngoing(true)
                 .setProgress(100, 0, download.getSize() < 0)
                 .setContentText(
-                        String.format(getString(R.string.downloader_download_in_progress_content), 0,
+                        String.format(getString(com.owncloud.android.R.string.downloader_download_in_progress_content), 0,
                                 new File(download.getSavePath()).getName())
                 );
 
@@ -532,7 +531,7 @@ public class FileDownloader extends Service
                 this, (int) System.currentTimeMillis(), showDetailsIntent, 0
         ));
 
-        mNotificationManager.notify(R.string.downloader_download_in_progress_ticker, mNotificationBuilder.build());
+        mNotificationManager.notify(com.owncloud.android.R.string.downloader_download_in_progress_ticker, mNotificationBuilder.build());
     }
 
 
@@ -546,9 +545,9 @@ public class FileDownloader extends Service
         if (percent != mLastPercent) {
             mNotificationBuilder.setProgress(100, percent, totalToTransfer < 0);
             String fileName = filePath.substring(filePath.lastIndexOf(FileUtils.PATH_SEPARATOR) + 1);
-            String text = String.format(getString(R.string.downloader_download_in_progress_content), percent, fileName);
+            String text = String.format(getString(com.owncloud.android.R.string.downloader_download_in_progress_content), percent, fileName);
             mNotificationBuilder.setContentText(text);
-            mNotificationManager.notify(R.string.downloader_download_in_progress_ticker, mNotificationBuilder.build());
+            mNotificationManager.notify(com.owncloud.android.R.string.downloader_download_in_progress_ticker, mNotificationBuilder.build());
         }
         mLastPercent = percent;
     }
@@ -562,14 +561,14 @@ public class FileDownloader extends Service
      */
     private void notifyDownloadResult(DownloadFileOperation download,
                                       RemoteOperationResult downloadResult) {
-        mNotificationManager.cancel(R.string.downloader_download_in_progress_ticker);
+        mNotificationManager.cancel(com.owncloud.android.R.string.downloader_download_in_progress_ticker);
         if (!downloadResult.isCancelled()) {
-            int tickerId = (downloadResult.isSuccess()) ? R.string.downloader_download_succeeded_ticker :
-                    R.string.downloader_download_failed_ticker;
+            int tickerId = (downloadResult.isSuccess()) ? com.owncloud.android.R.string.downloader_download_succeeded_ticker :
+                    com.owncloud.android.R.string.downloader_download_failed_ticker;
 
             boolean needsToUpdateCredentials = (ResultCode.UNAUTHORIZED.equals(downloadResult.getCode()));
             tickerId = (needsToUpdateCredentials) ?
-                    R.string.downloader_download_failed_credentials_error : tickerId;
+                    com.owncloud.android.R.string.downloader_download_failed_credentials_error : tickerId;
 
             mNotificationBuilder
                     .setTicker(getString(tickerId))
@@ -615,7 +614,7 @@ public class FileDownloader extends Service
                 // Sleep 2 seconds, so show the notification before remove it
                 NotificationUtils.cancelWithDelay(
                         mNotificationManager,
-                        R.string.downloader_download_succeeded_ticker,
+                        com.owncloud.android.R.string.downloader_download_succeeded_ticker,
                         2000);
             }
 

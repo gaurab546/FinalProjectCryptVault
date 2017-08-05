@@ -38,7 +38,6 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.utils.ThemeUtils;
 
 import java.util.Formatter;
@@ -77,7 +76,7 @@ public class MediaControlView extends FrameLayout /* implements OnLayoutChangeLi
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
         LayoutInflater inflate = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mRoot = inflate.inflate(R.layout.media_control, null);
+        mRoot = inflate.inflate(com.owncloud.android.R.layout.media_control, null);
         initControllerView(mRoot);
         addView(mRoot, frameParams);
 
@@ -203,23 +202,23 @@ public class MediaControlView extends FrameLayout /* implements OnLayoutChangeLi
 
 
     private void initControllerView(View v) {
-        mPauseButton = (ImageButton) v.findViewById(R.id.playBtn);
+        mPauseButton = (ImageButton) v.findViewById(com.owncloud.android.R.id.playBtn);
         if (mPauseButton != null) {
             mPauseButton.requestFocus();
             mPauseButton.setOnClickListener(this);
         }
 
-        mFfwdButton = (ImageButton) v.findViewById(R.id.forwardBtn);
+        mFfwdButton = (ImageButton) v.findViewById(com.owncloud.android.R.id.forwardBtn);
         if (mFfwdButton != null) {
             mFfwdButton.setOnClickListener(this);
         }
 
-        mRewButton = (ImageButton) v.findViewById(R.id.rewindBtn);
+        mRewButton = (ImageButton) v.findViewById(com.owncloud.android.R.id.rewindBtn);
         if (mRewButton != null) {
             mRewButton.setOnClickListener(this);
         }
 
-        mProgress = (ProgressBar) v.findViewById(R.id.progressBar);
+        mProgress = (ProgressBar) v.findViewById(com.owncloud.android.R.id.progressBar);
         if (mProgress != null) {
             if (mProgress instanceof SeekBar) {
                 SeekBar seeker = (SeekBar) mProgress;
@@ -231,8 +230,8 @@ public class MediaControlView extends FrameLayout /* implements OnLayoutChangeLi
             mProgress.setMax(1000);
         }
 
-        mEndTime = (TextView) v.findViewById(R.id.totalTimeText);
-        mCurrentTime = (TextView) v.findViewById(R.id.currentTimeText);
+        mEndTime = (TextView) v.findViewById(com.owncloud.android.R.id.totalTimeText);
+        mCurrentTime = (TextView) v.findViewById(com.owncloud.android.R.id.currentTimeText);
     }
 
 
@@ -398,11 +397,11 @@ public class MediaControlView extends FrameLayout /* implements OnLayoutChangeLi
         boolean playing = mPlayer.isPlaying();
         switch (v.getId()) {
 
-            case R.id.playBtn:
+            case com.owncloud.android.R.id.playBtn:
                 doPauseResume();
                 break;
 
-            case R.id.rewindBtn:
+            case com.owncloud.android.R.id.rewindBtn:
                 pos = mPlayer.getCurrentPosition();
                 pos -= 5000;
                 mPlayer.seekTo(pos);
@@ -412,7 +411,7 @@ public class MediaControlView extends FrameLayout /* implements OnLayoutChangeLi
                 setProgress();
                 break;
 
-            case R.id.forwardBtn:
+            case com.owncloud.android.R.id.forwardBtn:
                 pos = mPlayer.getCurrentPosition();
                 pos += 15000;
                 mPlayer.seekTo(pos);

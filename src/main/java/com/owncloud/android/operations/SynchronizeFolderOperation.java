@@ -28,6 +28,8 @@ import android.util.Log;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.services.FileDownloader;
+import com.owncloud.android.operations.common.SyncOperation;
+import com.owncloud.android.services.OperationsService;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.operations.OperationCancelledException;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
@@ -36,8 +38,6 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.ReadRemoteFileOperation;
 import com.owncloud.android.lib.resources.files.ReadRemoteFolderOperation;
 import com.owncloud.android.lib.resources.files.RemoteFile;
-import com.owncloud.android.operations.common.SyncOperation;
-import com.owncloud.android.services.OperationsService;
 import com.owncloud.android.utils.FileStorageUtils;
 import com.owncloud.android.utils.MimeTypeUtil;
 
@@ -471,7 +471,7 @@ public class SynchronizeFolderOperation extends SyncOperation {
 
     
     /**
-     * Creates and populates a new {@link com.owncloud.android.datamodel.OCFile}
+     * Creates and populates a new {@link OCFile}
      * object with the data read from the server.
      *
      * @param remote    remote file read from the server (remote file or folder).
@@ -484,7 +484,7 @@ public class SynchronizeFolderOperation extends SyncOperation {
 
     /**
      * Scans the default location for saving local copies of files searching for
-     * a 'lost' file with the same full name as the {@link com.owncloud.android.datamodel.OCFile}
+     * a 'lost' file with the same full name as the {@link OCFile}
      * received as parameter.
      *  
      * @param file      File to associate a possible 'lost' local file.

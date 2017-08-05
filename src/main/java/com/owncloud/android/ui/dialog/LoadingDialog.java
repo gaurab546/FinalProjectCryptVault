@@ -29,7 +29,6 @@ import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.utils.ThemeUtils;
 
 public class LoadingDialog extends DialogFragment {
@@ -54,14 +53,14 @@ public class LoadingDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Create a view by inflating desired layout
-        View v = inflater.inflate(R.layout.loading_dialog, container,  false);
+        View v = inflater.inflate(com.owncloud.android.R.layout.loading_dialog, container,  false);
         
         // set value
-        TextView tv  = (TextView) v.findViewById(R.id.loadingText);
+        TextView tv  = (TextView) v.findViewById(com.owncloud.android.R.id.loadingText);
         tv.setText(mMessage);
 
         // set progress wheel color
-        ProgressBar progressBar  = (ProgressBar) v.findViewById(R.id.loadingBar);
+        ProgressBar progressBar  = (ProgressBar) v.findViewById(com.owncloud.android.R.id.loadingBar);
         progressBar.getIndeterminateDrawable().setColorFilter(
                 ThemeUtils.primaryAccentColor(), PorterDuff.Mode.SRC_IN);
         

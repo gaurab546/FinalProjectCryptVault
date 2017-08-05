@@ -30,13 +30,13 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.IBinder;
 
-import com.owncloud.android.MainApp;
 import com.owncloud.android.authentication.AccountUtils;
-import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.db.ProviderMeta.ProviderTableMeta;
-import com.owncloud.android.files.services.FileDownloader;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.operations.SynchronizeFileOperation;
+import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.db.ProviderMeta;
+import com.owncloud.android.files.services.FileDownloader;
+import com.owncloud.android.MainApp;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.utils.FileStorageUtils;
 
 import java.io.File;
@@ -195,9 +195,9 @@ public class FileObserverService extends Service {
 
         // query for any favorite file in any OC account
         Cursor cursorOnKeptInSync = getContentResolver().query(
-                ProviderTableMeta.CONTENT_URI, 
+                ProviderMeta.ProviderTableMeta.CONTENT_URI,
                 null,
-                ProviderTableMeta.FILE_KEEP_IN_SYNC + " = ?", 
+                ProviderMeta.ProviderTableMeta.FILE_KEEP_IN_SYNC + " = ?",
                 new String[] { String.valueOf(1) }, 
                 null
         );
@@ -211,9 +211,9 @@ public class FileObserverService extends Service {
                 Account account = null;
                 do {
                     localPath = cursorOnKeptInSync.getString(cursorOnKeptInSync
-                            .getColumnIndex(ProviderTableMeta.FILE_STORAGE_PATH));
+                            .getColumnIndex(ProviderMeta.ProviderTableMeta.FILE_STORAGE_PATH));
                     accountName = cursorOnKeptInSync.getString(cursorOnKeptInSync
-                            .getColumnIndex(ProviderTableMeta.FILE_ACCOUNT_OWNER));
+                            .getColumnIndex(ProviderMeta.ProviderTableMeta.FILE_ACCOUNT_OWNER));
 
                     account = new Account(accountName, MainApp.getAccountType());
                     if (!AccountUtils.exists(account, this) || localPath == null || localPath.length() <= 0) {

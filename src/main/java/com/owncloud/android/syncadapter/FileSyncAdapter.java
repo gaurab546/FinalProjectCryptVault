@@ -35,15 +35,14 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-import com.owncloud.android.R;
-import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.datamodel.FileDataStorageManager;
+import com.owncloud.android.operations.RefreshFolderOperation;
+import com.owncloud.android.operations.UpdateOCVersionOperation;
+import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.operations.RefreshFolderOperation;
-import com.owncloud.android.operations.UpdateOCVersionOperation;
 import com.owncloud.android.ui.activity.ErrorsWhileCopyingHandlerActivity;
 import com.owncloud.android.utils.DataHolderUtil;
 import com.owncloud.android.utils.ThemeUtils;
@@ -408,21 +407,21 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
             updateAccountCredentials.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
             updateAccountCredentials.addFlags(Intent.FLAG_FROM_BACKGROUND);
             notificationBuilder
-                .setTicker(i18n(R.string.sync_fail_ticker_unauthorized))
-                .setContentTitle(i18n(R.string.sync_fail_ticker_unauthorized))
+                .setTicker(i18n(com.owncloud.android.R.string.sync_fail_ticker_unauthorized))
+                .setContentTitle(i18n(com.owncloud.android.R.string.sync_fail_ticker_unauthorized))
                 .setContentIntent(PendingIntent.getActivity(
                     getContext(), (int)System.currentTimeMillis(), updateAccountCredentials,
                         PendingIntent.FLAG_ONE_SHOT
                 ))
-                .setContentText(i18n(R.string.sync_fail_content_unauthorized, getAccount().name));
+                .setContentText(i18n(com.owncloud.android.R.string.sync_fail_content_unauthorized, getAccount().name));
         } else {
             notificationBuilder
-                .setTicker(i18n(R.string.sync_fail_ticker))
-                .setContentTitle(i18n(R.string.sync_fail_ticker))
-                .setContentText(i18n(R.string.sync_fail_content, getAccount().name));
+                .setTicker(i18n(com.owncloud.android.R.string.sync_fail_ticker))
+                .setContentTitle(i18n(com.owncloud.android.R.string.sync_fail_ticker))
+                .setContentText(i18n(com.owncloud.android.R.string.sync_fail_content, getAccount().name));
         }
         
-        showNotification(R.string.sync_fail_ticker, notificationBuilder);
+        showNotification(com.owncloud.android.R.string.sync_fail_ticker, notificationBuilder);
     }
 
 
@@ -435,31 +434,31 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
     private void notifyFailsInFavourites() {
         if (mFailedResultsCounter > 0) {
             NotificationCompat.Builder notificationBuilder = createNotificationBuilder();
-            notificationBuilder.setTicker(i18n(R.string.sync_fail_in_favourites_ticker));
+            notificationBuilder.setTicker(i18n(com.owncloud.android.R.string.sync_fail_in_favourites_ticker));
                 
             // TODO put something smart in the contentIntent below
             notificationBuilder
                 .setContentIntent(PendingIntent.getActivity(
                     getContext(), (int) System.currentTimeMillis(), new Intent(), 0
                 ))
-                .setContentTitle(i18n(R.string.sync_fail_in_favourites_ticker))
-                .setContentText(i18n(R.string.sync_fail_in_favourites_content,
+                .setContentTitle(i18n(com.owncloud.android.R.string.sync_fail_in_favourites_ticker))
+                .setContentText(i18n(com.owncloud.android.R.string.sync_fail_in_favourites_content,
                         mFailedResultsCounter + mConflictsFound, mConflictsFound));
             
-            showNotification(R.string.sync_fail_in_favourites_ticker, notificationBuilder);
+            showNotification(com.owncloud.android.R.string.sync_fail_in_favourites_ticker, notificationBuilder);
         } else {
             NotificationCompat.Builder notificationBuilder = createNotificationBuilder();
-            notificationBuilder.setTicker(i18n(R.string.sync_conflicts_in_favourites_ticker));
+            notificationBuilder.setTicker(i18n(com.owncloud.android.R.string.sync_conflicts_in_favourites_ticker));
           
             // TODO put something smart in the contentIntent below
             notificationBuilder
                 .setContentIntent(PendingIntent.getActivity(
                     getContext(), (int) System.currentTimeMillis(), new Intent(), 0
                 ))
-                .setContentTitle(i18n(R.string.sync_conflicts_in_favourites_ticker))
-                .setContentText(i18n(R.string.sync_conflicts_in_favourites_ticker, mConflictsFound));
+                .setContentTitle(i18n(com.owncloud.android.R.string.sync_conflicts_in_favourites_ticker))
+                .setContentText(i18n(com.owncloud.android.R.string.sync_conflicts_in_favourites_ticker, mConflictsFound));
             
-            showNotification(R.string.sync_conflicts_in_favourites_ticker, notificationBuilder);
+            showNotification(com.owncloud.android.R.string.sync_conflicts_in_favourites_ticker, notificationBuilder);
         } 
     }
     
@@ -476,7 +475,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
      */
     private void notifyForgottenLocalFiles() {
         NotificationCompat.Builder notificationBuilder = createNotificationBuilder();
-        notificationBuilder.setTicker(i18n(R.string.sync_foreign_files_forgotten_ticker));
+        notificationBuilder.setTicker(i18n(com.owncloud.android.R.string.sync_foreign_files_forgotten_ticker));
       
         /// includes a pending intent in the notification showing a more detailed explanation
         Intent explanationIntent = new Intent(getContext(), ErrorsWhileCopyingHandlerActivity.class);
@@ -493,11 +492,11 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
             .setContentIntent(PendingIntent.getActivity(
                 getContext(), (int) System.currentTimeMillis(), explanationIntent, 0
             ))
-            .setContentTitle(i18n(R.string.sync_foreign_files_forgotten_ticker))
-            .setContentText(i18n(R.string.sync_foreign_files_forgotten_content,
-                    mForgottenLocalFiles.size(), i18n(R.string.app_name)));
+            .setContentTitle(i18n(com.owncloud.android.R.string.sync_foreign_files_forgotten_ticker))
+            .setContentText(i18n(com.owncloud.android.R.string.sync_foreign_files_forgotten_content,
+                    mForgottenLocalFiles.size(), i18n(com.owncloud.android.R.string.app_name)));
         
-        showNotification(R.string.sync_foreign_files_forgotten_ticker, notificationBuilder);
+        showNotification(com.owncloud.android.R.string.sync_foreign_files_forgotten_ticker, notificationBuilder);
     }
     
     /**
@@ -507,7 +506,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
      */
     private NotificationCompat.Builder createNotificationBuilder() {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext());
-        notificationBuilder.setSmallIcon(R.drawable.notification_icon).setAutoCancel(true);
+        notificationBuilder.setSmallIcon(com.owncloud.android.R.drawable.notification_icon).setAutoCancel(true);
         notificationBuilder.setColor(ThemeUtils.primaryColor());
         return notificationBuilder;
     }

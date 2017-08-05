@@ -8,8 +8,7 @@
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License version 2,
  *   as published by the Free Software Foundation.
- *
- *   This program is distributed in the hope that it will be useful,
+ **   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
@@ -39,12 +38,12 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 
 
 /**
- *  Authenticator for ownCloud accounts.
+ *  Authenticator for cryptvault accounts.
  * 
  *  Controller class accessed from the system AccountManager,
- *  providing integration of ownCloud accounts with the Android system.
+ *  providing integration of cryptvault accounts with the Android system.
  * 
- *  TODO - better separation in operations for OAuth-capable and regular ownCloud accounts.
+ *  TODO - better separation in operations for OAuth-capable and regular cryptvault accounts.
  *  TODO - review completeness
  */
 public class AccountAuthenticator extends AbstractAccountAuthenticator {

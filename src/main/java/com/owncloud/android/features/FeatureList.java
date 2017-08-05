@@ -26,7 +26,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.owncloud.android.MainApp;
-import com.owncloud.android.R;
 import com.owncloud.android.lib.common.utils.Log_OC;
 
 import java.util.LinkedList;
@@ -44,14 +43,14 @@ public class FeatureList {
 
     static final private FeatureItem featuresList[] = {
             // Basic features showed on first install
-            new FeatureItem(R.drawable.whats_new_files,
-                    R.string.welcome_feature_1_title, R.string.welcome_feature_1_text,
+            new FeatureItem(com.owncloud.android.R.drawable.whats_new_files,
+                    com.owncloud.android.R.string.welcome_feature_1_title, com.owncloud.android.R.string.welcome_feature_1_text,
                     VERSION_1_0_0, BETA_VERSION_0, SHOW_ON_FIRST_RUN),
-            new FeatureItem(R.drawable.whats_new_accounts,
-                    R.string.welcome_feature_2_title, R.string.welcome_feature_2_text,
+            new FeatureItem(com.owncloud.android.R.drawable.whats_new_accounts,
+                    com.owncloud.android.R.string.welcome_feature_2_title, com.owncloud.android.R.string.welcome_feature_2_text,
                     VERSION_1_0_0, BETA_VERSION_0, SHOW_ON_FIRST_RUN),
-            new FeatureItem(R.drawable.what_new_instant_upload,
-                    R.string.welcome_feature_3_title, R.string.welcome_feature_3_text,
+            new FeatureItem(com.owncloud.android.R.drawable.what_new_instant_upload,
+                    com.owncloud.android.R.string.welcome_feature_3_title, com.owncloud.android.R.string.welcome_feature_3_text,
                     VERSION_1_0_0, BETA_VERSION_0, SHOW_ON_FIRST_RUN),
             // Features introduced in certain point in time
     };

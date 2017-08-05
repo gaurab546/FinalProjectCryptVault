@@ -30,12 +30,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.lib.common.network.OnDatatransferProgressListener;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.fragment.FileFragment;
 import com.owncloud.android.utils.ThemeUtils;
+import com.owncloud.android.lib.common.network.OnDatatransferProgressListener;
+import com.owncloud.android.lib.common.utils.Log_OC;
 
 import java.lang.ref.WeakReference;
 
@@ -135,15 +134,15 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
             }
         }
 
-        mView = inflater.inflate(R.layout.file_download_fragment, container, false);
+        mView = inflater.inflate(com.owncloud.android.R.layout.file_download_fragment, container, false);
         
-        ProgressBar progressBar = (ProgressBar)mView.findViewById(R.id.progressBar);
+        ProgressBar progressBar = (ProgressBar)mView.findViewById(com.owncloud.android.R.id.progressBar);
         ThemeUtils.colorPreLollipopHorizontalProgressBar(progressBar);
         mProgressListener = new ProgressListener(progressBar);
 
-        (mView.findViewById(R.id.cancelBtn)).setOnClickListener(this);
+        (mView.findViewById(com.owncloud.android.R.id.cancelBtn)).setOnClickListener(this);
         
-        (mView.findViewById(R.id.fileDownloadLL)).setOnClickListener(new OnClickListener() {
+        (mView.findViewById(com.owncloud.android.R.id.fileDownloadLL)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((PreviewImageActivity) getActivity()).toggleFullScreen();
@@ -211,7 +210,7 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.cancelBtn: {
+            case com.owncloud.android.R.id.cancelBtn: {
                 mContainerActivity.getFileOperationsHelper().cancelTransference(getFile());
                 getActivity().finish();
                 break;
@@ -227,36 +226,36 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
      * Enables or disables buttons for a file being downloaded
      */
     private void setButtonsForTransferring() {
-        getView().findViewById(R.id.cancelBtn).setVisibility(View.VISIBLE);
+        getView().findViewById(com.owncloud.android.R.id.cancelBtn).setVisibility(View.VISIBLE);
 
         // show the progress bar for the transfer
-        getView().findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-        TextView progressText = (TextView) getView().findViewById(R.id.progressText);
-        progressText.setText(R.string.downloader_download_in_progress_ticker);
+        getView().findViewById(com.owncloud.android.R.id.progressBar).setVisibility(View.VISIBLE);
+        TextView progressText = (TextView) getView().findViewById(com.owncloud.android.R.id.progressText);
+        progressText.setText(com.owncloud.android.R.string.downloader_download_in_progress_ticker);
         progressText.setVisibility(View.VISIBLE);
 
         // hides the error icon
-        getView().findViewById(R.id.errorText).setVisibility(View.GONE);
-        getView().findViewById(R.id.error_image).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.errorText).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.error_image).setVisibility(View.GONE);
     }
 
     /**
      * Enables or disables buttons for a file locally available
      */
     private void setButtonsForDown() {
-        getView().findViewById(R.id.cancelBtn).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.cancelBtn).setVisibility(View.GONE);
 
         // hides the progress bar
-        getView().findViewById(R.id.progressBar).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.progressBar).setVisibility(View.GONE);
 
         // updates the text message
-        TextView progressText = (TextView) getView().findViewById(R.id.progressText);
-        progressText.setText(R.string.common_loading);
+        TextView progressText = (TextView) getView().findViewById(com.owncloud.android.R.id.progressText);
+        progressText.setText(com.owncloud.android.R.string.common_loading);
         progressText.setVisibility(View.VISIBLE);
 
         // hides the error icon
-        getView().findViewById(R.id.errorText).setVisibility(View.GONE);
-        getView().findViewById(R.id.error_image).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.errorText).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.error_image).setVisibility(View.GONE);
     }
 
 
@@ -266,15 +265,15 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
      * Currently, this is only used when a download was failed
      */
     private void setButtonsForRemote() {
-        getView().findViewById(R.id.cancelBtn).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.cancelBtn).setVisibility(View.GONE);
 
         // hides the progress bar and message
-        getView().findViewById(R.id.progressBar).setVisibility(View.GONE);
-        getView().findViewById(R.id.progressText).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.progressBar).setVisibility(View.GONE);
+        getView().findViewById(com.owncloud.android.R.id.progressText).setVisibility(View.GONE);
 
         // shows the error icon and message
-        getView().findViewById(R.id.errorText).setVisibility(View.VISIBLE);
-        getView().findViewById(R.id.error_image).setVisibility(View.VISIBLE);
+        getView().findViewById(com.owncloud.android.R.id.errorText).setVisibility(View.VISIBLE);
+        getView().findViewById(com.owncloud.android.R.id.error_image).setVisibility(View.VISIBLE);
     }
 
 

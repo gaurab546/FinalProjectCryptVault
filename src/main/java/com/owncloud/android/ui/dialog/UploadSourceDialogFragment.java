@@ -28,9 +28,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
-import com.owncloud.android.R;
-import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.activity.UploadFilesActivity;
 
@@ -63,12 +62,12 @@ public class UploadSourceDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         String[] allTheItems = {
-                getString(R.string.actionbar_upload_files),
-                getString(R.string.actionbar_upload_from_apps)
+                getString(com.owncloud.android.R.string.actionbar_upload_files),
+                getString(com.owncloud.android.R.string.actionbar_upload_from_apps)
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.actionbar_upload);
+        builder.setTitle(com.owncloud.android.R.string.actionbar_upload);
         builder.setItems(allTheItems, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 if (item == 0) {
@@ -93,7 +92,7 @@ public class UploadSourceDialogFragment extends DialogFragment {
                         action.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     }
                     getActivity().startActivityForResult(
-                            Intent.createChooser(action, getString(R.string.upload_chooser_title)),
+                            Intent.createChooser(action, getString(com.owncloud.android.R.string.upload_chooser_title)),
                             FileDisplayActivity.REQUEST_CODE__SELECT_CONTENT_FROM_APPS
                     );
                 }
